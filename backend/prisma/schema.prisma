@@ -4,5 +4,130 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:postgres@localhost:5432/Evolver?schema=public"
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  firstName  String   @db.VarChar(25)
+  middleName String?  @db.VarChar(25)
+  lastName   String   @db.VarChar(25)
+  password   String   @db.VarChar(255)
+  email      String   @unique @db.VarChar(50)
+  role       Role     @default(student)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  teacher    Teacher?
+  student    Student?
+
+  @@map("user")
+}
+
+model Teacher {
+  id           Int              @id
+  user         User             @relation(fields: [id], references: [id])
+  isController Boolean          @default(false)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  subjects     TeacherSubject[]
+  exams        Exam[]
+
+  @@map("teacher")
+}
+
+model Subject {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique @db.VarChar(50)
+  description String?
+  teachers    TeacherSubject[]
+  exams       Exam[]
+
+  @@map("subject")
+}
+
+model TeacherSubject {
+  teacherId Int
+  subjectId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@id([teacherId, subjectId])
+  @@map("teacher_subject")
+}
+
+model Student {
+  id        Int      @id
+  user      User     @relation(fields: [id], references: [id])
+  rollNo    String   @unique @db.Char(15)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  results   Result[]
+  answers   Answer[]
+
+  @@map("student")
+}
+
+model Exam {
+  id        Int      @id @default(autoincrement())
+  subjectId Int?
+  addedBy   Int
+  subject   Subject? @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  teacher   Teacher  @relation(fields: [addedBy], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  mcqs      MCQ[]
+  results   Result[]
+
+  @@map("exam")
+}
+
+model MCQ {
+  id                Int      @id @default(autoincrement())
+  examId            Int
+  questionBody      String   @db.Text
+  questionBodyImage String?  @db.Text
+  optionA           String   @db.Text
+  optionB           String   @db.Text
+  optionC           String   @db.Text
+  optionD           String   @db.Text
+  answer            String   @db.Char(1)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  exam              Exam     @relation(fields: [examId], references: [id])
+  answers           Answer[]
+
+  @@map("mcq")
+}
+
+model Result {
+  id          Int      @id @default(autoincrement())
+  studentId   Int
+  examId      Int
+  submittedAt DateTime @default(now())
+  totalMarks  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  student     Student  @relation(fields: [studentId], references: [id])
+  exam        Exam     @relation(fields: [examId], references: [id])
+
+  @@map("result")
+}
+
+model Answer {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  mcqId     Int
+  selected  String   @db.Char(1)
+  isCorrect Boolean
+  createdAt DateTime @default(now())
+  student   Student  @relation(fields: [studentId], references: [id])
+  mcq       MCQ      @relation(fields: [mcqId], references: [id])
+
+  @@map("answer")
+}
+
+enum Role {
+  controller
+  teacher
+  student
 }
