@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:postgres@localhost:5432/Evolver?schema=public"
+  url      = "postgresql://postgres:raktim1234@localhost:5432/Evolver?schema=public"
 }
 
 model User {
@@ -19,7 +19,8 @@ model User {
   updatedAt  DateTime @updatedAt
   teacher    Teacher?
   student    Student?
-
+  accessToken String?
+  refreshToekn String?
   @@map("user")
 }
 
