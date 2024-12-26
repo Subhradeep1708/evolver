@@ -9,6 +9,7 @@ import {
     SimpleGrid,
     Span,
 } from "@chakra-ui/react";
+import CountdownTimer from "../components/Timer";
 
 const mcqs = [
     {
@@ -305,18 +306,7 @@ const ExamPanel = () => {
                 <Text fontSize="xl" fontWeight="bold">
                     JEE Exam Panel
                 </Text>
-                <Text fontSize="lg" fontWeight="bold">
-                    Time Left:
-                    <Span
-                        background={"white"}
-                        py={1}
-                        px={2}
-                        borderRadius={"2xl"}
-                        ml={1}
-                    >
-                        2:00:00
-                    </Span>
-                </Text>
+                <CountdownTimer initialMinutes={60} />
             </HStack>
 
             {/* Content Area */}
