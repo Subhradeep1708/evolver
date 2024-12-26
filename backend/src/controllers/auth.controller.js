@@ -56,11 +56,11 @@ export const registerStudent = async (req, res) => {
                 password: hashedPassword,
                 role,
                 refreshToekn: refreshToken,
-                student: db.student.create({
-                    data: {
+                student: {
+                    create: {
                         rollNo,
                     },
-                }),
+                },
             },
         });
 
@@ -91,11 +91,16 @@ export const registerTeacher = async (req, res) => {
         } = req.body;
         // Validate inputs
         if (!email || !password || !role || !lastName || !firstName) {
-            throw new Error("Email, password, and role are required");
+            return res.status(400).json({
+                message:
+                    "Email, password, role, first name, and last name are required",
+            });
         }
 
         if (password.length < 6) {
-            throw new Error("Password must be at least 6 characters");
+            return res.status(400).json({
+                message: "Password must be at least 6 characters",
+            });
         }
 
         // Check if user already exists
@@ -123,12 +128,12 @@ export const registerTeacher = async (req, res) => {
                 password: hashedPassword,
                 role,
                 refreshToekn: refreshToken,
-                teacher: db.teacher.create({
-                    data: {
+                teacher: {
+                    create: {
                         isController,
                         subjects,
                     },
-                }),
+                },
             },
         });
 
@@ -150,8 +155,11 @@ export const login = async (req, res) => {
     try {
         // Validate inputs
         const { email, password, rollNo } = req.body;
+
         if (!email || !password) {
-            throw new Error("Email and password are required");
+            return res.status(400).json({
+                message: "Email and password are required",
+            });
         }
 
         // Find user by email
@@ -163,7 +171,9 @@ export const login = async (req, res) => {
         // Verify password
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
-            throw new Error("Incorrect password");
+            return res.status(400).json({
+                message: "Invalid password",
+            });
         }
 
         // Generate access and refresh tokens
@@ -198,7 +208,9 @@ export const logout = async (id) => {
     try {
         // Validate input
         if (!id) {
-            throw new Error("User ID is required");
+            return res.status(400).json({
+                message: "User ID is required",
+            });
         }
 
         // Clear refresh token
@@ -207,7 +219,9 @@ export const logout = async (id) => {
             data: { refreshToekn: null },
         });
 
-        return { message: "Logout successful" };
+        return {
+            message: "Logout successful",
+        };
     } catch (error) {
         throw new Error(error.message);
     }

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import env from "../utils/env.js";
+import env from "../lib/env";
 
 // Middleware to check if the user is authenticated
 export const isAuthenticated = (req, res, next) => {

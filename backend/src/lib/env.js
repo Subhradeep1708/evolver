@@ -1,9 +1,11 @@
-export const env={
-    auth:{
-        accessTokenSecret:process.env.ACCESS_TOKEN_SECRET,
-        refreshTokenSecret:process.env.REFRESH_TOKEN_SECRET
+const env = {
+    auth: {
+        accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+        refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
     },
-    db:{
-        url:process.env.DATABASE_URL
-    }
-}
+    db: {
+        url: process.env.DATABASE_URL,
+    },
+};
+
+export default env;

@@ -10,28 +10,51 @@ const deleteExam = async (req, res) => {
 };
 
 export const createExam = async (req, res) => {
-    const { subjectId, examDuration, examType, mcqs } = req.body;
-    //! examDate, examTime, examDuration, examType add these later to the db
+    try {
+        const { subjectId, examDuration, examType, mcqs } = req.body;
+        //! examDate, examTime, examDuration, examType add these later to the db
 
-    if (req.user.role === "student") {
-        return res
-            .status(403)
-            .json({ message: "You are not authorized to create an exam" });
-    }
+        if (req.user.role === "student") {
+            return res
+                .status(403)
+                .json({ message: "You are not authorized to create an exam" });
+        }
 
-    await db.exam.create({
-        data: {
-            subjectId,
-            mcqs: db.mCQ.createMany(mcqs),
-            addedBy: req.user.id,
-            subject: {
-                connect: {
-                    id: subjectId,
+        const newExam = await db.exam.create({
+            data: {
+                subjectId,
+                addedBy: req.user.id,
+                subject: {
+                    connect: {
+                        id: subjectId,
+                    },
                 },
             },
-        },
-    });
-    return res.status(201).json({ message: "Exam created successfully" });
+        });
+
+        const examId = newExam.id;
+
+        mcqs.map(async (mcq) => {
+            const newMcq = await db.mCQ.createMany({
+                data: {
+                    // examId: examId,
+                    questionBody: mcq.questionBody,
+                    questionBodyImage: mcq.questionBodyImage,
+                    optionA: mcq.options[0],
+                    optionB: mcq.options[1],
+                    optionC: mcq.options[2],
+                    optionD: mcq.options[3],
+                    answer: mcq.answer,
+                    examId: examId,
+                },
+            });
+        });
+
+        return res.status(201).json({ message: "Exam created successfully" });
+    } catch (error) {
+        console.error("Error creating exam:", error);
+        return res.status(500).json({ message: "An error occurred" });
+    }
 };
 
 const getLeaderboard = async (req, res) => {};

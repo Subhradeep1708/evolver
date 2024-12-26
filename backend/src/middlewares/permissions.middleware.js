@@ -9,7 +9,7 @@ const checkStudentPermission = (req, res, next) => {
 };
 
 const checkTeacherPermission = (req, res, next) => {
-    if (req.user.role !== "teacher") {
+    if (req.user.role !== "teacher" || req.user.role !== "controller") {
         return res.status(403).json({
             message:
                 "You are not authorized to perform this action. Only Teachers can be allowed.",
@@ -23,6 +23,25 @@ const checkControllerPermission = (req, res, next) => {
         return res.status(403).json({
             message:
                 "You are not authorized to perform this action. Only Controllers can be allowed.",
+        });
+    }
+    next();
+};
+
+const checkStudentAndControllerPermission = (req, res, next) => {
+    if (req.user.role !== "student" || req.user.role !== "controller") {
+        return res.status(403).json({
+            message:
+                "You are not authorized to perform this action. Only Students and Controllers can be allowed.",
+        });
+    }
+    next();
+};
+
+const checkSelfPermission = (req, res, next) => {
+    if (req.user.id !== req.params.id) {
+        return res.status(403).json({
+            message: "You are not authorized to perform this action.",
         });
     }
     next();
