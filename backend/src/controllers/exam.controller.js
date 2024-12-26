@@ -12,7 +12,7 @@ const deleteExam = async (req, res) => {
 export const createExam = async (req, res) => {
     try {
         const { subjectId, examDuration, examType, mcqs } = req.body;
-        //! examDate, examTime, examDuration, examType add these later to the db
+        //TODO: examDate, examTime, examDuration, examType add these later to the db
 
         if (req.user.role === "student") {
             return res
@@ -34,20 +34,20 @@ export const createExam = async (req, res) => {
 
         const examId = newExam.id;
 
-        mcqs.map(async (mcq) => {
-            const newMcq = await db.mCQ.createMany({
-                data: {
-                    // examId: examId,
-                    questionBody: mcq.questionBody,
-                    questionBodyImage: mcq.questionBodyImage,
-                    optionA: mcq.options[0],
-                    optionB: mcq.options[1],
-                    optionC: mcq.options[2],
-                    optionD: mcq.options[3],
-                    answer: mcq.answer,
-                    examId: examId,
-                },
-            });
+        const mcqData = mcqs.map((mcq) => ({
+            questionBody: mcq.questionBody,
+            questionBodyImage: mcq.questionBodyImage,
+            optionA: mcq.options[0],
+            optionB: mcq.options[1],
+            optionC: mcq.options[2],
+            optionD: mcq.options[3],
+            answer: mcq.answer,
+            examId: examId,
+        }));
+
+        // Insert MCQs in bulk
+        await db.mCQ.createMany({
+            data: mcqData,
         });
 
         return res.status(201).json({ message: "Exam created successfully" });
