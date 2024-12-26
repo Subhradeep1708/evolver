@@ -1,5 +1,6 @@
 function StudentLogin() {
-    return <div>StudentLogin</div>;
+    // const [showPassword, setShowPassword] = useState(false);
+    return <></>;
 }
 
 export default StudentLogin;

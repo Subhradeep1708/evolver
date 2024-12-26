@@ -7,6 +7,7 @@ import {
     VStack,
     Text,
     SimpleGrid,
+    Span,
 } from "@chakra-ui/react";
 
 const mcqs = [
@@ -303,6 +304,17 @@ const ExamPanel = () => {
             <HStack bg="teal.400" p={4} color="black" justify="space-between">
                 <Text fontSize="xl" fontWeight="bold">
                     JEE Exam Panel
+                </Text>
+                <Text fontSize="lg" fontWeight="bold">
+                    Time Left:
+                    <Span
+                        background={"white"}
+                        py={1}
+                        px={2}
+                        borderRadius={"2xl"}
+                    >
+                        2:00:00
+                    </Span>
                 </Text>
             </HStack>
 
