@@ -13,7 +13,7 @@ const mcqs = [
     {
         id: 1,
         question:
-            "What is the capital of France? Hi . Raktim is on fire. Are you ? amfnakjfhhalfaf fhaioehfa  afhaofh  aioefaiof  feiauefio  eau fioaue fpa aifuapfu uefaiouf apfup ufpuepofuapo ufepouaepfup",
+            "What is the capital of France? Hi . Raktim is on fire. Are you ?",
         optionA: "Paris",
         optionB: "Berlin",
         optionC: "Madrid",
