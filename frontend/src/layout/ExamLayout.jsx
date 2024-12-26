@@ -302,7 +302,14 @@ const ExamPanel = () => {
     return (
         <Box h="100vh" color={"black"}>
             {/* Header */}
-            <HStack bg="teal.400" p={4} color="black" justify="space-between">
+            <HStack
+                bg="teal.200"
+                px={4}
+                py={2}
+                shadow={"sm"}
+                color="black"
+                justify="space-between"
+            >
                 <Text fontSize="xl" fontWeight="bold">
                     JEE Exam Panel
                 </Text>
