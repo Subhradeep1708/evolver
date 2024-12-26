@@ -312,6 +312,7 @@ const ExamPanel = () => {
                         py={1}
                         px={2}
                         borderRadius={"2xl"}
+                        ml={1}
                     >
                         2:00:00
                     </Span>
@@ -332,150 +333,202 @@ const ExamPanel = () => {
                     borderRadius="md"
                     shadow="md"
                     align="start"
-                    overflow="hidden"
+                    overflow="auto"
                     spacing={4}
-                    spaceY={20}
+                    background={"bg"}
+                    spaceY={10}
                 >
-                    <Text fontSize="lg" fontWeight="bold">
-                        {mcqs[currentQuestion].question}
-                    </Text>
-                    {/* image */}
-                    {/* Options */}
-                    <Grid
-                        templateColumns={"1fr 1fr"}
-                        templateRows={"1fr 1fr"}
-                        gap={4}
-                        align="start"
-                        w="100%"
-                        spacing={2}
-                    >
-                        {["optionA", "optionB", "optionC", "optionD"].map(
-                            (optionKey) => (
+                    <Box w="100%" h="100%" spaceY={10}>
+                        <Text fontSize="lg" fontWeight="bold">
+                            {mcqs[currentQuestion].question}
+                        </Text>
+                        {/* image */}
+                        {/* Options */}
+                        <Grid
+                            templateColumns={"1fr 1fr"}
+                            templateRows={"1fr 1fr"}
+                            gap={4}
+                            align="start"
+                            w="100%"
+                            spacing={2}
+                        >
+                            {["optionA", "optionB", "optionC", "optionD"].map(
+                                (optionKey) => (
+                                    <Button
+                                        key={optionKey}
+                                        w="100%"
+                                        variant="outline"
+                                        colorScheme="teal"
+                                        color={"black"}
+                                        _hover={{
+                                            bg: "blue.500",
+                                            color: "white",
+                                        }}
+                                        onClick={() => {
+                                            setQuestions((prev) =>
+                                                prev.map((q, i) => {
+                                                    if (i === currentQuestion) {
+                                                        return {
+                                                            ...q,
+                                                            selectedOption:
+                                                                optionKey,
+                                                            isAnswered: true,
+                                                        };
+                                                    }
+                                                    return q;
+                                                })
+                                            );
+                                            setQuestions((prev) => {
+                                                prev[
+                                                    currentQuestion
+                                                ].isVisited = true;
+                                                return prev;
+                                            });
+                                            console.log(questions);
+                                        }}
+                                        onAbort={() => {
+                                            setQuestions((prev) =>
+                                                prev.map((q, i) =>
+                                                    i === currentQuestion
+                                                        ? {
+                                                              ...q,
+                                                              selectedOption:
+                                                                  optionKey,
+                                                          }
+                                                        : q
+                                                )
+                                            );
+                                        }}
+                                        background={
+                                            questions[currentQuestion]
+                                                .selectedOption === optionKey
+                                                ? "teal.500"
+                                                : "white"
+                                        }
+                                    >
+                                        {mcqs[currentQuestion][optionKey]}
+                                    </Button>
+                                )
+                            )}
+                        </Grid>
+                    </Box>
+
+                    {/* <Box></Box> */}
+
+                    <Box w={"100%"}>
+                        <Grid
+                            w={"100%"}
+                            display="flex"
+                            justifyContent="space-between"
+                            templateColumns="1fr 1fr 1fr 1fr"
+                            gap={4}
+                        >
+                            <Box w={"100%"}>
                                 <Button
-                                    key={optionKey}
-                                    w="100%"
-                                    variant="outline"
-                                    colorScheme="teal"
-                                    color={"black"}
-                                    _hover={{ bg: "blue.500", color: "white" }}
                                     onClick={() => {
-                                        setQuestions((prev) =>
-                                            prev.map((q, i) => {
-                                                if (i === currentQuestion) {
-                                                    return {
-                                                        ...q,
-                                                        selectedOption:
-                                                            optionKey,
-                                                        isAnswered: true,
-                                                    };
-                                                }
-                                                return q;
-                                            })
-                                        );
+                                        const Q = currentQuestion - 1;
+                                        setCurrentQuestion(Q);
                                         setQuestions((prev) => {
-                                            prev[
-                                                currentQuestion
-                                            ].isVisited = true;
+                                            prev[Q].isVisited = true;
                                             return prev;
                                         });
-                                        console.log(questions);
                                     }}
-                                    onAbort={() => {
+                                    disabled={currentQuestion === 0}
+                                    colorScheme="teal"
+                                    p={4}
+                                    borderWidth={2}
+                                    borderColor={"black"}
+                                    w={"100%"}
+                                    size={"lg"}
+                                >
+                                    Previous
+                                </Button>
+                            </Box>
+                            <Box w={"100%"}>
+                                <Button
+                                    background={
+                                        questions[currentQuestion]
+                                            .isMarkedForReview
+                                            ? "purple.400"
+                                            : "purple.600"
+                                    }
+                                    size="lg"
+                                    p={4}
+                                    onClick={() =>
+                                        toggleReview(currentQuestion)
+                                    }
+                                    color={"white"}
+                                    w={"100%"}
+                                >
+                                    {questions[currentQuestion]
+                                        .isMarkedForReview
+                                        ? "Unmark for Review"
+                                        : "Mark for Review"}
+                                </Button>
+                            </Box>
+                            {/* clear selected ans button */}
+                            <Box w={"100%"}>
+                                <Button
+                                    onClick={() => {
                                         setQuestions((prev) =>
                                             prev.map((q, i) =>
                                                 i === currentQuestion
                                                     ? {
                                                           ...q,
-                                                          selectedOption:
-                                                              optionKey,
+                                                          selectedOption: "",
                                                       }
                                                     : q
                                             )
                                         );
                                     }}
-                                    background={
-                                        questions[currentQuestion]
-                                            .selectedOption === optionKey
-                                            ? "teal.500"
-                                            : "white"
-                                    }
+                                    background="red"
+                                    p={4}
+                                    w={"100%"}
+                                    size={"lg"}
+
+                                    // borderWidth={2}
+                                    // borderColor={"black"}
                                 >
-                                    {mcqs[currentQuestion][optionKey]}
+                                    X Clear
                                 </Button>
-                            )
-                        )}
-                    </Grid>
-
-                    <Box>
-                        <Button
-                            background={"purple.600"}
-                            size="lg"
-                            p={4}
-                            onClick={() => toggleReview(currentQuestion)}
-                            color={"white"}
-                        >
-                            {questions[currentQuestion].isMarkedForReview
-                                ? "Unmark for Review"
-                                : "Mark for Review"}
-                        </Button>
-                    </Box>
-
-                    <Box w={"100%"}>
-                        {" "}
-                        <Box
-                            w={"100%"}
-                            display="flex"
-                            justifyContent="space-between"
-                        >
-                            <Button
-                                onClick={() => {
-                                    const Q = currentQuestion - 1;
-                                    setCurrentQuestion(Q);
-                                    setQuestions((prev) => {
-                                        prev[Q].isVisited = true;
-                                        return prev;
-                                    });
-                                }}
-                                disabled={currentQuestion === 0}
-                                colorScheme="teal"
-                                p={4}
-                                borderWidth={2}
-                                borderColor={"black"}
-                            >
-                                Previous
-                            </Button>
-                            <Button
-                                onClick={() => {
-                                    const Q = currentQuestion + 1;
-                                    setCurrentQuestion(Q);
-                                    setQuestions((prev) => {
-                                        prev[Q].isVisited = true;
-                                        return prev;
-                                    });
-                                }}
-                                disabled={currentQuestion === mcqs.length - 1}
-                                colorScheme="teal"
-                                p={4}
-                                borderWidth={2}
-                                borderColor={"black"}
-                            >
-                                Next
-                            </Button>
-                        </Box>
+                            </Box>
+                            <Box w={"100%"}>
+                                <Button
+                                    onClick={() => {
+                                        const Q = currentQuestion + 1;
+                                        setCurrentQuestion(Q);
+                                        setQuestions((prev) => {
+                                            prev[Q].isVisited = true;
+                                            return prev;
+                                        });
+                                    }}
+                                    disabled={
+                                        currentQuestion === mcqs.length - 1
+                                    }
+                                    colorScheme="teal"
+                                    p={4}
+                                    borderWidth={2}
+                                    borderColor={"black"}
+                                    w={"100%"}
+                                >
+                                    Next
+                                </Button>
+                            </Box>
+                        </Grid>
                     </Box>
                 </VStack>
 
                 {/* Right Panel */}
                 <VStack
                     spacing={4}
-                    // background={"red.100"}
+                    // background={"bg"}
                     h={"100%"}
                     justify={"space-between"}
                 >
                     {/* Question Pallet */}
 
                     <VStack
-                        bg="gray.50"
+                        background="bg"
                         p={4}
                         borderRadius="md"
                         shadow="md"
