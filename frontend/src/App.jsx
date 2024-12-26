@@ -7,7 +7,9 @@ function App() {
     return (
         <>
             {/* <ExamLayout /> */}
-            <MainLayout />
+            <MainLayout>
+                bantu
+            </MainLayout>
         </>
     );
 }
