@@ -245,13 +245,62 @@ const mcqs = [
     },
 ];
 
+mcqs.map((q) => {
+    return { ...q, isMarkedForReview: false, selectedOption: "" };
+});
+
+// unattempted - gray color
+// attempted & answered  - green color
+// attempted & not answered - red color
+// marked for review - purple color
+// current question - teal color
+
 const ExamPanel = () => {
+    const [questions, setQuestions] = useState(
+        mcqs.map((q, i) => ({
+            ...q,
+            selectedOption: "", // the selected option will be highlighted
+            isMarkedForReview: false,
+            isVisited: i === 0 ? true : false,
+            isAnswered: false,
+        }))
+    );
+
+    // const [answers, setAnswers] = useState(Array(mcqs.length).fill(-1));
+
+    const computeBackgroundColor = (q) => {
+        if (q.isMarkedForReview) {
+            return "purple.400";
+        } else if (!q.isAnswered && q.isVisited) {
+            return "red.400";
+        } else if (q.isVisited && q.isAnswered) {
+            return "green.400";
+        } else {
+            return "gray.200";
+        }
+    };
+
+    const toggleReview = (index) => {
+        setQuestions((prev) =>
+            prev.map((q, i) =>
+                i === index
+                    ? { ...q, isMarkedForReview: !q.isMarkedForReview }
+                    : q
+            )
+        );
+    };
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    // setQuestions((prev) => {
+    //     prev[0].isAttempted = true;
+    //     return prev;
+    // });
 
     return (
         <Box h="100vh" color={"black"}>
             {/* Header */}
-            <HStack bg="teal.500" p={4} color="black" justify="space-between">
+            <HStack bg="teal.400" p={4} color="black" justify="space-between">
                 <Text fontSize="xl" fontWeight="bold">
                     JEE Exam Panel
                 </Text>
@@ -279,6 +328,7 @@ const ExamPanel = () => {
                         {mcqs[currentQuestion].question}
                     </Text>
                     {/* image */}
+                    {/* Options */}
                     <Grid
                         templateColumns={"1fr 1fr"}
                         templateRows={"1fr 1fr"}
@@ -295,16 +345,121 @@ const ExamPanel = () => {
                                     variant="outline"
                                     colorScheme="teal"
                                     color={"black"}
+                                    _hover={{ bg: "blue.500", color: "white" }}
+                                    onClick={() => {
+                                        setQuestions((prev) =>
+                                            prev.map((q, i) => {
+                                                if (i === currentQuestion) {
+                                                    return {
+                                                        ...q,
+                                                        selectedOption:
+                                                            optionKey,
+                                                        isAnswered: true,
+                                                    };
+                                                }
+                                                return q;
+                                            })
+                                        );
+                                        setQuestions((prev) => {
+                                            prev[
+                                                currentQuestion
+                                            ].isVisited = true;
+                                            return prev;
+                                        });
+                                        console.log(questions);
+                                    }}
+                                    onAbort={() => {
+                                        setQuestions((prev) =>
+                                            prev.map((q, i) =>
+                                                i === currentQuestion
+                                                    ? {
+                                                          ...q,
+                                                          selectedOption:
+                                                              optionKey,
+                                                      }
+                                                    : q
+                                            )
+                                        );
+                                    }}
+                                    background={
+                                        questions[currentQuestion]
+                                            .selectedOption === optionKey
+                                            ? "teal.500"
+                                            : "white"
+                                    }
                                 >
                                     {mcqs[currentQuestion][optionKey]}
                                 </Button>
                             )
                         )}
                     </Grid>
+
+                    <Box>
+                        <Button
+                            background={"purple.600"}
+                            size="lg"
+                            p={4}
+                            onClick={() => toggleReview(currentQuestion)}
+                            color={"white"}
+                        >
+                            {questions[currentQuestion].isMarkedForReview
+                                ? "Unmark for Review"
+                                : "Mark for Review"}
+                        </Button>
+                    </Box>
+
+                    <Box w={"100%"}>
+                        {" "}
+                        <Box
+                            w={"100%"}
+                            display="flex"
+                            justifyContent="space-between"
+                        >
+                            <Button
+                                onClick={() => {
+                                    const Q = currentQuestion - 1;
+                                    setCurrentQuestion(Q);
+                                    setQuestions((prev) => {
+                                        prev[Q].isVisited = true;
+                                        return prev;
+                                    });
+                                }}
+                                disabled={currentQuestion === 0}
+                                colorScheme="teal"
+                                p={4}
+                                borderWidth={2}
+                                borderColor={"black"}
+                            >
+                                Previous
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    const Q = currentQuestion + 1;
+                                    setCurrentQuestion(Q);
+                                    setQuestions((prev) => {
+                                        prev[Q].isVisited = true;
+                                        return prev;
+                                    });
+                                }}
+                                disabled={currentQuestion === mcqs.length - 1}
+                                colorScheme="teal"
+                                p={4}
+                                borderWidth={2}
+                                borderColor={"black"}
+                            >
+                                Next
+                            </Button>
+                        </Box>
+                    </Box>
                 </VStack>
 
                 {/* Right Panel */}
-                <VStack spacing={4} background={"red.100"} h={"100%"}>
+                <VStack
+                    spacing={4}
+                    // background={"red.100"}
+                    h={"100%"}
+                    justify={"space-between"}
+                >
                     {/* Question Pallet */}
 
                     <VStack
@@ -313,7 +468,7 @@ const ExamPanel = () => {
                         borderRadius="md"
                         shadow="md"
                         align="start"
-                        h="85%"
+                        h="90%"
                         overflow="hidden"
                         w={"100%"}
                         scrollBehavior={"smooth"}
@@ -327,18 +482,38 @@ const ExamPanel = () => {
                                 <Box key={q.id}>
                                     <Button
                                         size="lg"
-                                        colorScheme={
-                                            currentQuestion === idx
-                                                ? "teal"
-                                                : "gray"
+                                        background={
+                                            currentQuestion == idx
+                                                ? "gray.700"
+                                                : computeBackgroundColor(
+                                                      questions[idx]
+                                                  )
                                         }
-                                        onClick={() => setCurrentQuestion(idx)}
-                                        borderRadius={"50%"}
+                                        color={
+                                            currentQuestion == idx
+                                                ? "white"
+                                                : "black"
+                                        }
+                                        //
+                                        fontWeight={"bold"}
+                                        onClick={() => {
+                                            setCurrentQuestion(idx);
+                                            setQuestions((prev) => {
+                                                prev[idx].isVisited = true;
+                                                return prev;
+                                            });
+                                        }}
+                                        borderRadius={
+                                            questions[idx].isMarkedForReview
+                                                ? "md"
+                                                : "full"
+                                        }
                                         p={2}
                                         m={2}
-                                        borderColor={"teal.500"}
+                                        borderColor={"gray.500"}
                                         borderWidth={2}
                                         aspectRatio={"square"}
+                                        // height={"8%"}
                                     >
                                         {q.id}
                                     </Button>
@@ -354,6 +529,8 @@ const ExamPanel = () => {
                             colorScheme="green"
                             size="lg"
                             onClick={() => alert("Exam Submitted!")}
+                            borderRadius={"md"}
+                            shadow={"md"}
                         >
                             Submit Exam
                         </Button>
