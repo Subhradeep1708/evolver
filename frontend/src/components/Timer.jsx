@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Span, Text } from "@chakra-ui/react";
 
 const CountdownTimer = ({ initialMinutes }) => {
@@ -45,5 +46,9 @@ const CountdownTimer = ({ initialMinutes }) => {
         </Text>
     );
 };
+CountdownTimer.propTypes = {
+    initialMinutes: PropTypes.number.isRequired,
+};
 
+// export default CountdownTimer;
 export default CountdownTimer;

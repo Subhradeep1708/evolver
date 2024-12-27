@@ -8,13 +8,13 @@ import StudentLogin from "./pages/auth/StudentLogin";
 function App() {
     return (
         <Box background="bg.muted">
-            <ExamLayout />
+            {/* <ExamLayout /> */}
             {/* <MainLayout>
                 bantu
             </MainLayout> */}
-            {/* <AuthLayout>
+            <AuthLayout>
                 <StudentLogin />
-            </AuthLayout> */}
+            </AuthLayout>
         </Box>
     );
 }

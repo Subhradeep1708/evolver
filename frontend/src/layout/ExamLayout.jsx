@@ -7,7 +7,7 @@ import {
     VStack,
     Text,
     SimpleGrid,
-    Span,
+    // Span,
 } from "@chakra-ui/react";
 import CountdownTimer from "../components/Timer";
 
