@@ -2,15 +2,17 @@ import { Box, Button, Input, Link, Span, Text, VStack } from "@chakra-ui/react";
 import { Field } from "../../components/ui/field";
 import { InputGroup } from "../../components/ui/input-group";
 import { LuEye, LuEyeClosed, LuLock, LuUser } from "react-icons/lu";
-// import { Field } from "@/components/ui/field";
 import { useState } from "react";
 const StudentLogin = () => {
     const [showPassword, setShowPassword] = useState(true);
-    const [type, setType] = useState("password");
+    const [rollNoError, setRollNoError] = useState("Invalid Roll No");
+    const [passwordFieldType, setPasswordFieldType] = useState("password");
+
     const toggleEye = () => {
         setShowPassword(!showPassword);
-        setType(showPassword ? "text" : "password");
+        setPasswordFieldType(showPassword ? "text" : "password");
     };
+
     return (
         <Box
             mx="auto"
@@ -26,7 +28,12 @@ const StudentLogin = () => {
                 <Text fontSize="2xl" fontWeight="bold">
                     Login
                 </Text>
-                <Field label="Roll Number" w={"24rem"}>
+                <Field
+                    label="Roll Number"
+                    w={"24rem"}
+                    invalid
+                    errorText={rollNoError}
+                >
                     <InputGroup
                         flex="1"
                         startElement={
@@ -55,7 +62,11 @@ const StudentLogin = () => {
                         }
                         w={"100%"}
                     >
-                        <Input w={"100%"} placeholder="Password" type={type} />
+                        <Input
+                            w={"100%"}
+                            placeholder="Password"
+                            type={passwordFieldType}
+                        />
                     </InputGroup>
                     <Link href="/hello" fontSize="sm" color="gray.500">
                         Forgot Password?
