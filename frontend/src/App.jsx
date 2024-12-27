@@ -5,6 +5,7 @@ import "./app.css";
 import MainLayout from "./layout/MainLayout";
 import AuthLayout from "./layout/AuthLayout";
 import StudentLogin from "./pages/auth/StudentLogin";
+import TeacherLogin from "./pages/auth/TeacherLogin";
 function App() {
     return (
         <Box background="bg.muted">
@@ -13,7 +14,8 @@ function App() {
                 bantu
             </MainLayout> */}
             <AuthLayout>
-                <StudentLogin />
+               <TeacherLogin/>
+               {/* <StudentLogin/> */}
             </AuthLayout>
         </Box>
     );
