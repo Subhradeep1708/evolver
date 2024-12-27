@@ -10,13 +10,11 @@ function App() {
     return (
         <Box background="bg.muted">
             {/* <ExamLayout /> */}
-            {/* <MainLayout>
-                bantu
-            </MainLayout> */}
-            <AuthLayout>
-               <TeacherLogin/>
-               {/* <StudentLogin/> */}
-            </AuthLayout>
+            <MainLayout>bantu</MainLayout>
+            {/* <AuthLayout> */}
+            {/* <TeacherLogin/> */}
+            {/* <StudentLogin/> */}
+            {/* </AuthLayout> */}
         </Box>
     );
 }

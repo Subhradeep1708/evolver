@@ -1,87 +1,86 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Input,
-  Stack,
-  Heading,
-  Text,
-  FieldHelperText,
-  VStack,
- Field
-} from '@chakra-ui/react';
+import { Button, Fieldset, Input, Stack } from "@chakra-ui/react";
+import { Field } from "../../components/ui/field";
+import { PasswordInput } from "../../components/ui/password-input";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
 const TeacherLogin = () => {
-    const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Email is required"),
+            password: Yup.string()
+                .min(6, "Password must be at least 6 characters")
+                .required("Password is required"),
+        }),
+        onSubmit: (values) => {
+            handleSubmit(values);
+            console.log("Form Submitted:", values);
+        },
+    });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ email, password });
-  };
-  return (
- <Field.Root display={"flex"} justifyContent={"center"} alignItems={"center"} minH={"100vh"} >
-       <Box
-    minH="100vh"
-    
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    
-  >
-    <Box
-      w="full"
-      maxW="md"
-      p={6}
-      
-      boxShadow="lg"
-      borderRadius="md"
-    >
-      <form onSubmit={handleSubmit} >
-        <VStack spacing={4}>
-          <Heading as="h1" size="lg" textAlign="center">
-            Login
-          </Heading>
-          <Text fontSize="sm" color="gray.500" textAlign="center">
-            Enter your credentials to access your account
-          </Text>
+    const handleSubmit = (values) => {
+        // e.preventDefault();
 
-          <Stack w="full" spacing={3}>
-            <Box>
-              <Text mb={1} fontWeight="semibold">
-                Email
-              </Text>
-              <Input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Enter your email"
-              />
-              <FieldHelperText>We'll never share your email.</FieldHelperText>
-            </Box>
+        console.log("Form Submitted:", values);
+    };
 
-            <Box>
-              <Text mb={1} fontWeight="semibold">
-                Password
-              </Text>
-              <Input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Enter your password"
-              />
-            </Box>
-          </Stack>
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <Fieldset.Root size="lg" maxW="md" spaceY="4">
+                <Stack>
+                    <Fieldset.Legend>Contact details</Fieldset.Legend>
+                    <Fieldset.HelperText>
+                        Please provide your contact details below.
+                    </Fieldset.HelperText>
+                </Stack>
 
-          <Button colorScheme="teal" size="md" type="submit" w="full">
-            Login
-          </Button>
-        </VStack>
-      </form>
-    </Box>
-  </Box>
- </Field.Root>
-  )
-}
+                <Fieldset.Content>
+                    <Field
+                        label="Email address"
+                        // error={formik.touched.email && formik.errors.email}
+                        invalid={formik.touched.email && formik.errors.email}
+                        errorText={formik.touched.email && formik.errors.email}
+                    >
+                        <Input
+                            name="email"
+                            type="email"
+                            px={2}
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                    </Field>
+                </Fieldset.Content>
 
-export default TeacherLogin
+                <Field
+                    label="Password"
+                    error={formik.touched.password && formik.errors.password}
+                >
+                    <PasswordInput
+                        name="password"
+                        px={2}
+                        pr={4}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                        <p style={{ color: "red" }}>{formik.errors.password}</p>
+                    )}
+                </Field>
+
+                <Button type="submit" alignSelf="flex-start" p={4} size="lg">
+                    Submit
+                </Button>
+            </Fieldset.Root>
+        </form>
+    );
+};
+
+export default TeacherLogin;

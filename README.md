@@ -5,3 +5,41 @@ A robust online examination platform built with Node.js and PostgreSQL, featurin
 ### Database Model:
 
 <img src="./backend/prisma/prismaliser.png" />
+
+### Student
+
+Available Exams
+
+Exam Portal (`DONE`)
+
+Scores
+
+Edit Profile
+
+### Teachers
+
+All Exams
+
+Exam Results
+
+Add Exam
+
+Edit Profile
+
+### Controller
+
+Add Teacher
+
+All Teacher
+
+Add Student
+
+All Student
+
+Add Subject
+
+Exam -> Result
+
+Add Exam
+
+Edit Profile
