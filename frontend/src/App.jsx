@@ -8,6 +8,7 @@ import StudentLogin from "./pages/auth/StudentLogin";
 import TeacherLogin from "./pages/auth/TeacherLogin";
 import SubjectCard from "./components/students/SubjectCard";
 import ResultTable from "./components/students/ResultTable";
+import TeacherForm from "./components/forms/TeacherForm";
 function App() {
     return (
         <Box background="bg.muted">
@@ -26,7 +27,8 @@ function App() {
                     <SubjectCard />
                 </Grid> */}
 
-                <ResultTable />
+                {/* <ResultTable /> */}
+                <TeacherForm />
             </MainLayout>
             {/* <AuthLayout> */}
             {/* <TeacherLogin/> */}
