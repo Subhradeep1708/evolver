@@ -1,5 +1,5 @@
 import { HStack, Box, VStack } from "@chakra-ui/react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/common/sidebar/Sidebar";
 import PropTypes from "prop-types";
 import Navbar from "../components/Navbar";
 
@@ -11,7 +11,13 @@ const MainLayout = ({ children }) => {
             </Box>
             <VStack background={"bg"} gap={0} flexGrow={1} h={"100%"}>
                 <Navbar />
-                <Box background={"green"} w={"full"} flexGrow={1} p={4}>
+                <Box
+                    background={""}
+                    w={"full"}
+                    flexGrow={1}
+                    p={4}
+                    overflow={"auto"}
+                >
                     {/* pages will come here */}
                     {children}
                 </Box>

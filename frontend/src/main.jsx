@@ -3,15 +3,29 @@ import { createRoot } from "react-dom/client";
 
 import App from "./App.jsx";
 import { Provider } from "./components/ui/provider.jsx";
-import ExamPanel from "./layout/ExamLayout.jsx";
-import TeacherLogin from "./pages/auth/TeacherLogin.jsx";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router";
+import StudentLogin from "./pages/auth/StudentLogin.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <Provider>
-            <App />
-        </Provider>
+        <BrowserRouter>
+            <Provider>
+                <Routes>
+                    <Route path="/" element={<App />} />
+                    {/* <Route path="/auth">
+                        <Route
+                            index
+                            path="/login/student"
+                            element={<StudentLogin />}
+                        />
+                        <Route
+                            path="/login/teacher"
+                            element={<StudentLogin />}
+                        />
+                    </Route> */}
+                </Routes>
+            </Provider>
+        </BrowserRouter>
     </StrictMode>
 );
 
