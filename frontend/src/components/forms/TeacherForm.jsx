@@ -133,8 +133,14 @@ const TeacherForm = () => {
                                 <NativeSelectRoot>
                                     <NativeSelectField
                                         name="role"
-                                        items={["Teacher", "Controller"]}
-                                    />
+                                        px={4}
+                                        // items={["Teacher", "Controller"]}
+                                    >
+                                        <option value="teacher">Teacher</option>
+                                        <option value="controller">
+                                            Controller
+                                        </option>
+                                    </NativeSelectField>
                                 </NativeSelectRoot>
                             </Field>
                         </Fieldset.Content>
@@ -217,3 +223,52 @@ const TeacherForm = () => {
 };
 
 export default TeacherForm;
+
+// import {
+//     Button,
+//     Field,
+//     Fieldset,
+//     Input,
+//     // NativeSelectField,
+//     // NativeSelectRoot,
+//     Stack,
+// } from "@chakra-ui/react";
+// // import { Field } from "@/components/ui/field";
+
+// import { NativeSelectField, NativeSelectRoot } from "../components/ui/select";
+
+// const TeacherForm = () => {
+//     return (
+//         <Fieldset.Root size="lg" maxW="md">
+//             <Stack>
+//                 <Fieldset.Legend>Contact details</Fieldset.Legend>
+//                 <Fieldset.HelperText>
+//                     Please provide your contact details below.
+//                 </Fieldset.HelperText>
+//             </Stack>
+
+//             <Fieldset.Content>
+//                 <Field label="Country">
+//                     <NativeSelectRoot>
+//                         <NativeSelectField
+//                             name="country"
+//                             items={[
+//                                 "United Kingdom (UK)",
+//                                 "Canada (CA)",
+//                                 "United States (US)",
+//                             ]}
+//                         />
+//                         <option value="1">Option 1</option>
+//                         <option value="2">Option 2</option>
+//                     </NativeSelectRoot>
+//                 </Field>
+//             </Fieldset.Content>
+
+//             <Button type="submit" alignSelf="flex-start">
+//                 Submit
+//             </Button>
+//         </Fieldset.Root>
+//     );
+// };
+
+// export default TeacherForm;
