@@ -1,14 +1,44 @@
-import { HStack } from "@chakra-ui/react";
+import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
+import {
+    MenuContent,
+    MenuItem,
+    MenuRoot,
+    MenuTrigger,
+} from "./ui/menu"
+import { RxAvatar } from "react-icons/rx";
 
 function Navbar() {
     return (
         <HStack
             w={"full"}
-            background={"pink"}
+            background={"gray.100"}
             h={"8vh"}
-            justifyContent={"center"}
+            justifyContent={"space-between"}
+            p={3}
         >
-            Navbar
+            <Box>
+                <Text>Raktim is on fire </Text>
+                <Text fontSize={'xs'}>Roll:1234</Text>
+            </Box>
+            <Box>
+                <Text>Exam Dashboard</Text>
+            </Box>
+            <Box>
+                <MenuRoot>
+                    <MenuTrigger asChild>
+                        {/* <Button variant="outline" size="sm" p={0}>
+                            <RxAvatar />
+                        </Button> */}
+                        <RxAvatar size={'36'} />
+                    </MenuTrigger>
+                    <MenuContent p={3}>
+
+                        <MenuItem value="logout">Log Out</MenuItem>
+                        <MenuItem value="login">Log In</MenuItem>
+
+                    </MenuContent>
+                </MenuRoot>
+            </Box>
         </HStack>
     );
 }
