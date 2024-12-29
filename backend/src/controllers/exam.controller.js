@@ -61,8 +61,57 @@ const getLeaderboard = async (req, res) => {};
 
 const getExamByStudentId = async (req, res) => {};
 
-const getExamByTeacherId = async (req, res) => {};
+export const getExamByTeacherId = async (req, res) => {
+    const { id } = req.params;
+    const exams = await db.exam.findMany({
+        where: {
+            addedBy: id,
+        },
+    });
+
+    return res.status(200).json({ exams });
+};
 
 const getAllExams = async (req, res) => {};
 
-const submitExamByStudentId = async (req, res) => {};
+const submitExamByStudentId = async (req, res) => {
+    const { studentId } = req.params;
+    const { examId, answers } = req.body;
+
+    const exam = await db.exam.findUnique({
+        where: {
+            id: examId,
+        },
+    });
+
+    if (!exam) {
+        return res.status(404).json({ message: "Exam not found" });
+    }
+
+    const mcqs = await db.mCQ.findMany({
+        where: {
+            examId: examId,
+        },
+    });
+
+    const totalQuestions = mcqs.length;
+    let correctAnswers = 0;
+
+    for (let i = 0; i < totalQuestions; i++) {
+        if (mcqs[i].answer === answers[i]) {
+            correctAnswers++;
+        }
+    }
+
+    const score = (correctAnswers / totalQuestions) * 100;
+
+    await db.examSubmission.create({
+        data: {
+            studentId,
+            examId,
+            score,
+        },
+    });
+
+    return res.status(200).json({ score });
+};

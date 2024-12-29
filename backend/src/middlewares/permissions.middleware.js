@@ -46,3 +46,11 @@ const checkSelfPermission = (req, res, next) => {
     }
     next();
 };
+
+export {                                
+    checkStudentPermission,
+    checkTeacherPermission,
+    checkControllerPermission,
+    checkStudentAndControllerPermission,
+    checkSelfPermission,
+};
