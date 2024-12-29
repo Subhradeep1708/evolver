@@ -1,8 +1,9 @@
 import db from "../db/db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import env from "../lib/env.js";
 
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+// const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 export const registerStudent = async (req, res) => {
     try {
@@ -41,9 +42,11 @@ export const registerStudent = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Generate refresh token
-        const refreshToken = jwt.sign({ email }, refreshTokenSecret, {
+        const refreshToken = jwt.sign({ email }, env.auth.refreshTokenSecret, {
             expiresIn: "15d",
         });
+
+        console.log("ref tok");
 
         // Create user
 
@@ -55,7 +58,7 @@ export const registerStudent = async (req, res) => {
                 middleName,
                 password: hashedPassword,
                 role,
-                refreshToekn: refreshToken,
+                refreshToekn: refreshToken || "",
                 student: {
                     create: {
                         rollNo,
@@ -64,17 +67,20 @@ export const registerStudent = async (req, res) => {
             },
         });
 
-        return {
+        console.log("new user");
+
+        return res.send({
             message: "User registered successfully",
             data: {
                 id: newUser.id,
                 email: newUser.email,
                 role: newUser.role,
-                refreshToken: newUser.refreshToekn,
+                refreshToken: newUser.refreshToekn || "",
             },
-        };
+        });
     } catch (error) {
-        throw new Error(error.message);
+        // throw new Error(error.message);
+        return res.status(400).json({ message: error.message });
     }
 };
 export const registerTeacher = async (req, res) => {

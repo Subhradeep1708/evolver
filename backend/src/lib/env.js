@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const env = {
     auth: {
         accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,

@@ -4,23 +4,24 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:raktim1234@localhost:5432/Evolver?schema=public"
+  url      = "postgresql://postgres:postgres@localhost:5432/Evolver?schema=public"
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  firstName  String   @db.VarChar(25)
-  middleName String?  @db.VarChar(25)
-  lastName   String   @db.VarChar(25)
-  password   String   @db.VarChar(255)
-  email      String   @unique @db.VarChar(50)
-  role       Role     @default(student)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  teacher    Teacher?
-  student    Student?
-  accessToken String?
+  id           Int      @id @default(autoincrement())
+  firstName    String   @db.VarChar(25)
+  middleName   String?  @db.VarChar(25)
+  lastName     String   @db.VarChar(25)
+  password     String   @db.VarChar(255)
+  email        String   @unique @db.VarChar(50)
+  role         Role     @default(student)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  teacher      Teacher?
+  student      Student?
+  accessToken  String?
   refreshToekn String?
+
   @@map("user")
 }
 
