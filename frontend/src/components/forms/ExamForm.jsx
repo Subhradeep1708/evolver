@@ -310,6 +310,7 @@ const ExamForm = () => {
                                     <Box>
                                         <Button
                                             background={"bg.muted"}
+                                            disabled={mcqs.length === 1}
                                             onClick={() => {
                                                 setMcqs(
                                                     mcqs.filter(
