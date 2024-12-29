@@ -1,43 +1,35 @@
 // import { useState } from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
-import ExamLayout from "./layout/ExamLayout";
 import "./app.css";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import MainLayout from "./layout/MainLayout";
-import AuthLayout from "./layout/AuthLayout";
-import StudentLogin from "./pages/auth/StudentLogin";
-import TeacherLogin from "./pages/auth/TeacherLogin";
-import SubjectCard from "./components/students/SubjectCard";
-import ResultTable from "./components/students/ResultTable";
-import TeacherForm from "./components/forms/TeacherForm";
 import SubjectForm from "./components/forms/SubjectForm";
+import TeacherForm from "./components/forms/TeacherForm";
+import StudentForm from "./components/forms/StudentForm";
 function App() {
     return (
         <Box background="bg.muted">
             {/* <ExamLayout /> */}
             <MainLayout>
-                {/* <Grid
-                    templateColumns="repeat(3, 1fr)"
-                    gap={4}
-                    // placeContent={"center"}
-                    placeItems={"center"}
-                    // justifyContent={"center"}
-                    // alignItems={"center"}
-                >
-                    <SubjectCard />
-                    <SubjectCard />
-                    <SubjectCard />
-                </Grid> */}
-
-                {/* <ResultTable /> */}
-                {/* <TeacherForm /> */}
-                <SubjectForm />
+                {/* <SubjectForm /> */}
+                {/* <TeacherForm teacher={sampleTeacher} /> */}
+                <StudentForm />
             </MainLayout>
-            {/* <AuthLayout> */}
-            {/* <TeacherLogin/> */}
-            {/* <StudentLogin/> */}
-            {/* </AuthLayout> */}
         </Box>
     );
 }
 
 export default App;
+
+const sampleTeacher = {
+    id: 1,
+    firstName: "John",
+    middleName: "",
+    lastName: "Doe",
+    email: "johdow@gmail.com",
+    phone: "08012345678",
+    address: "123, Lagos Street",
+    subjects: [
+        { id: 1, name: "Mathematics" },
+        { id: 2, name: "English" },
+    ],
+};

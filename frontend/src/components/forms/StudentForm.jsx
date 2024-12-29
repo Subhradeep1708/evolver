@@ -1,29 +1,17 @@
 import { useFormik } from "formik";
-import {
-    Button,
-    Fieldset,
-    HStack,
-    Input,
-    NativeSelectField,
-    NativeSelectRoot,
-    Stack,
-} from "@chakra-ui/react";
+import { Button, Fieldset, HStack, Input, Stack } from "@chakra-ui/react";
 import { Field } from "../../components/ui/field";
 import * as Yup from "yup";
-import { Checkbox } from "../../components/ui/checkbox";
 
-const TeacherForm = ({ teacher = null }) => {
-    const isUpdateMode = !!teacher; // Determine if it's update mode
-
+const StudentForm = ({ student }) => {
     const formik = useFormik({
         initialValues: {
-            firstName: teacher?.firstName || "",
-            lastName: teacher?.lastName || "",
-            middleName: teacher?.middleName || "",
-            email: teacher?.email || "",
-            role: teacher?.role || "teacher",
-            isController: teacher?.isController || false,
-            subjects: teacher?.subjects?.map((sub) => sub.name) || [],
+            firstName: student?.firstName || "",
+            lastName: student?.lastName || "",
+            middleName: student?.middleName || "",
+            email: student?.email || "",
+            role: student?.role || "student",
+            rollNumber: student?.rollNumber || "",
         },
 
         validationSchema: Yup.object({
@@ -31,52 +19,32 @@ const TeacherForm = ({ teacher = null }) => {
             lastName: Yup.string().required("Last name is required"),
             middleName: Yup.string(),
             email: Yup.string()
-                .email("Invalid email address")
-                .required("Email is required"),
-            role: Yup.string().required("Role is required"),
-            isController: Yup.boolean().required(),
-            subjects: Yup.array().required("At least one subject is required"),
+                // .email("Invalid email address")
+                .required("Email is required")
+                .matches(
+                    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                    "Invalid email address"
+                ),
+            role: Yup.string().required("Role is required").default("student"),
+            rollNumber: Yup.string().required("Roll number is required"),
         }),
-
         onSubmit: (values) => {
-            if (isUpdateMode) {
-                handleUpdate(values);
-            } else {
-                handleAdd(values);
-            }
+            handleSubmit(values);
         },
     });
 
-    const handleAdd = (values) => {
-        console.log("Add Teacher:", values);
-        // Call add teacher API or handle state update here
+    const handleSubmit = (values) => {
+        console.log("Form Submitted:", values);
     };
-
-    const handleUpdate = (values) => {
-        console.log("Update Teacher:", values);
-        // Call update teacher API or handle state update here
-    };
-
-    const subjects = [
-        { id: 1, label: "Mathematics", name: "mathematics" },
-        { id: 2, label: "English", name: "english" },
-        { id: 3, label: "Physics", name: "physics" },
-        { id: 4, label: "Chemistry", name: "chemistry" },
-        { id: 5, label: "Biology", name: "biology" },
-    ];
 
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <Fieldset.Root size="lg" spaceY="6">
                     <Stack>
-                        <Fieldset.Legend>
-                            {isUpdateMode ? "Update Teacher" : "Add Teacher"}
-                        </Fieldset.Legend>
+                        <Fieldset.Legend>Student Details</Fieldset.Legend>
                         <Fieldset.HelperText>
-                            {isUpdateMode
-                                ? "Update the teacher details below."
-                                : "Provide the teacher details below."}
+                            Please provide the student details below.
                         </Fieldset.HelperText>
                     </Stack>
 
@@ -105,7 +73,11 @@ const TeacherForm = ({ teacher = null }) => {
                         </Fieldset.Content>
                         <Field
                             label="Middle Name"
-                            error={
+                            errorText={
+                                formik.touched.middleName &&
+                                formik.errors.middleName
+                            }
+                            invalid={
                                 formik.touched.middleName &&
                                 formik.errors.middleName
                             }
@@ -120,7 +92,11 @@ const TeacherForm = ({ teacher = null }) => {
                         </Field>
                         <Field
                             label="Last Name"
-                            error={
+                            errorText={
+                                formik.touched.lastName &&
+                                formik.errors.lastName
+                            }
+                            invalid={
                                 formik.touched.lastName &&
                                 formik.errors.lastName
                             }
@@ -138,7 +114,10 @@ const TeacherForm = ({ teacher = null }) => {
                         <Fieldset.Content>
                             <Field
                                 label="Email"
-                                error={
+                                errorText={
+                                    formik.touched.email && formik.errors.email
+                                }
+                                invalid={
                                     formik.touched.email && formik.errors.email
                                 }
                             >
@@ -150,47 +129,36 @@ const TeacherForm = ({ teacher = null }) => {
                                     onBlur={formik.handleBlur}
                                 />
                             </Field>
-                            <Field label="Role">
-                                <NativeSelectRoot>
-                                    <NativeSelectField
-                                        name="role"
-                                        px={4}
-                                        value={formik.values.role}
-                                        onChange={formik.handleChange}
-                                    >
-                                        <option value="teacher">Teacher</option>
-                                        <option value="controller">
-                                            Controller
-                                        </option>
-                                    </NativeSelectField>
-                                </NativeSelectRoot>
-                            </Field>
                         </Fieldset.Content>
                     </HStack>
                     <HStack>
-                        {subjects.map((subject) => (
-                            <Checkbox
-                                key={subject.id}
-                                name="subjects"
-                                value={subject.name}
-                                checked={formik.values.subjects.includes(
-                                    subject.name
-                                )}
+                        <Field
+                            label="Roll Number"
+                            invalid={
+                                formik.touched.rollNumber &&
+                                formik.errors.rollNumber
+                            }
+                            errorText={
+                                formik.touched.rollNumber &&
+                                formik.errors.rollNumber
+                            }
+                        >
+                            <Input
+                                name="rollNumber"
+                                type="text"
+                                px={2}
+                                value={formik.values.rollNumber}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                            >
-                                {subject.label}
-                            </Checkbox>
-                        ))}
+                            />
+                        </Field>
                     </HStack>
 
-                    <Button type="submit">
-                        {isUpdateMode ? "Update" : "Add"}
-                    </Button>
+                    <Button type="submit">Submit</Button>
                 </Fieldset.Root>
             </form>
         </div>
     );
 };
 
-export default TeacherForm;
+export default StudentForm;

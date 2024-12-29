@@ -1,4 +1,4 @@
-import { Fieldset, Input, VStack } from "@chakra-ui/react";
+import { Button, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Field } from "../ui/field";
@@ -21,22 +21,24 @@ const SubjectForm = () => {
 
     const handleSubmit = (values) => {
         console.log(values);
+        // clear the form
+        formik.resetForm();
     };
 
     return (
-        <VStack w={"full"} spacing={4}>
+        <div>
             <form onSubmit={formik.handleSubmit}>
-                <Fieldset.Root id="fieldset" w={"full"} size="lg" spaceY="6">
-                    <VStack>
+                <Fieldset.Root w={"full"} size="lg" spaceY="6">
+                    <Stack>
                         <Fieldset.Legend>Subject</Fieldset.Legend>
                         <Fieldset.HelperText>
                             Please provide your subject details below.
                         </Fieldset.HelperText>
-                    </VStack>
+                    </Stack>
+                    {/* <HStack></HStack> */}
                     <Fieldset.Content>
                         <Field
                             label="Name"
-                            id="name"
                             invalid={formik.errors.name && formik.touched.name}
                             errorText={
                                 formik.errors.name && formik.touched.name
@@ -75,9 +77,10 @@ const SubjectForm = () => {
                             />
                         </Field>
                     </Fieldset.Content>
+                    <Button type="submit">Submit</Button>
                 </Fieldset.Root>
             </form>
-        </VStack>
+        </div>
     );
 };
 export default SubjectForm;
