@@ -5,7 +5,7 @@ import MainLayout from "./layout/MainLayout";
 import SubjectForm from "./components/forms/SubjectForm";
 import TeacherForm from "./components/forms/TeacherForm";
 import StudentForm from "./components/forms/StudentForm";
-import MultiPageExamForm from "./components/forms/ExamForm";
+import ExamForm from "./components/forms/ExamForm";
 function App() {
     return (
         <Box background="bg.muted">
@@ -14,7 +14,7 @@ function App() {
                 {/* <SubjectForm /> */}
                 {/* <TeacherForm teacher={sampleTeacher} /> */}
                 {/* <StudentForm /> */}
-                <MultiPageExamForm />
+                <ExamForm />
             </MainLayout>
         </Box>
     );

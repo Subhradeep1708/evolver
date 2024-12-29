@@ -9,7 +9,7 @@ const MainLayout = ({ children }) => {
             <Box w={"20%"} h={"100%"}>
                 <Sidebar />
             </Box>
-            <VStack background={"bg"} gap={0} flexGrow={1} h={"100%"}>
+            <VStack background={"bg.muted"} gap={0} flexGrow={1} h={"100%"}>
                 <Navbar />
                 <Box
                     background={""}

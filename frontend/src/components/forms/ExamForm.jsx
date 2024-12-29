@@ -9,16 +9,23 @@ import {
     Fieldset,
     HStack,
     Text,
-    Select,
-    NumberInput,
     Box,
-    Flex,
+    Grid,
+    FileUploadRoot,
+    FileUploadTrigger,
+    // NumberInputRoot,
 } from "@chakra-ui/react";
 import { Field } from "../ui/field";
+import { HiUpload } from "react-icons/hi";
+import { NumberInputRoot, NumberInputField } from "../ui/number-input";
 
-const MultiPageExamForm = () => {
+// import { Card } from "../ui/card";
+
+const ExamForm = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [mcqs, setMcqs] = useState([]);
+    const [mcqs, setMcqs] = useState([
+        { question: "", options: ["", "", "", ""], point: 1 },
+    ]);
     const [csvFile, setCsvFile] = useState(null);
 
     // Page 1 Formik setup
@@ -26,9 +33,13 @@ const MultiPageExamForm = () => {
         initialValues: {
             subject: "",
             examName: "",
-            mcqs: [],
-            // csvFile: null,
-
+            mcqs: [
+                {
+                    question: "asdasd",
+                    options: ["asdad", "asdasd", "asdas", "sadasd"],
+                    point: 0,
+                },
+            ],
         },
         validationSchema: Yup.object({
             subject: Yup.string().required("Subject is required"),
@@ -41,27 +52,36 @@ const MultiPageExamForm = () => {
         },
     });
 
-    // Add a new MCQ
-    const addMcq = () => {
-        setMcqs([...mcqs, { question: "", options: ["", "", "", ""], correctAnswer: 0, score: 1 }]);
+    // Page 2
+    const addBlankQuestion = () => {
+        setMcqs([
+            ...mcqs,
+            { question: "", options: ["", "", "", ""], point: 1 },
+        ]);
     };
 
-    // Update an MCQ
-    const updateMcq = (index, field, value) => {
+    const handleQuestionChange = (index, field, value) => {
         const updatedMcqs = [...mcqs];
-        if (field === "question") updatedMcqs[index].question = value;
+
+        if (field === "question") {
+            updatedMcqs[index].question = value;
+
+            // Automatically add a new question if typing in the last field
+            if (index === mcqs.length - 1 && value.trim() !== "") {
+                addBlankQuestion();
+            }
+        }
+
         if (field.startsWith("option")) {
-            const optionIndex = parseInt(field.split("option")[1]);
+            const optionIndex = parseInt(field.split("option")[1], 10);
             updatedMcqs[index].options[optionIndex] = value;
         }
-        if (field === "correctAnswer") updatedMcqs[index].correctAnswer = value;
-        if (field === "score") updatedMcqs[index].score = value;
-        setMcqs(updatedMcqs);
-    };
 
-    // Submit final MCQs
-    const submitExam = () => {
-        console.log("Exam Data:", mcqs);
+        if (field === "point") {
+            updatedMcqs[index].point = Number(value) || 1; // Default to 1 point if empty
+        }
+
+        setMcqs(updatedMcqs);
     };
 
     const firstPageSubmit = () => {
@@ -70,9 +90,35 @@ const MultiPageExamForm = () => {
         } else {
             // convert csv to mcqs
             // setMcqs()
-            // setCurrentPage(3);{Success page}
+            // setCurrentPage(3);// Success page
         }
-    }
+    };
+
+    const handleSubmit = () => {
+        // console.log(
+        //     "Submitted MCQs:",
+        //     mcqs.filter((q) => q.question.trim() !== "")
+        // );
+
+        setMcqs(
+            mcqs
+                .filter((q) => q.question.trim() !== "")
+                .map((q) => {
+                    return {
+                        question: q.question,
+                        optionA: q.options[0],
+                        optionB: q.options[1],
+                        optionC: q.options[2],
+                        optionD: q.options[3],
+                        point: q.point,
+                    };
+                })
+        );
+        console.log("Submitted MCQs:", mcqs);
+
+        // submit the mcqs
+        setCurrentPage(3);
+    };
 
     return (
         <Box p={8}>
@@ -80,43 +126,56 @@ const MultiPageExamForm = () => {
                 <form onSubmit={formikPage1.handleSubmit}>
                     <Fieldset.Root>
                         <Stack spacing={4}>
-                            <Field label="Subject">
+                            <Field
+                                label="Subject"
+                                invalid={
+                                    formikPage1.touched.subject &&
+                                    formikPage1.errors.subject
+                                }
+                                errorText={formikPage1.errors.subject}
+                                h={24}
+                            >
                                 <Input
                                     name="subject"
                                     value={formikPage1.values.subject}
                                     onChange={formikPage1.handleChange}
                                     onBlur={formikPage1.handleBlur}
                                     placeholder="Enter subject"
+                                    px={2}
                                 />
-                                {formikPage1.touched.subject && formikPage1.errors.subject && (
-                                    <Text color="red.500">{formikPage1.errors.subject}</Text>
-                                )}
                             </Field>
-                            <Field label="Exam Name">
+                            <Field label="Exam Name" h={24}>
                                 <Input
                                     name="examName"
                                     value={formikPage1.values.examName}
                                     onChange={formikPage1.handleChange}
                                     onBlur={formikPage1.handleBlur}
                                     placeholder="Enter exam name"
+                                    px={2}
                                 />
-                                {formikPage1.touched.examName && formikPage1.errors.examName && (
-                                    <Text color="red.500">{formikPage1.errors.examName}</Text>
-                                )}
+                                {formikPage1.touched.examName &&
+                                    formikPage1.errors.examName && (
+                                        <Text color="red.500">
+                                            {formikPage1.errors.examName}
+                                        </Text>
+                                    )}
                             </Field>
-                            <Field label="Upload CSV">
-                                <Input
-                                    type="file"
-                                    name="csvFile"
-                                    onChange={(event) => {
-                                        formikPage1.setFieldValue(
-                                            "csvFile",
-                                            event.target.files[0]
-                                        );
-                                    }}
-                                />
+                            <Field label="Upload CSV File">
+                                <FileUploadRoot maxFiles={5}>
+                                    <FileUploadTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            p={2}
+                                        >
+                                            <HiUpload /> Upload file
+                                        </Button>
+                                    </FileUploadTrigger>
+                                </FileUploadRoot>
                             </Field>
-                            <Button type={"button"} onClick={firstPageSubmit}>{csvFile ? "Submit" : "Next"}</Button>
+                            <Button type={"button"} onClick={firstPageSubmit}>
+                                {csvFile ? "Submit" : "Next"}
+                            </Button>
                         </Stack>
                     </Fieldset.Root>
                 </form>
@@ -124,14 +183,107 @@ const MultiPageExamForm = () => {
 
             {currentPage === 2 && (
                 <Box>
-                    page 2
+                    <Stack spacing={6}>
+                        <Text fontSize="lg" fontWeight="bold">
+                            Add Questions
+                        </Text>
+
+                        {/* Map over the MCQs to render each question */}
+                        {/* <Card> */}
+                        {mcqs.map((mcq, index) => (
+                            <Box
+                                key={index}
+                                p={4}
+                                borderRadius="md"
+                                spaceY={4}
+                                mb={4}
+                                bg={"bg"}
+                                shadow={"sm"}
+                            >
+                                {/* <Stack spacing={4}> */}
+                                <HStack>
+                                    <Input
+                                        value={index + 1 + "."}
+                                        disabled={true}
+                                        px={2}
+                                        maxW={10}
+                                        color={"fg"}
+                                        fontWeight={"bold"}
+                                        borderWidth={0}
+                                    />
+                                    {/* Question Input */}
+                                    <Input
+                                        placeholder="Enter question"
+                                        value={mcq.question}
+                                        px={2}
+                                        onChange={(e) => {
+                                            handleQuestionChange(
+                                                index,
+                                                "question",
+                                                e.target.value
+                                            );
+                                        }}
+                                        onFocus={() => {
+                                            if (index === mcqs.length - 1) {
+                                                addBlankQuestion();
+                                            }
+                                        }}
+                                    />
+                                    {/* Points Input */}
+
+                                    <NumberInputRoot
+                                        defaultValue="1"
+                                        maxW={20}
+                                        // px={2}
+                                    >
+                                        <NumberInputField />
+                                    </NumberInputRoot>
+                                </HStack>
+
+                                {/* Options Inputs */}
+                                <Grid
+                                    templateColumns={"repeat(2, 1fr)"}
+                                    templateRows={"repeat(2, 1fr)"}
+                                    gap={4}
+                                    w={"100%"}
+                                >
+                                    {mcq.options.map((option, optionIndex) => (
+                                        <Input
+                                            key={optionIndex}
+                                            placeholder={`Option ${String.fromCharCode(
+                                                65 + optionIndex
+                                            )}`}
+                                            px={2}
+                                            w={"100%"}
+                                            value={option}
+                                            onChange={(e) =>
+                                                handleQuestionChange(
+                                                    index,
+                                                    `option${optionIndex}`,
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    ))}
+                                </Grid>
+                                {/* </Stack> */}
+                            </Box>
+                        ))}
+                        {/* </Card> */}
+
+                        {/* Submit Button */}
+                        <Button onClick={handleSubmit}>Submit Exam</Button>
+                    </Stack>
+                </Box>
+            )}
+
+            {currentPage === 3 && (
+                <Box>
+                    <Text>Exam Submitted Successfully!</Text>
                 </Box>
             )}
         </Box>
     );
 };
 
-export default MultiPageExamForm;
-
-
-// remove csv from formik add mcqs array instead
+export default ExamForm;

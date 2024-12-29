@@ -1,24 +1,19 @@
 import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
-import {
-    MenuContent,
-    MenuItem,
-    MenuRoot,
-    MenuTrigger,
-} from "./ui/menu"
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./ui/menu";
 import { RxAvatar } from "react-icons/rx";
 
 function Navbar() {
     return (
         <HStack
             w={"full"}
-            background={"gray.100"}
+            background={"bg"}
             h={"8vh"}
             justifyContent={"space-between"}
             p={3}
         >
             <Box>
                 <Text>Raktim is on fire </Text>
-                <Text fontSize={'xs'}>Roll:1234</Text>
+                <Text fontSize={"xs"}>Roll:1234</Text>
             </Box>
             <Box>
                 <Text>Exam Dashboard</Text>
@@ -29,13 +24,11 @@ function Navbar() {
                         {/* <Button variant="outline" size="sm" p={0}>
                             <RxAvatar />
                         </Button> */}
-                        <RxAvatar size={'36'} />
+                        <RxAvatar size={"36"} />
                     </MenuTrigger>
                     <MenuContent p={3}>
-
                         <MenuItem value="logout">Log Out</MenuItem>
                         <MenuItem value="login">Log In</MenuItem>
-
                     </MenuContent>
                 </MenuRoot>
             </Box>
