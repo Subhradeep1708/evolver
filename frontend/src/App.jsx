@@ -2,6 +2,7 @@
 import "./app.css";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import MainLayout from "./layout/MainLayout";
+import ExamLayout from "./layout/ExamLayout";
 import SubjectForm from "./components/forms/SubjectForm";
 import TeacherForm from "./components/forms/TeacherForm";
 import StudentForm from "./components/forms/StudentForm";
@@ -11,9 +12,6 @@ function App() {
         <Box background="bg.muted">
             {/* <ExamLayout /> */}
             <MainLayout>
-                {/* <SubjectForm /> */}
-                {/* <TeacherForm teacher={sampleTeacher} /> */}
-                {/* <StudentForm /> */}
                 <ExamForm />
             </MainLayout>
         </Box>

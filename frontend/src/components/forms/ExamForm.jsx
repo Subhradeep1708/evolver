@@ -13,11 +13,14 @@ import {
     Grid,
     FileUploadRoot,
     FileUploadTrigger,
-    // NumberInputRoot,
+    NativeSelectField,
+    NativeSelectRoot,
 } from "@chakra-ui/react";
 import { Field } from "../ui/field";
 import { HiUpload } from "react-icons/hi";
 import { NumberInputRoot, NumberInputField } from "../ui/number-input";
+import { AiOutlineDelete } from "react-icons/ai";
+import { FaRegImage } from "react-icons/fa";
 
 // import { Card } from "../ui/card";
 
@@ -199,6 +202,7 @@ const ExamForm = () => {
                                 mb={4}
                                 bg={"bg"}
                                 shadow={"sm"}
+                                maxW={""}
                             >
                                 {/* <Stack spacing={4}> */}
                                 <HStack>
@@ -266,6 +270,58 @@ const ExamForm = () => {
                                         />
                                     ))}
                                 </Grid>
+
+                                <HStack justify={"space-between"}>
+                                    <HStack>
+                                        <Field>
+                                            <NativeSelectRoot>
+                                                <NativeSelectField
+                                                    name="role"
+                                                    px={4}
+                                                    maxW={96}
+                                                    background={"bg"}
+                                                    font={"fg"}
+                                                >
+                                                    <option value="">
+                                                        Select correct answer
+                                                    </option>
+                                                    <option value="teacher">
+                                                        A. {mcq.options[0]}
+                                                    </option>
+                                                    <option value="controller">
+                                                        B. {mcq.options[1]}
+                                                    </option>
+                                                    <option value="controller">
+                                                        C. {mcq.options[2]}
+                                                    </option>
+                                                    <option value="controller">
+                                                        D. {mcq.options[3]}
+                                                    </option>
+                                                </NativeSelectField>
+                                            </NativeSelectRoot>
+                                        </Field>
+                                        <Button
+                                            background={"bg.muted"}
+                                            color={"fg"}
+                                        >
+                                            <FaRegImage />
+                                        </Button>
+                                    </HStack>
+                                    <Box>
+                                        <Button
+                                            background={"bg.muted"}
+                                            onClick={() => {
+                                                setMcqs(
+                                                    mcqs.filter(
+                                                        (mcq, i) => i !== index
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            <AiOutlineDelete color="red" />
+                                        </Button>
+                                    </Box>
+                                </HStack>
                                 {/* </Stack> */}
                             </Box>
                         ))}
