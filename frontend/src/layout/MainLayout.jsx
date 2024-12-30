@@ -2,6 +2,7 @@ import { HStack, Box, VStack } from "@chakra-ui/react";
 import Sidebar from "../components/common/sidebar/Sidebar";
 import PropTypes from "prop-types";
 import Navbar from "../components/Navbar";
+import { Outlet } from "react-router";
 
 const MainLayout = ({ children }) => {
     return (
@@ -19,7 +20,7 @@ const MainLayout = ({ children }) => {
                     overflow={"auto"}
                 >
                     {/* pages will come here */}
-                    {children}
+                    <Outlet />
                 </Box>
             </VStack>
         </HStack>
