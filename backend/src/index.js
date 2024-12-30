@@ -6,6 +6,8 @@ import userRouter from "./routes/user.route.js";
 import cookieParser from "cookie-parser";
 import subjectRouter from "./routes/subject.route.js";
 import examRouter from "./routes/exam.route.js";
+import answerRouter from "./routes/answer.route.js";
+import resultRouter from "./routes/result.route.js";
 
 dotenv.config();
 
@@ -22,6 +24,10 @@ app.use("/api/user", userRouter);
 
 app.use("/api/subject", subjectRouter);
 app.use("/api/exam", examRouter);
+
+app.use("/api/answer", answerRouter);
+
+app.use("/api/result", resultRouter);
 
 app.listen(5000, () => {
     console.log("app is listening");
