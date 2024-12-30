@@ -151,9 +151,9 @@ const ExamForm = () => {
     };
 
     return (
-        <Box p={8}>
-            {currentPage === 1 && (
-                <form>
+        <form onSubmit={formikPage1.handleSubmit}>
+            <Box p={8}>
+                {currentPage === 1 && (
                     <Fieldset.Root>
                         <Stack spacing={4}>
                             <Field label="Subject">
@@ -213,12 +213,10 @@ const ExamForm = () => {
                             </Button>
                         </Stack>
                     </Fieldset.Root>
-                </form>
-            )}
+                )}
 
-            {currentPage === 2 && (
-                <Box>
-                    <form onSubmit={formikPage1.handleSubmit}>
+                {currentPage === 2 && (
+                    <Box>
                         <Stack spacing={6}>
                             <Text fontSize="lg" fontWeight="bold">
                                 Add Questions
@@ -383,17 +381,17 @@ const ExamForm = () => {
                             {/* <Button onClick={handleSubmit}>Submit Exam</Button> */}
                             <Button type="submit">Submit Exam</Button>
                         </Stack>
-                    </form>
-                </Box>
-            )}
+                    </Box>
+                )}
 
-            {currentPage === 3 && (
-                <Box>
-                    <Text>Exam Submitted Successfully!</Text>
-                    {/* <Button type="submit">Test Submit</Button> */}
-                </Box>
-            )}
-        </Box>
+                {currentPage === 3 && (
+                    <Box>
+                        <Text>Exam Submitted Successfully!</Text>
+                        {/* <Button type="submit">Test Submit</Button> */}
+                    </Box>
+                )}
+            </Box>
+        </form>
     );
 };
 
