@@ -29,7 +29,7 @@ import axios from "axios";
 const ExamForm = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [mcqs, setMcqs] = useState([
-        { question: "", options: ["", "", "", ""], point: 1 },
+        { question: "", options: ["", "", "", ""], point: 1, answer: "" },
     ]);
 
     const [subjects, setSubjects] = useState([]);
@@ -53,13 +53,7 @@ const ExamForm = () => {
         initialValues: {
             subjectId: "",
             examName: "",
-            mcqs: [
-                {
-                    question: "asdasd",
-                    options: ["asdad", "asdasd", "asdas", "sadasd"],
-                    point: 0,
-                },
-            ],
+            mcqs: [],
         },
         validationSchema: Yup.object({
             subject: Yup.string().required("Subject is required"),
@@ -69,6 +63,10 @@ const ExamForm = () => {
         }),
         onSubmit: (values) => {
             console.log("Page 1 Data:", values);
+            const { subjectId, examName, mcqs } = values;
+            console.log("Subject ID:", subjectId);
+            console.log("Exam Name:", examName);
+            console.log("MCQs:", mcqs);
         },
     });
 
@@ -140,8 +138,14 @@ const ExamForm = () => {
         // }
 
         // );
-
-        setMcqs(mcqs.filter((q) => q.question.trim() !== ""));
+        // change "question" to "questionBody"
+        setMcqs(() => {
+            const updatedMcqs = mcqs.filter((q) => q.question.trim() !== "");
+            updatedMcqs.forEach((q) => {
+                q.questionBody = q.question;
+            });
+            return updatedMcqs;
+        });
 
         const formData = {
             examName: formikPage1.values.examName,
@@ -164,7 +168,11 @@ const ExamForm = () => {
                     <Fieldset.Root>
                         <Stack spacing={4}>
                             <Field label="Subject">
-                                <NativeSelectRoot>
+                                <NativeSelectRoot
+                                    value={formikPage1.values.subjectId}
+                                    onChange={formikPage1.handleChange}
+                                    onBlur={formikPage1.handleBlur}
+                                >
                                     <NativeSelectField
                                         name="subjectId"
                                         px={4}
@@ -375,6 +383,7 @@ const ExamForm = () => {
             {currentPage === 3 && (
                 <Box>
                     <Text>Exam Submitted Successfully!</Text>
+                    <Button type="submit">Test Submit</Button>
                 </Box>
             )}
         </Box>
