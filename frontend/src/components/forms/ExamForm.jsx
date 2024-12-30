@@ -57,22 +57,24 @@ const ExamForm = () => {
     // Page 1 Formik setup
     const formikPage1 = useFormik({
         initialValues: {
-            subjectId: "",
+            subjectId: 0,
             examName: "",
-            mcqs: [],
+            mcqs: [
+                {
+                    questionBody: "",
+                    options: ["", "", "", ""],
+                    answer: "",
+                    point: 0,
+                },
+            ],
         },
         validationSchema: Yup.object({
-            subject: Yup.string().required("Subject is required"),
+            subjectId: Yup.number().required("Subject is required"),
             examName: Yup.string().required("Exam name is required"),
-            // csvFile: Yup.mixed(),
-            mcqs: Yup.array().min(5, "At least 5 MCQ is required"),
+            mcqs: Yup.array().min(1, "At least 1 MCQ is required"),
         }),
         onSubmit: (values) => {
-            console.log("Page 1 Data:", values);
-            const { subjectId, examName, mcqs } = values;
-            console.log("Subject ID:", subjectId);
-            console.log("Exam Name:", examName);
-            console.log("MCQs:", mcqs);
+            console.log("Form values:", values);
             handleSubmit(values);
         },
     });
@@ -122,37 +124,17 @@ const ExamForm = () => {
     const handleSubmit = async (values) => {
         // sample request body
 
-        // console.log(
-        //     "Submitted MCQs:",
-        //     mcqs.filter((q) => q.question.trim() !== "")
-        // {
-        //     "examName": "General Knowledge Test",
-        //     "subjectId": 2,
-        //     "mcqs": [
-        //         {
-        //             "questionBody": "What is the capital of France?",
-        //             "options": ["Berlin", "Madrid", "Paris", "Rome"],
-        //             "answer": "C",
-        //             "point": 5
-        //         },
-        //         {
-        //             "questionBody": "Which is the largest planet in our solar system?",
-        //             "options": ["Earth", "Jupiter", "Mars", "Venus"],
-        //             "answer": "B",
-        //             "point": 10
-        //         }
-        //     ]
-        // }
+        console.log(
+            "Submitted MCQs:",
+            mcqs.filter((q) => q.question.trim() !== "")
+        );
 
-        // );
         // change "question" to "questionBody"
-        setMcqs(() => {
-            const updatedMcqs = mcqs.filter((q) => q.question.trim() !== "");
-            updatedMcqs.forEach((q) => {
-                q.questionBody = q.question;
-            });
-            return updatedMcqs;
+        const updatedMcqs = mcqs.filter((q) => q.question.trim() !== "");
+        updatedMcqs.forEach((q) => {
+            q.questionBody = q.question;
         });
+        setMcqs(updatedMcqs);
 
         const formData = {
             examName: formikPage1.values.examName,
@@ -182,21 +164,18 @@ const ExamForm = () => {
                                 >
                                     <NativeSelectField
                                         name="subjectId"
-                                        px={4}
                                         value={formikPage1.values.subjectId}
-                                        onChange={formikPage1.handleChange}
-                                        // onBlur={formikPage1.handleBlur}
+                                        onChange={formikPage1.handleChange} // This should be enough to update Formik
+                                        onBlur={formikPage1.handleBlur}
                                     >
-                                        {subjects?.map((sub) => {
-                                            return (
-                                                <option
-                                                    key={sub.id}
-                                                    value={sub.id}
-                                                >
-                                                    {sub.name}
-                                                </option>
-                                            );
-                                        })}
+                                        <option value="" disabled>
+                                            Select Subject
+                                        </option>
+                                        {subjects?.map((sub) => (
+                                            <option key={sub.id} value={sub.id}>
+                                                {sub.name}
+                                            </option>
+                                        ))}
                                     </NativeSelectField>
                                 </NativeSelectRoot>
                             </Field>
@@ -292,6 +271,13 @@ const ExamForm = () => {
                                         defaultValue="1"
                                         maxW={20}
                                         // px={2}
+                                        onChange={(value) => {
+                                            handleQuestionChange(
+                                                index,
+                                                "point",
+                                                value
+                                            );
+                                        }}
                                     >
                                         <NumberInputField />
                                     </NumberInputRoot>
@@ -334,6 +320,13 @@ const ExamForm = () => {
                                                     maxW={96}
                                                     background={"bg"}
                                                     font={"fg"}
+                                                    onChange={(e) =>
+                                                        handleQuestionChange(
+                                                            index,
+                                                            "answer",
+                                                            e.target.value
+                                                        )
+                                                    }
                                                 >
                                                     <option value="">
                                                         Select correct answer
