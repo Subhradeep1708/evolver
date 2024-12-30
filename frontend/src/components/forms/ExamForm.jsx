@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -21,6 +21,8 @@ import { HiUpload } from "react-icons/hi";
 import { NumberInputRoot, NumberInputField } from "../ui/number-input";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegImage } from "react-icons/fa";
+import { routes } from "../../utils/constants";
+import axios from "axios"
 
 // import { Card } from "../ui/card";
 
@@ -29,12 +31,29 @@ const ExamForm = () => {
     const [mcqs, setMcqs] = useState([
         { question: "", options: ["", "", "", ""], point: 1 },
     ]);
+
+    const [subjects, setSubjects] = useState([]);
     const [csvFile, setCsvFile] = useState(null);
+
+    useEffect(()=>{
+        const getAllSubjects = async () => {
+            //! Raktim HELPPPPPPPPPPPPPPPPPPP yeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhh
+            const res = await axios.get(routes.getAllSubject); // Add the api endpoint here
+            if(res.status === 200){
+                const data = res.data.data
+                setSubjects(data)
+            }
+        }
+
+        getAllSubjects();
+    }, [])
+
+
 
     // Page 1 Formik setup
     const formikPage1 = useFormik({
         initialValues: {
-            subject: "",
+            subjectId: "",
             examName: "",
             mcqs: [
                 {
@@ -101,6 +120,48 @@ const ExamForm = () => {
         // console.log(
         //     "Submitted MCQs:",
         //     mcqs.filter((q) => q.question.trim() !== "")
+        // {
+        //     "examName": "General Knowledge Test",
+        //     "subjectId": 2,
+        //     "mcqs": [
+        //         {
+        //             "questionBody": "What is the capital of France?",
+        //             "options": ["Berlin", "Madrid", "Paris", "Rome"],
+        //             "answer": "C",
+        //             "point": 5
+        //         },
+        //         {
+        //             "questionBody": "Which is the largest planet in our solar system?",
+        //             "options": ["Earth", "Jupiter", "Mars", "Venus"],
+        //             "answer": "B",
+        //             "point": 10
+        //         }
+        //     ]
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // );
 
         setMcqs(
@@ -129,7 +190,7 @@ const ExamForm = () => {
                 <form onSubmit={formikPage1.handleSubmit}>
                     <Fieldset.Root>
                         <Stack spacing={4}>
-                            <Field
+                            {/* <Field
                                 label="Subject"
                                 invalid={
                                     formikPage1.touched.subject &&
@@ -146,6 +207,24 @@ const ExamForm = () => {
                                     placeholder="Enter subject"
                                     px={2}
                                 />
+                            </Field> */}
+                              <Field label="Subject" >
+                                <NativeSelectRoot>
+                                    <NativeSelectField
+                                        name="subjectId"
+                                        px={4}
+                                        value={formikPage1.values.subjectId}
+                                        onChange={formikPage1.handleChange}
+                                        onBlur={formikPage1.handleBlur}
+                                    >
+                                        {
+                                            subjects?.map((sub)=>{
+                                                return <option key={sub.id} value={sub.id}>{sub.name}</option>
+                                            })
+                                        }
+                                       
+                                    </NativeSelectField>
+                                </NativeSelectRoot>
                             </Field>
                             <Field label="Exam Name" h={24}>
                                 <Input

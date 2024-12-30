@@ -6,4 +6,5 @@ export const routes={
     teacherLogin:`${origin}/${auth_routes}/teacher/login`,
     studentRegister:`${origin}/${auth_routes}/student/register`,
     teacherRegister:`${origin}/${auth_routes}/teacher/register`,
+    getAllSubject:`${origin}/api/subject`,
 };

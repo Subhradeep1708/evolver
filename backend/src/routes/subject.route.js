@@ -11,7 +11,7 @@ const subjectRouter = Router();
 
 subjectRouter.post("/", isAuthenticated, checkControllerPermission, addSubject);
 
-subjectRouter.get("/", isAuthenticated, getAllSubjects);
+subjectRouter.get("/",  getAllSubjects);
 
 subjectRouter.get("/:subjectId", isAuthenticated, getSubjectById);
 

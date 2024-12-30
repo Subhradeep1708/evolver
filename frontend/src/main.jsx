@@ -8,6 +8,11 @@ import StudentLogin from "./pages/auth/StudentLogin.jsx";
 import TeacherLogin from "./pages/auth/TeacherLogin.jsx";
 import AuthLayout from "./layout/AuthLayout.jsx";
 import MainLayout from "./layout/MainLayout.jsx";
+import StudentForm from "./components/forms/StudentForm.jsx";
+import TeacherForm from "./components/forms/TeacherForm.jsx";
+import SubjectForm from "./components/forms/SubjectForm.jsx";
+import ExamForm from "./components/forms/ExamForm.jsx";
+
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <BrowserRouter>
@@ -21,19 +26,22 @@ createRoot(document.getElementById("root")).render(
                     <Route path="/" element={<MainLayout />}>
                         {/* exams */}
                         <Route path="dashboard" element={<p>Hi</p>} />
+                        {/* Add Student */}
+                        <Route path="student/add" element={<StudentForm />} />
+                        <Route
+                            path="teacher/add"
+                            element={<TeacherForm />}
+                        ></Route>
+                        <Route
+                            path="subject/add"
+                            element={<SubjectForm />}
+                        ></Route>
                         {/*  */}
+                        <Route path="exam/add" element={<ExamForm />}></Route>
                     </Route>
                 </Routes>
-            </Provider>
+             </Provider>
         </BrowserRouter>
     </StrictMode>
+    
 );
-
-// createRoot(root).render(
-//     <BrowserRouter>
-//         <Routes>
-//             <Route path="/" element={<ExamPanel />} />
-//             <Route path="/dashboard" element={<TeacherLogin />} />
-//         </Routes>
-//     </BrowserRouter>
-// );
