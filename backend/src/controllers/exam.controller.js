@@ -29,6 +29,7 @@ export const createExam = async (req, res) => {
                         id: subjectId,
                     },
                 },
+                totalMarks: mcqs.reduce((acc, mcq) => acc + mcq.point, 0),
             },
         });
 
@@ -42,6 +43,7 @@ export const createExam = async (req, res) => {
             optionC: mcq.options[2],
             optionD: mcq.options[3],
             answer: mcq.answer,
+            point: mcq.point,
             examId: examId,
         }));
 

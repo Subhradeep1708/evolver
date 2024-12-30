@@ -14,9 +14,7 @@ const userRouter = Router();
 userRouter.get(
     "/student/:studentId",
     isAuthenticated,
-    // checkStudentPermission,
     checkTeacherPermission,
-    // getExamByStudentId
     (req, res) => {
         res.send("Hello, world!");
     }

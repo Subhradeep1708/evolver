@@ -70,15 +70,17 @@ model Student {
 }
 
 model Exam {
-  id        Int      @id @default(autoincrement())
-  subjectId Int?
-  addedBy   Int
-  subject   Subject? @relation(fields: [subjectId], references: [id], onDelete: SetNull)
-  teacher   Teacher  @relation(fields: [addedBy], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  mcqs      MCQ[]
-  results   Result[]
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(50)
+  totalMarks Int      @db.Integer
+  subjectId  Int?
+  addedBy    Int
+  subject    Subject? @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  teacher    Teacher  @relation(fields: [addedBy], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  mcqs       MCQ[]
+  results    Result[]
 
   @@map("exam")
 }
@@ -92,6 +94,7 @@ model MCQ {
   optionB           String   @db.Text
   optionC           String   @db.Text
   optionD           String   @db.Text
+  point             Int      @db.Integer
   answer            String   @db.Char(1)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
