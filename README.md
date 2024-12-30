@@ -43,3 +43,9 @@ Exam -> Result
 Add Exam
 
 Edit Profile
+
+```
+TODO:
+
+- Rectify Login Signup
+```

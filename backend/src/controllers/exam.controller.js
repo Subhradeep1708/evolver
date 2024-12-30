@@ -59,7 +59,19 @@ export const createExam = async (req, res) => {
 
 const getLeaderboard = async (req, res) => {};
 
-const getExamByStudentId = async (req, res) => {};
+const getExamByStudentId = async (req, res) => {
+    const { studentId } = req.params;
+    // const exams = await db.examSubmission.findMany({
+    //     where: {
+    //         studentId,
+    //     },
+    //     include: {
+    //         exam: true,
+    //     },
+    // });
+
+    return res.status(200).json({ exams });
+};
 
 export const getExamByTeacherId = async (req, res) => {
     const { id } = req.params;
@@ -114,4 +126,12 @@ const submitExamByStudentId = async (req, res) => {
     });
 
     return res.status(200).json({ score });
+};
+
+export {
+    deleteExam,
+    getLeaderboard,
+    getExamByStudentId,
+    getAllExams,
+    submitExamByStudentId,
 };

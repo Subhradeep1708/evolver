@@ -1,13 +1,23 @@
 import { Router } from "express";
-import { login, registerStudent, registerTeacher } from "../controllers/auth.controller.js";
+import {
+    loginStudent,
+    loginTeacher,
+    registerStudent,
+    registerTeacher,
+} from "../controllers/auth.controller.js";
 
 // route for login
 const authRouter = Router();
-authRouter.post("/student/login", login ); //TODO: login for student and teacher
 
-// authRouter.post("/teacher/login", login ); // TODO
+authRouter.post("/student/login", loginStudent);
+authRouter.post("/teacher/login", loginTeacher);
 
-authRouter.post("/student/register", registerStudent );
-authRouter.post("/teacher/register", registerTeacher );
+authRouter.post("/student/register", registerStudent);
+authRouter.post("/teacher/register", registerTeacher);
+
+authRouter.get("/logout", (req, res) => {
+    res.clearCookie("accessToken");
+    res.send("Logged out successfully");
+});
 
 export default authRouter;

@@ -1,9 +1,18 @@
 import jwt from "jsonwebtoken";
-import env from "../lib/env";
+import env from "../lib/env.js";
 
 // Middleware to check if the user is authenticated
 export const isAuthenticated = (req, res, next) => {
-    const accessToken = req.cookies.accessToken;
+    const cookies = req.cookies;
+    console.log("Cookies:", cookies);
+
+    if (!cookies) {
+        return res.status(401).json({
+            message: "Unauthorized: No cookies found. Please log in.",
+            success: false,
+        });
+    }
+    const accessToken = cookies.accessToken;
 
     if (!accessToken) {
         return res.status(401).json({
