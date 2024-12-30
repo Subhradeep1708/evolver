@@ -1,60 +1,115 @@
-import { Box, Button, Input, Link, Span, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Fieldset, Input, Link, Span, Stack, Text, VStack } from "@chakra-ui/react";
 import { Field } from "../../components/ui/field";
 import { InputGroup } from "../../components/ui/input-group";
 import { LuUser } from "react-icons/lu";
 import { PasswordInput } from "../../components/ui/password-input";
-
+import * as Yup from "yup";
+import axios from "axios";
 import { useState } from "react";
+import { useFormik } from "formik";
+import { routes } from "../../utils/constants";
 const StudentLogin = () => {
     const [rollNoError, setRollNoError] = useState("Invalid Roll No");
 
+
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Email is required"),
+            password: Yup.string()
+                .min(6, "Password must be at least 6 characters")
+                .required("Password is required"),
+        }),
+        onSubmit: (values) => {
+            handleSubmit(values);
+            console.log("Form Submitted:", values);
+        },
+    });
+
+
+    const handleSubmit = async (values) => {
+        const response = await axios.post(routes.studentLogin, values, {
+            withCredentials: true,
+        });
+        if (response.status === 200) {
+            const data = response.data;
+            console.log("Form Submitted:", response);
+        } else {
+            console.log("Error:", response);
+        }
+    };
+
+
     return (
-        <Box
-            mx="auto"
-            w={"100%"}
-            py={10}
-            maxW="md"
-            shadow={"md"}
-            p={5}
-            borderRadius={"md"}
-            background={"bg"}
-        >
-            <VStack w={"100%"} gap="8" width="full">
-                <Text fontSize="2xl" fontWeight="bold">
-                    Login
-                </Text>
-                <Field
-                    label="Roll Number"
-                    w={"24rem"}
-                    invalid
-                    errorText={rollNoError}
-                >
-                    <InputGroup
-                        flex="1"
-                        startElement={
-                            <Span p={"2"}>
-                                <LuUser />
-                            </Span>
-                        }
-                        w={"100%"}
+        <form onSubmit={formik.handleSubmit}>
+            <Fieldset.Root size="lg" maxW="md" spaceY="4">
+                <Stack>
+                    <Fieldset.Legend>Student Login</Fieldset.Legend>
+                    <Fieldset.HelperText>
+                        Please enter your login details below.
+                    </Fieldset.HelperText>
+                </Stack>
+
+                <Fieldset.Content>
+                    <Field
+                        label="Roll Number"
+                        invalid={formik.touched.rollNo && formik.errors.rollNo}
+                        errorText={formik.touched.rollNo && formik.errors.rollNo}
                     >
-                        <Input w={"100%"} placeholder="GCECTB-R22-XXXX" />
-                    </InputGroup>
+                        <InputGroup
+                            flex="1"
+                            startElement={
+                                <Span p="2">
+                                    <LuUser />
+                                </Span>
+                            }
+                            w="100%"
+                        >
+                            <Input
+                                name="rollNo"
+                                w="100%"
+                                placeholder="GCECTB-R22-XXXX"
+                                value={formik.values.rollNo}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                        </InputGroup>
+                    </Field>
+                </Fieldset.Content>
+
+                <Field
+                    label="Password"
+                    invalid={formik.touched.password && formik.errors.password}
+                    errorText={formik.touched.password && formik.errors.password}
+                >
+                    <PasswordInput
+                        name="password"
+                        px={2}
+                        pr={4}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                        <p style={{ color: "red" }}>{formik.errors.password}</p>
+                    )}
                 </Field>
 
-                <Field label="Password">
-                    <PasswordInput px={2} />
-                </Field>
-                <Link href="/hello" fontSize="sm" color="gray.500">
+                <Link href="/forgot-password" fontSize="sm" color="gray.500">
                     Forgot Password?
                 </Link>
-                {/* </Field> */}
 
-                <Button w={32} colorScheme="blue" size={"lg"} variant="solid">
+                <Button type="submit" alignSelf="flex-start" p={4} size="lg">
                     Login
                 </Button>
-            </VStack>
-        </Box>
+            </Fieldset.Root>
+        </form>
+
     );
 };
 
