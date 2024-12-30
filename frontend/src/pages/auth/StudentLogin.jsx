@@ -8,9 +8,11 @@ import axios from "axios";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { routes } from "../../utils/constants";
+import { useUser } from "../../contexts/userContext";
 const StudentLogin = () => {
-    const [rollNoError, setRollNoError] = useState("Invalid Roll No");
 
+    const [rollNoError, setRollNoError] = useState("Invalid Roll No");
+    const {user, setUser} = useUser();
 
     const formik = useFormik({
         initialValues: {
@@ -37,7 +39,11 @@ const StudentLogin = () => {
             withCredentials: true,
         });
         if (response.status === 200) {
-            const data = response.data;
+            const data = response.data.data;
+            setUser({
+                id: data.id,
+                role: data.role,
+            });
             console.log("Form Submitted:", response);
         } else {
             console.log("Error:", response);
