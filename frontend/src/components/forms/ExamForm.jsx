@@ -116,7 +116,10 @@ const ExamForm = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        // sample request body 
+
+
         // console.log(
         //     "Submitted MCQs:",
         //     mcqs.filter((q) => q.question.trim() !== "")
@@ -140,44 +143,25 @@ const ExamForm = () => {
         // }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // );
 
-        setMcqs(
-            mcqs
-                .filter((q) => q.question.trim() !== "")
-                .map((q) => {
-                    return {
-                        question: q.question,
-                        optionA: q.options[0],
-                        optionB: q.options[1],
-                        optionC: q.options[2],
-                        optionD: q.options[3],
-                        point: q.point,
-                    };
-                })
-        );
+        setMcqs(mcqs.filter((q) => q.question.trim() !== ""))
+
+        const formData = {
+            examName: formikPage1.values.examName,
+            examId: formikPage1.values.examId,
+            mcqs: mcqs
+        }
+
+        console.log(formData);
+        
+
+        // const res = axios.post("", {
+        //     mc
+        // })
+
+
+    
         console.log("Submitted MCQs:", mcqs);
 
         // submit the mcqs
