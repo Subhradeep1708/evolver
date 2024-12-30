@@ -11,7 +11,7 @@ const deleteExam = async (req, res) => {
 
 export const createExam = async (req, res) => {
     try {
-        const { subjectId, examDuration, examType, mcqs } = req.body;
+        const { examName, subjectId, mcqs } = req.body;
         //TODO: examDate, examTime, examDuration, examType add these later to the db
 
         if (req.user.role === "student") {
@@ -20,16 +20,19 @@ export const createExam = async (req, res) => {
                 .json({ message: "You are not authorized to create an exam" });
         }
 
+        if (mcqs.length === 0) {
+            return res.status(400).json({ message: "No MCQs provided" });
+        }
+
+        const totalMarks = mcqs.reduce((acc, mcq) => acc + mcq.point, 0);
+
         const newExam = await db.exam.create({
             data: {
                 subjectId,
+                name: examName,
                 addedBy: req.user.id,
-                subject: {
-                    connect: {
-                        id: subjectId,
-                    },
-                },
-                totalMarks: mcqs.reduce((acc, mcq) => acc + mcq.point, 0),
+
+                totalMarks,
             },
         });
 
@@ -37,19 +40,29 @@ export const createExam = async (req, res) => {
 
         const mcqData = mcqs.map((mcq) => ({
             questionBody: mcq.questionBody,
-            questionBodyImage: mcq.questionBodyImage,
             optionA: mcq.options[0],
             optionB: mcq.options[1],
             optionC: mcq.options[2],
             optionD: mcq.options[3],
             answer: mcq.answer,
-            point: mcq.point,
+            point: parseInt(mcq.point),
             examId: examId,
         }));
 
+        mcqs.forEach((mcq) => {
+            if (!["A", "B", "C", "D"].includes(mcq.answer)) {
+                return res.status(400).json({
+                    message: "Answer should be one of A, B, C, or D",
+                });
+            }
+        });
+
+        console.log(mcqData);
+
         // Insert MCQs in bulk
-        await db.mCQ.createMany({
+        const newMcqs = await db.mCQ.createMany({
             data: mcqData,
+            skipDuplicates: true,
         });
 
         return res.status(201).json({ message: "Exam created successfully" });
@@ -57,6 +70,38 @@ export const createExam = async (req, res) => {
         console.error("Error creating exam:", error);
         return res.status(500).json({ message: "An error occurred" });
     }
+};
+
+export const getExamById = async (req, res) => {
+    const { id } = req.params;
+    const exam = await db.exam.findUnique({
+        where: {
+            id: parseInt(id),
+        },
+        include: {
+            subject: true,
+            mcqs: {
+                select: {
+                    questionBody: true,
+                    optionA: true,
+                    optionB: true,
+                    optionC: true,
+                    optionD: true,
+                    // answer: true,
+                    point: true,
+                },
+            },
+        },
+    });
+
+    if (!exam) {
+        return res.status(404).json({ message: "Exam not found" });
+    }
+
+    return res.status(200).json({
+        message: "Exam fetched",
+        exam,
+    });
 };
 
 const getLeaderboard = async (req, res) => {};

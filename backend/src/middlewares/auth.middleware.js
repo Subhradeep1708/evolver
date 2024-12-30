@@ -4,7 +4,7 @@ import env from "../lib/env.js";
 // Middleware to check if the user is authenticated
 export const isAuthenticated = (req, res, next) => {
     const cookies = req.cookies;
-    console.log("Cookies:", cookies);
+    // console.log("Cookies:", cookies);
 
     if (!cookies) {
         return res.status(401).json({
