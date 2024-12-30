@@ -118,7 +118,7 @@ const Sidebar = () => {
             background={"blue.950"}
             color={"white"}
         >
-            {links[role].map((link) => (
+            {links[role]?.map((link) => (
                 <Box
                     key={link.id}
                     w="full"
