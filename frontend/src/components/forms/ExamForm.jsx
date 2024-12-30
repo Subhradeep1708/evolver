@@ -29,7 +29,12 @@ import axios from "axios";
 const ExamForm = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [mcqs, setMcqs] = useState([
-        { question: "", options: ["", "", "", ""], point: 1, answer: "" },
+        {
+            question: "abc",
+            options: ["a", "b", "c", "d"],
+            point: 1,
+            answer: "",
+        },
     ]);
 
     const [subjects, setSubjects] = useState([]);
@@ -42,6 +47,7 @@ const ExamForm = () => {
             if (res.status === 200) {
                 const data = res.data.data;
                 setSubjects(data);
+                console.log("Subjects:", data);
             }
         };
 
@@ -67,6 +73,7 @@ const ExamForm = () => {
             console.log("Subject ID:", subjectId);
             console.log("Exam Name:", examName);
             console.log("MCQs:", mcqs);
+            handleSubmit(values);
         },
     });
 
@@ -112,7 +119,7 @@ const ExamForm = () => {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (values) => {
         // sample request body
 
         // console.log(
@@ -170,15 +177,15 @@ const ExamForm = () => {
                             <Field label="Subject">
                                 <NativeSelectRoot
                                     value={formikPage1.values.subjectId}
-                                    onChange={formikPage1.handleChange}
-                                    onBlur={formikPage1.handleBlur}
+                                    // onChange={formikPage1.handleChange}
+                                    // onBlur={formikPage1.handleBlur}
                                 >
                                     <NativeSelectField
                                         name="subjectId"
                                         px={4}
                                         value={formikPage1.values.subjectId}
                                         onChange={formikPage1.handleChange}
-                                        onBlur={formikPage1.handleBlur}
+                                        // onBlur={formikPage1.handleBlur}
                                     >
                                         {subjects?.map((sub) => {
                                             return (
@@ -375,7 +382,8 @@ const ExamForm = () => {
                         {/* </Card> */}
 
                         {/* Submit Button */}
-                        <Button onClick={handleSubmit}>Submit Exam</Button>
+                        {/* <Button onClick={handleSubmit}>Submit Exam</Button> */}
+                        <Button type="submit">Submit Exam</Button>
                     </Stack>
                 </Box>
             )}
@@ -383,7 +391,7 @@ const ExamForm = () => {
             {currentPage === 3 && (
                 <Box>
                     <Text>Exam Submitted Successfully!</Text>
-                    <Button type="submit">Test Submit</Button>
+                    {/* <Button type="submit">Test Submit</Button> */}
                 </Box>
             )}
         </Box>
