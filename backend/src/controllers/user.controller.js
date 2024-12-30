@@ -13,3 +13,6 @@ const getStudentData = async (req, res) => {
 };
 
 const getTeacherData = async (req, res) => {};
+
+
+
