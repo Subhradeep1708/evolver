@@ -3,7 +3,8 @@ import { Field } from "../../components/ui/field";
 import { PasswordInput } from "../../components/ui/password-input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import axios from "axios";
+import { routes } from "../../utils/constants";
 const TeacherLogin = () => {
     const formik = useFormik({
         initialValues: {
@@ -24,12 +25,18 @@ const TeacherLogin = () => {
         },
     });
 
-    const handleSubmit = (values) => {
-        // e.preventDefault();
-
-        console.log("Form Submitted:", values);
+    const handleSubmit = async (values) => {
+        
+        const response = await axios.post(routes.teacherLogin, values, {
+            withCredentials: true,
+        });
+        if (response.status === 200) {
+            const data = response.data;
+            console.log("Form Submitted:", response);
+        } else {
+            console.log("Error:", response);
+        }
     };
-
     return (
         <form onSubmit={formik.handleSubmit}>
             <Fieldset.Root size="lg" maxW="md" spaceY="4">

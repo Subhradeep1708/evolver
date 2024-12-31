@@ -8,7 +8,7 @@ import subjectRouter from "./routes/subject.route.js";
 import examRouter from "./routes/exam.route.js";
 import answerRouter from "./routes/answer.route.js";
 import resultRouter from "./routes/result.route.js";
-
+import cors from "cors";
 dotenv.config();
 
 const app = express();
@@ -16,7 +16,11 @@ const app = express();
 app.use(cookieParser());
 
 app.use(express.json());
-
+app.use(cors({
+    origin:["http://localhost:5173"],
+    methods:["GET","PUT","POST","PATCH","DELETE"],
+    credentials:true,
+}))
 // Routes
 
 app.use("/api/auth", authRouter);
