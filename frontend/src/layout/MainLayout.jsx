@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router";
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
     return (
         <HStack background={"red.600"} display={"flex"} gap={0} h={"100vh"}>
             <Box w={"20%"} h={"100%"}>
