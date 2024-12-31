@@ -12,6 +12,7 @@ import StudentForm from "./components/forms/StudentForm.jsx";
 import TeacherForm from "./components/forms/TeacherForm.jsx";
 import SubjectForm from "./components/forms/SubjectForm.jsx";
 import ExamForm from "./components/forms/ExamForm.jsx";
+import McqForm from "./components/forms/McqForm.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
@@ -38,6 +39,7 @@ createRoot(document.getElementById("root")).render(
                         ></Route>
                         {/*  */}
                         <Route path="exam/add" element={<ExamForm />}></Route>
+                        <Route path="mcq/add" element={<McqForm />}></Route>
                     </Route>
                 </Routes>
              </Provider>
