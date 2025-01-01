@@ -1,8 +1,10 @@
 import { Avatar, Button, Card, HStack, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router";
 
 // import { Button } from "@/components/ui/button"
 
-const SubjectCard = () => {
+const ExamCard = ({ examName, addedBy, totalMarks, description, examLink }) => {
+    const navigate = useNavigate();
     return (
         <Card.Root
             width="full"
@@ -12,28 +14,25 @@ const SubjectCard = () => {
             variant={"elevated"}
         >
             <Card.Body gapY="4">
-                <Card.Title mt="2">Test your DSA</Card.Title>
+                <Card.Title mt="2">{examName}</Card.Title>
                 <HStack justify={"space-between"}>
-                    <Text>Shyama Mondal</Text>
+                    <Text>{addedBy}</Text>
                     <Text fontSize="sm" color="gray.500">
-                        50 marks
+                        {totalMarks} Marks
                     </Text>
                 </HStack>
-                <Card.Description>
-                    This is the card body. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Curabitur nec odio vel dui
-                    euismod fermentum. Curabitur nec odio vel dui euismod
-                    fermentum.
-                </Card.Description>
+                <Card.Description>{description}</Card.Description>
             </Card.Body>
             <Card.Footer justifyContent="flex-end">
                 {/* <Text fontSize="sm" color="red">
                     Due at 10th October at 10:00 AM
                 </Text> */}
-                <Button px={"3"}>Start Exam</Button>
+                <Button px={"3"} onClick={() => navigate(examLink)}>
+                    Start Exam
+                </Button>
             </Card.Footer>
         </Card.Root>
     );
 };
 
-export default SubjectCard;
+export default ExamCard;

@@ -11,6 +11,10 @@ examRouter.post(
     //  checkTeacherPermission,
     createExam
 );
-examRouter.get("/:id", isAuthenticated, getExamById);
+examRouter.get(
+    "/:id",
+    // isAuthenticated,
+    getExamById
+);
 
 export default examRouter;

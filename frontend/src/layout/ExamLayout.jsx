@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ExamPanel from "../pages/student/exam/ExamPanel";
 import StartExam from "../pages/student/exam/StartExam";
+import { useParams } from "react-router";
+import axios from "axios";
 
 const ExamLayout = () => {
     const pageRef = useRef(null);
@@ -10,9 +12,11 @@ const ExamLayout = () => {
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     useEffect(() => {
+        // Fetch exam data
+
         // Disable right-click context menu
         const handleRightClick = (event) => {
-            event.preventDefault();
+            // event.preventDefault();
         };
         document.addEventListener("contextmenu", handleRightClick);
 
