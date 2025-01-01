@@ -37,7 +37,7 @@ const ExamForm = () => {
     ]);
 
     const [subjects, setSubjects] = useState([]);
-    const [csvFile, setCsvFile] = useState(null);
+    // const [csvFile, setCsvFile] = useState(null);
 
     useEffect(() => {
         const getAllSubjects = async () => {
@@ -52,8 +52,7 @@ const ExamForm = () => {
         getAllSubjects();
     }, []);
 
-    
-    const formik= useFormik({
+    const formik = useFormik({
         initialValues: {
             subjectId: 0,
             examName: "",
@@ -68,56 +67,51 @@ const ExamForm = () => {
         },
     });
 
-
-
-
     const handleSubmit = async (values) => {
-       console.log("Form values:", values);
+        console.log("Form values:", values);
     };
 
     return (
         <form onSubmit={formik.handleSubmit}>
             <Box p={8}>
-                    <Fieldset.Root>
-                        <Stack spacing={4}>
-                            <Field label="Subject">
-                                <NativeSelectRoot
+                <Fieldset.Root>
+                    <Stack spacing={4}>
+                        <Field label="Subject">
+                            <NativeSelectRoot value={formik.values.subjectId}>
+                                <NativeSelectField
+                                    name="subjectId"
                                     value={formik.values.subjectId}
-                                >
-                                    <NativeSelectField
-                                        name="subjectId"
-                                        value={formik.values.subjectId}
-                                        onChange={formik.handleChange} // This should be enough to update Formik
-                                        onBlur={formik.handleBlur}
-                                    >
-                                        <option value="" disabled>
-                                            Select Subject
-                                        </option>
-                                        {subjects?.map((sub) => (
-                                            <option key={sub.id} value={sub.id}>
-                                                {sub.name}
-                                            </option>
-                                        ))}
-                                    </NativeSelectField>
-                                </NativeSelectRoot>
-                            </Field>
-                            <Field label="Exam Name" h={24}>
-                                <Input
-                                    name="examName"
-                                    value={formik.values.examName}
-                                    onChange={formik.handleChange}
+                                    onChange={formik.handleChange} // This should be enough to update Formik
                                     onBlur={formik.handleBlur}
-                                    placeholder="Enter exam name"
-                                    px={2}
-                                />
-                                {formik.touched.examName &&
-                                    formik.errors.examName && (
-                                        <Text color="red.500">
-                                            {formik.errors.examName}
-                                        </Text>
-                                    )}
-                            </Field>
-                            {/* <Field label="Upload CSV File">
+                                >
+                                    <option value="" disabled>
+                                        Select Subject
+                                    </option>
+                                    {subjects?.map((sub) => (
+                                        <option key={sub.id} value={sub.id}>
+                                            {sub.name}
+                                        </option>
+                                    ))}
+                                </NativeSelectField>
+                            </NativeSelectRoot>
+                        </Field>
+                        <Field label="Exam Name" h={24}>
+                            <Input
+                                name="examName"
+                                value={formik.values.examName}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                placeholder="Enter exam name"
+                                px={2}
+                            />
+                            {formik.touched.examName &&
+                                formik.errors.examName && (
+                                    <Text color="red.500">
+                                        {formik.errors.examName}
+                                    </Text>
+                                )}
+                        </Field>
+                        {/* <Field label="Upload CSV File">
                                 <FileUploadRoot maxFiles={5}>
                                     <FileUploadTrigger asChild>
                                         <Button
@@ -133,10 +127,10 @@ const ExamForm = () => {
                             <Button type={"button"} onClick={firstPageSubmit}>
                                 {csvFile ? "Submit" : "Next"}
                             </Button> */}
-                            <Button type="submit">Submit</Button>
-                        </Stack>
-                    </Fieldset.Root>
-              </Box>
+                        <Button type="submit">Submit</Button>
+                    </Stack>
+                </Fieldset.Root>
+            </Box>
         </form>
     );
 };

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import {
     Button,
     Input,
@@ -16,194 +16,225 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegImage } from "react-icons/fa";
 import { routes } from "../../utils/constants";
 import { HiUpload } from "react-icons/hi";
-const handleQuestionChange = (index, key, value) => {}
-const addBlankQuestion = () => {}
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
 const McqForm = () => {
-    const handleSubmit=()=>{}
-    const mcqs=[
-        {
-            question: "abc",
-            options: ["a", "b", "c", "d"],
-            point: 1,
-            answer: "",
+    // const handleSubmit = () => {};
+
+    const formik = useFormik({
+        initialValues: {
+            mcqs: [
+                {
+                    questionBody: "abc",
+                    options: ["a", "b", "c", "d"],
+                    point: 1,
+                    answer: "",
+                },
+            ],
         },
-        {
-            question: "abc",
-            options: ["a", "b", "c", "d"],
-            point: 1,
-            answer: "",
-        }
-    ]
-  return (
-   <form>
-     <Box>
-    <Stack spacing={6}>
-        <Text fontSize="lg" fontWeight="bold">
-            Add Questions
-        </Text>
+        validationSchema: Yup.object({
+            mcqs: Yup.array().of(
+                Yup.object().shape({
+                    questionBody: Yup.string().required("Question is required"),
+                    options: Yup.array()
+                        .of(Yup.string().required("Option is required"))
+                        .min(4, "At least 4 options are required")
+                        .required("Options are required"),
+                    point: Yup.number()
+                        .min(1, "Point must be at least 1")
+                        .required("Point is required"),
+                    answer: Yup.string().required("Answer is required"),
+                })
+            ),
+        }),
+        onSubmit: (values) => {
+            console.log("Submitting...");
+            handleSubmit(values);
+        },
+    });
 
-        {/* Map over the MCQs to render each question */}
-        {/* <Card> */}
-        
-        {mcqs.map((mcq, index) => (
-            <Box
-                key={index}
-                p={4}
-                borderRadius="md"
-                spaceY={4}
-                mb={4}
-                bg={"bg"}
-                shadow={"sm"}
-                maxW={""}
-            >
-                {/* <Stack spacing={4}> */}
-                <HStack>
-                    <Input
-                        value={index + 1 + "."}
-                        disabled={true}
-                        px={2}
-                        maxW={10}
-                        color={"fg"}
-                        fontWeight={"bold"}
-                        borderWidth={0}
-                    />
-                    {/* Question Input */}
-                    <Input
-                        placeholder="Enter question"
-                        value={mcq.question}
-                        px={2}
-                        onChange={(e) => {
-                            handleQuestionChange(
-                                index,
-                                "question",
-                                e.target.value
-                            );
-                        }}
-                        onFocus={() => {
-                            if (index === mcqs.length - 1) {
-                                addBlankQuestion();
-                            }
-                        }}
-                    />
-                    {/* Points Input */}
+    const handleSubmit = (values) => {
+        console.log("Form Data: ", values);
+    };
 
-                    <NumberInputRoot
-                        defaultValue="1"
-                        maxW={20}
-                        // px={2}
-                        onChange={(value) => {
-                            handleQuestionChange(
-                                index,
-                                "point",
-                                value
-                            );
-                        }}
-                    >
-                        <NumberInputField />
-                    </NumberInputRoot>
-                </HStack>
+    const addBlankQuestion = () => {
+        formik.setFieldValue("mcqs", [
+            ...formik.values.mcqs,
+            {
+                questionBody: "",
+                options: ["", "", "", ""],
+                point: 1,
+                answer: "",
+            },
+        ]);
+    };
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <Box>
+                <Stack spacing={6}>
+                    <Text fontSize="lg" fontWeight="bold">
+                        Add Questions
+                    </Text>
 
-                {/* Options Inputs */}
-                <Grid
-                    templateColumns={"repeat(2, 1fr)"}
-                    templateRows={"repeat(2, 1fr)"}
-                    gap={4}
-                    w={"100%"}
-                >
-                    {mcq.options.map(
-                        (option, optionIndex) => (
-                            <Input
-                                key={optionIndex}
-                                placeholder={`Option ${String.fromCharCode(
-                                    65 + optionIndex
-                                )}`}
-                                px={2}
-                                w={"100%"}
-                                value={option}
-                                onChange={(e) =>
-                                    handleQuestionChange(
-                                        index,
-                                        `option${optionIndex}`,
-                                        e.target.value
-                                    )
-                                }
-                            />
-                        )
-                    )}
-                </Grid>
-
-                <HStack justify={"space-between"}>
-                    <HStack>
-                        <Field>
-                            <NativeSelectRoot>
-                                <NativeSelectField
-                                    name="role"
-                                    px={4}
-                                    maxW={96}
-                                    background={"bg"}
-                                    font={"fg"}
-                                    onChange={(e) =>
-                                        handleQuestionChange(
-                                            index,
-                                            "answer",
-                                            e.target.value
-                                        )
+                    {formik.values.mcqs.map((mcq, mcqIndex) => (
+                        <Box
+                            key={mcqIndex}
+                            p={4}
+                            borderRadius="md"
+                            spaceY={4}
+                            mb={4}
+                            bg={"bg"}
+                            shadow={"sm"}
+                            maxW={""}
+                        >
+                            {/* <Stack spacing={4}> */}
+                            <HStack>
+                                <Input
+                                    value={mcqIndex + 1 + "."}
+                                    disabled={true}
+                                    px={2}
+                                    maxW={10}
+                                    color={"fg"}
+                                    fontWeight={"bold"}
+                                    borderWidth={0}
+                                />
+                                {/* Question Input */}
+                                <Input
+                                    placeholder="Enter question"
+                                    // value={mcq.question}
+                                    px={2}
+                                    name={`mcqs[${mcqIndex}].questionBody`}
+                                    onChange={formik.handleChange}
+                                    value={
+                                        formik.values.mcqs[mcqIndex]
+                                            .questionBody
                                     }
-                                >
-                                    <option value="">
-                                        Select correct
-                                        answer
-                                    </option>
-                                    <option value="teacher">
-                                        A. {mcq.options[0]}
-                                    </option>
-                                    <option value="controller">
-                                        B. {mcq.options[1]}
-                                    </option>
-                                    <option value="controller">
-                                        C. {mcq.options[2]}
-                                    </option>
-                                    <option value="controller">
-                                        D. {mcq.options[3]}
-                                    </option>
-                                </NativeSelectField>
-                            </NativeSelectRoot>
-                        </Field>
-                        <Button
-                            background={"bg.muted"}
-                            color={"fg"}
-                        >
-                            <FaRegImage />
-                        </Button>
-                    </HStack>
-                    <Box>
-                        <Button
-                            background={"bg.muted"}
-                            disabled={mcqs.length === 1}
-                            onClick={() => {
-                                setMcqs(
-                                    mcqs.filter(
-                                        (mcq, i) =>
-                                            i !== index
-                                    )
-                                );
-                            }}
-                        >
-                            <AiOutlineDelete color="red" />
-                        </Button>
-                    </Box>
-                </HStack>
-                {/* </Stack> */}
+                                    onBlur={formik.handleBlur}
+                                />
+                                {/* Points Input */}
+
+                                <NumberInputRoot maxW={20} px={2}>
+                                    <NumberInputField
+                                        name={`mcqs[${mcqIndex}].point`}
+                                        value={
+                                            formik.values.mcqs[mcqIndex].point
+                                        }
+                                        onChange={(valueString) =>
+                                            formik.setFieldValue(
+                                                `mcqs[${mcqIndex}].point`,
+                                                valueString
+                                            )
+                                        }
+                                        onBlur={formik.onBlur}
+                                    />
+                                </NumberInputRoot>
+                            </HStack>
+
+                            {/* Options Inputs */}
+                            <Grid
+                                templateColumns={"repeat(2, 1fr)"}
+                                templateRows={"repeat(2, 1fr)"}
+                                gap={4}
+                                w={"100%"}
+                            >
+                                {mcq.options?.map((option, optionIndex) => (
+                                    <Input
+                                        key={optionIndex}
+                                        px={2}
+                                        w={"100%"}
+                                        name={`mcqs[${mcqIndex}].options[${optionIndex}]`}
+                                        value={
+                                            formik.values.mcqs[mcqIndex]
+                                                .options[optionIndex]
+                                        }
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                ))}
+                            </Grid>
+
+                            <HStack justify={"space-between"}>
+                                <HStack>
+                                    <Field>
+                                        <NativeSelectRoot>
+                                            <NativeSelectField
+                                                px={4}
+                                                maxW={96}
+                                                background={"bg"}
+                                                font={"fg"}
+                                                name={`mcqs[${mcqIndex}].answer`}
+                                                value={
+                                                    formik.values.mcqs[mcqIndex]
+                                                        .answer
+                                                }
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
+                                            >
+                                                <option value="" disabled>
+                                                    Select Answer
+                                                </option>
+                                                <option value="A">
+                                                    A.{" "}
+                                                    {
+                                                        formik.values.mcqs[
+                                                            mcqIndex
+                                                        ].options[0]
+                                                    }
+                                                </option>
+                                                <option value="B">
+                                                    B.{" "}
+                                                    {
+                                                        formik.values.mcqs[
+                                                            mcqIndex
+                                                        ].options[1]
+                                                    }
+                                                </option>
+                                                <option value="C">
+                                                    C.{" "}
+                                                    {
+                                                        formik.values.mcqs[
+                                                            mcqIndex
+                                                        ].options[2]
+                                                    }
+                                                </option>
+                                                <option value="D">
+                                                    D.{" "}
+                                                    {
+                                                        formik.values.mcqs[
+                                                            mcqIndex
+                                                        ].options[3]
+                                                    }
+                                                </option>
+                                            </NativeSelectField>
+                                        </NativeSelectRoot>
+                                    </Field>
+                                    <Button
+                                        background={"bg.muted"}
+                                        color={"fg"}
+                                    >
+                                        <FaRegImage />
+                                    </Button>
+                                </HStack>
+                                <Box>
+                                    <Button
+                                        background={"bg.muted"}
+                                        disabled={
+                                            formik.values.mcqs.length === 1
+                                        }
+                                        type="submit"
+                                    >
+                                        <AiOutlineDelete color="red" />
+                                    </Button>
+                                </Box>
+                            </HStack>
+                        </Box>
+                    ))}
+                    <Button type="submit">Submit Exam</Button>
+                </Stack>
             </Box>
-        ))}
-        {/* </Card> */}
+        </form>
+    );
+};
 
-        {/* Submit Button */}
-        {/* <Button onClick={handleSubmit}>Submit Exam</Button> */}
-        <Button type="submit">Submit Exam</Button>
-    </Stack>
-   </Box>
-   </form>
-)}
-
-export default McqForm
+export default McqForm;
