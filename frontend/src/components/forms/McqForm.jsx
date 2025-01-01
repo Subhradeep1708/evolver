@@ -60,11 +60,11 @@ const McqForm = () => {
     const handleSubmit = (values) => {
         console.log("Form Data: ", values);
         const response = axios.post(routes.addMcqBulk, {
-            examId: examId,
+            examId: parseInt(examId),
             mcqs: values.mcqs,
         });
 
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
             console.log("MCQs added successfully");
         }
     };

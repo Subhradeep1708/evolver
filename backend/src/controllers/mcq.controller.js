@@ -1,3 +1,5 @@
+import db from "../db/db.js";
+
 const deleteMcq = async (req, res) => {
     const { id } = req.params;
     await db.mCQ.delete({
@@ -26,11 +28,12 @@ const addMcq = async (req, res) => {
     return res.status(201).json({ message: "MCQ created successfully" });
 };
 
-const addMcqBulk = async (req, res) => {
+export const addMcqBulk = async (req, res) => {
     const { examId, mcqs } = req.body;
+
     const mcqData = mcqs.map((mcq) => ({
         questionBody: mcq.questionBody,
-        questionImage: mcq.questionImage || null,
+        questionBodyImage: mcq.questionBodyImage || "",
         optionA: mcq.options[0],
         optionB: mcq.options[1],
         optionC: mcq.options[2],
@@ -40,10 +43,14 @@ const addMcqBulk = async (req, res) => {
         examId: examId,
     }));
 
-    await db.mCQ.createMany({
+    const newMcqs = await db.mCQ.createMany({
         data: mcqData,
         skipDuplicates: true,
     });
+
+    console.log("New MCQs:", newMcqs);
+    // console.log();
+    console.log("MCQs:", mcqData);
 
     return res
         .status(201)

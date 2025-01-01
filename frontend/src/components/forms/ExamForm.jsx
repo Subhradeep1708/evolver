@@ -48,6 +48,8 @@ const ExamForm = () => {
                 const data = res.data.data;
                 setSubjects(data);
                 console.log("Subjects:", data);
+            } else {
+                console.log("Error fetching subjects");
             }
         };
 

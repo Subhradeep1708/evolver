@@ -14,52 +14,24 @@ export const createExam = async (req, res) => {
         const { examName, subjectId } = req.body;
         //TODO: examDate, examTime, examDuration, examType add these later to the db
 
-        if (req.user.role === "student") {
-            return res
-                .status(403)
-                .json({ message: "You are not authorized to create an exam" });
-        }
-
-        if (mcqs.length === 0) {
-            return res.status(400).json({ message: "No MCQs provided" });
-        }
+        // if (req.user.role === "student") {
+        //     return res
+        //         .status(403)
+        //         .json({ message: "You are not authorized to create an exam" });
+        // }
 
         const newExam = await db.exam.create({
             data: {
-                subjectId,
+                subjectId: parseInt(subjectId),
                 name: examName,
-                addedBy: req.user.id,
+                totalMarks: 5,
+                addedBy: 4,
             },
         });
 
+        console.log("New exam:", newExam);
+
         const examId = newExam.id;
-
-        // const mcqData = mcqs.map((mcq) => ({
-        //     questionBody: mcq.questionBody,
-        //     optionA: mcq.options[0],
-        //     optionB: mcq.options[1],
-        //     optionC: mcq.options[2],
-        //     optionD: mcq.options[3],
-        //     answer: mcq.answer,
-        //     point: parseInt(mcq.point),
-        //     examId: examId,
-        // }));
-
-        // mcqs.forEach((mcq) => {
-        //     if (!["A", "B", "C", "D"].includes(mcq.answer)) {
-        //         return res.status(400).json({
-        //             message: "Answer should be one of A, B, C, or D",
-        //         });
-        //     }
-        // });
-
-        // console.log(mcqData);
-
-        // Insert MCQs in bulk
-        // const newMcqs = await db.mCQ.createMany({
-        //     data: mcqData,
-        //     skipDuplicates: true,
-        // });
 
         return res
             .status(201)

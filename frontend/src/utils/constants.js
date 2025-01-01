@@ -9,5 +9,5 @@ export const routes = {
     getAllSubject: `${origin}/api/subject`,
     addSubject: `${origin}/api/subject`,
     addExam: `${origin}/api/exam`,
-    addMcq: `${origin}/api/mcq`,
+    addMcqBulk: `${origin}/api/mcq`,
 };
