@@ -101,7 +101,15 @@ export const getExamByTeacherId = async (req, res) => {
     return res.status(200).json({ exams });
 };
 
-const getAllExams = async (req, res) => {};
+const getAllExams = async (req, res) => {
+    const exams= await db.exam.findMany();
+    if(exams){
+        return res.status(200).json({exams});
+    }
+    else{
+        return res.status(404).json({message: "No exams found"});
+    }
+};
 
 const submitExamByStudentId = async (req, res) => {
     const { studentId } = req.params;
