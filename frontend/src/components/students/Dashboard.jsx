@@ -38,6 +38,20 @@ const Dashboard = () => {
             description: "This is a description",
             examLink: "/start/exam/3",
         },
+        {
+            examName: "Exam 3",
+            addedBy: "Teacher 3",
+            totalMarks: 100,
+            description: "This is a description",
+            examLink: "/start/exam/3",
+        },
+        {
+            examName: "Exam 7",
+            addedBy: "Teacher 7",
+            totalMarks: 100,
+            description: "This is a description",
+            examLink: "/start/exam/7",
+        },
     ];
 
     return (
