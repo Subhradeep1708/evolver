@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import axios from "axios";
+
+import { routes } from "../../utils/constants";
+import { useParams } from "react-router";
+
 import {
     Button,
     Input,
@@ -14,12 +21,7 @@ import { Field } from "../ui/field";
 import { NumberInputRoot, NumberInputField } from "../ui/number-input";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegImage } from "react-icons/fa";
-import { routes } from "../../utils/constants";
 import { HiUpload } from "react-icons/hi";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useParams } from "react-router";
-import axios from "axios";
 
 const McqForm = () => {
     let { examId } = useParams();
@@ -210,38 +212,23 @@ const McqForm = () => {
                                                 <option value="" disabled>
                                                     Select Answer
                                                 </option>
-                                                <option value="A">
-                                                    A.{" "}
-                                                    {
-                                                        formik.values.mcqs[
-                                                            mcqIndex
-                                                        ].options[0]
-                                                    }
-                                                </option>
-                                                <option value="B">
-                                                    B.{" "}
-                                                    {
-                                                        formik.values.mcqs[
-                                                            mcqIndex
-                                                        ].options[1]
-                                                    }
-                                                </option>
-                                                <option value="C">
-                                                    C.{" "}
-                                                    {
-                                                        formik.values.mcqs[
-                                                            mcqIndex
-                                                        ].options[2]
-                                                    }
-                                                </option>
-                                                <option value="D">
-                                                    D.{" "}
-                                                    {
-                                                        formik.values.mcqs[
-                                                            mcqIndex
-                                                        ].options[3]
-                                                    }
-                                                </option>
+                                                {formik.values.mcqs[
+                                                    mcqIndex
+                                                ].options.map(
+                                                    (option, optionIndex) => (
+                                                        <option
+                                                            key={optionIndex}
+                                                            value={String.fromCharCode(
+                                                                65 + optionIndex
+                                                            )}
+                                                        >
+                                                            {String.fromCharCode(
+                                                                65 + optionIndex
+                                                            )}
+                                                            . {option}
+                                                        </option>
+                                                    )
+                                                )}
                                             </NativeSelectField>
                                         </NativeSelectRoot>
                                     </Field>
