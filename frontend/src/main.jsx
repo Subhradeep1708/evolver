@@ -1,7 +1,6 @@
+import App from "./App.jsx";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
-import App from "./App.jsx";
 import { Provider } from "./components/ui/provider.jsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import StudentLogin from "./pages/auth/StudentLogin.jsx";
@@ -16,6 +15,7 @@ import McqForm from "./components/forms/McqForm.jsx";
 import ExamLayout from "./layout/ExamLayout.jsx";
 import ExamPanel from "./pages/student/exam/ExamPanel.jsx";
 import StartExam from "./pages/student/exam/StartExam.jsx";
+import Dashboard from "./components/students/Dashboard.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
@@ -29,7 +29,7 @@ createRoot(document.getElementById("root")).render(
                     </Route>
                     <Route path="/" element={<MainLayout />}>
                         {/* exams */}
-                        <Route path="dashboard" element={<p>Hi</p>} />
+                        <Route path="dashboard" element={<Dashboard />}></Route>
                         {/* Add Student */}
                         <Route path="student/add" element={<StudentForm />} />
                         <Route
