@@ -18,9 +18,12 @@ import { routes } from "../../utils/constants";
 import { HiUpload } from "react-icons/hi";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useParams } from "react-router";
+import axios from "axios";
 
 const McqForm = () => {
-    // const handleSubmit = () => {};
+    let { examId } = useParams();
+    console.log("Exam ID: ", examId);
 
     const formik = useFormik({
         initialValues: {
@@ -56,6 +59,14 @@ const McqForm = () => {
 
     const handleSubmit = (values) => {
         console.log("Form Data: ", values);
+        const response = axios.post(routes.addMcqBulk, {
+            examId: examId,
+            mcqs: values.mcqs,
+        });
+
+        if (response.status === 201) {
+            console.log("MCQs added successfully");
+        }
     };
 
     const addBlankQuestion = () => {
@@ -74,7 +85,7 @@ const McqForm = () => {
             "mcqs",
             formik.values.mcqs.filter((_, i) => i !== index)
         );
-    }
+    };
     return (
         <form onSubmit={formik.handleSubmit}>
             <Box>
@@ -118,38 +129,42 @@ const McqForm = () => {
                                     }
                                     onBlur={formik.handleBlur}
                                     onFocus={() => {
-                                        if (mcqIndex === formik.values.mcqs.length - 1) {
+                                        if (
+                                            mcqIndex ===
+                                            formik.values.mcqs.length - 1
+                                        ) {
                                             addBlankQuestion();
                                         }
-                                    }
-                                    }
+                                    }}
                                 />
                                 {/* Points Input */}
-                              
-                               <Field>
-                               <NumberInputRoot maxW={20} px={2}
-                                 
-                                  onValueChange={(valueString) =>
-                                      {formik.setFieldValue(
-                                          `mcqs[${mcqIndex}].point`,
-                                          valueString.value
-                                          
-                                      )
-                                      console.log(formik.values.mcqs[mcqIndex].point);
-                                      console.log(valueString);
-                                      
-                                  }
-                                  }
-                                
-                               >
-                                    <NumberInputField
-                                     name={`mcqs[${mcqIndex}].point`}
-                                     value={
-                                         formik.values.mcqs[mcqIndex].point
-                                     }
-                                         onBlur={formik.onBlur}        />
-                                </NumberInputRoot>
-                               </Field>
+
+                                <Field>
+                                    <NumberInputRoot
+                                        maxW={20}
+                                        px={2}
+                                        onValueChange={(valueString) => {
+                                            formik.setFieldValue(
+                                                `mcqs[${mcqIndex}].point`,
+                                                valueString.value
+                                            );
+                                            console.log(
+                                                formik.values.mcqs[mcqIndex]
+                                                    .point
+                                            );
+                                            console.log(valueString);
+                                        }}
+                                    >
+                                        <NumberInputField
+                                            name={`mcqs[${mcqIndex}].point`}
+                                            value={
+                                                formik.values.mcqs[mcqIndex]
+                                                    .point
+                                            }
+                                            onBlur={formik.onBlur}
+                                        />
+                                    </NumberInputRoot>
+                                </Field>
                             </HStack>
 
                             {/* Options Inputs */}

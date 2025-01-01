@@ -23,10 +23,12 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegImage } from "react-icons/fa";
 import { routes } from "../../utils/constants";
 import axios from "axios";
-
+import { useNavigate } from "react-router";
 // import { Card } from "../ui/card";
 
 const ExamForm = () => {
+    let navigate = useNavigate();
+
     const [mcqs, setMcqs] = useState([
         {
             question: "abc",
@@ -69,6 +71,13 @@ const ExamForm = () => {
 
     const handleSubmit = async (values) => {
         console.log("Form values:", values);
+        const res = await axios.post(routes.addExam, values);
+        if (res.status === 201) {
+            console.log("Exam created successfully");
+            const data = res.data.data;
+            const examId = data.id;
+            navigate(`/exam/${examId}/mcq`);
+        }
     };
 
     return (

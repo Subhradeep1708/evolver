@@ -25,3 +25,27 @@ const addMcq = async (req, res) => {
     });
     return res.status(201).json({ message: "MCQ created successfully" });
 };
+
+const addMcqBulk = async (req, res) => {
+    const { examId, mcqs } = req.body;
+    const mcqData = mcqs.map((mcq) => ({
+        questionBody: mcq.questionBody,
+        questionImage: mcq.questionImage || null,
+        optionA: mcq.options[0],
+        optionB: mcq.options[1],
+        optionC: mcq.options[2],
+        optionD: mcq.options[3],
+        answer: mcq.answer,
+        point: parseInt(mcq.point),
+        examId: examId,
+    }));
+
+    await db.mCQ.createMany({
+        data: mcqData,
+        skipDuplicates: true,
+    });
+
+    return res
+        .status(201)
+        .json({ message: "MCQs created successfully", data: mcqData });
+};

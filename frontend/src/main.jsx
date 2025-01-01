@@ -39,11 +39,13 @@ createRoot(document.getElementById("root")).render(
                         ></Route>
                         {/*  */}
                         <Route path="exam/add" element={<ExamForm />}></Route>
-                        <Route path="mcq/add" element={<McqForm />}></Route>
+                        <Route
+                            path="/exam/:examId/mcq"
+                            element={<McqForm />}
+                        ></Route>
                     </Route>
                 </Routes>
-             </Provider>
+            </Provider>
         </BrowserRouter>
     </StrictMode>
-    
 );

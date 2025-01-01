@@ -11,7 +11,7 @@ const deleteExam = async (req, res) => {
 
 export const createExam = async (req, res) => {
     try {
-        const { examName, subjectId, mcqs } = req.body;
+        const { examName, subjectId } = req.body;
         //TODO: examDate, examTime, examDuration, examType add these later to the db
 
         if (req.user.role === "student") {
@@ -24,48 +24,46 @@ export const createExam = async (req, res) => {
             return res.status(400).json({ message: "No MCQs provided" });
         }
 
-        const totalMarks = mcqs.reduce((acc, mcq) => acc + mcq.point, 0);
-
         const newExam = await db.exam.create({
             data: {
                 subjectId,
                 name: examName,
                 addedBy: req.user.id,
-
-                totalMarks,
             },
         });
 
         const examId = newExam.id;
 
-        const mcqData = mcqs.map((mcq) => ({
-            questionBody: mcq.questionBody,
-            optionA: mcq.options[0],
-            optionB: mcq.options[1],
-            optionC: mcq.options[2],
-            optionD: mcq.options[3],
-            answer: mcq.answer,
-            point: parseInt(mcq.point),
-            examId: examId,
-        }));
+        // const mcqData = mcqs.map((mcq) => ({
+        //     questionBody: mcq.questionBody,
+        //     optionA: mcq.options[0],
+        //     optionB: mcq.options[1],
+        //     optionC: mcq.options[2],
+        //     optionD: mcq.options[3],
+        //     answer: mcq.answer,
+        //     point: parseInt(mcq.point),
+        //     examId: examId,
+        // }));
 
-        mcqs.forEach((mcq) => {
-            if (!["A", "B", "C", "D"].includes(mcq.answer)) {
-                return res.status(400).json({
-                    message: "Answer should be one of A, B, C, or D",
-                });
-            }
-        });
+        // mcqs.forEach((mcq) => {
+        //     if (!["A", "B", "C", "D"].includes(mcq.answer)) {
+        //         return res.status(400).json({
+        //             message: "Answer should be one of A, B, C, or D",
+        //         });
+        //     }
+        // });
 
-        console.log(mcqData);
+        // console.log(mcqData);
 
         // Insert MCQs in bulk
-        const newMcqs = await db.mCQ.createMany({
-            data: mcqData,
-            skipDuplicates: true,
-        });
+        // const newMcqs = await db.mCQ.createMany({
+        //     data: mcqData,
+        //     skipDuplicates: true,
+        // });
 
-        return res.status(201).json({ message: "Exam created successfully" });
+        return res
+            .status(201)
+            .json({ message: "Exam created successfully", data: newExam });
     } catch (error) {
         console.error("Error creating exam:", error);
         return res.status(500).json({ message: "An error occurred" });
