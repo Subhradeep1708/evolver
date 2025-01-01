@@ -69,6 +69,12 @@ const McqForm = () => {
             },
         ]);
     };
+    const handleDelete = (index) => {
+        formik.setFieldValue(
+            "mcqs",
+            formik.values.mcqs.filter((_, i) => i !== index)
+        );
+    }
     return (
         <form onSubmit={formik.handleSubmit}>
             <Box>
@@ -111,24 +117,39 @@ const McqForm = () => {
                                             .questionBody
                                     }
                                     onBlur={formik.handleBlur}
+                                    onFocus={() => {
+                                        if (mcqIndex === formik.values.mcqs.length - 1) {
+                                            addBlankQuestion();
+                                        }
+                                    }
+                                    }
                                 />
                                 {/* Points Input */}
-
-                                <NumberInputRoot maxW={20} px={2}>
+                              
+                               <Field>
+                               <NumberInputRoot maxW={20} px={2}
+                                 
+                                  onValueChange={(valueString) =>
+                                      {formik.setFieldValue(
+                                          `mcqs[${mcqIndex}].point`,
+                                          valueString.value
+                                          
+                                      )
+                                      console.log(formik.values.mcqs[mcqIndex].point);
+                                      console.log(valueString);
+                                      
+                                  }
+                                  }
+                                
+                               >
                                     <NumberInputField
-                                        name={`mcqs[${mcqIndex}].point`}
-                                        value={
-                                            formik.values.mcqs[mcqIndex].point
-                                        }
-                                        onChange={(valueString) =>
-                                            formik.setFieldValue(
-                                                `mcqs[${mcqIndex}].point`,
-                                                valueString
-                                            )
-                                        }
-                                        onBlur={formik.onBlur}
-                                    />
+                                     name={`mcqs[${mcqIndex}].point`}
+                                     value={
+                                         formik.values.mcqs[mcqIndex].point
+                                     }
+                                         onBlur={formik.onBlur}        />
                                 </NumberInputRoot>
+                               </Field>
                             </HStack>
 
                             {/* Options Inputs */}
@@ -223,6 +244,7 @@ const McqForm = () => {
                                             formik.values.mcqs.length === 1
                                         }
                                         type="submit"
+                                        onClick={() => handleDelete(mcqIndex)}
                                     >
                                         <AiOutlineDelete color="red" />
                                     </Button>
