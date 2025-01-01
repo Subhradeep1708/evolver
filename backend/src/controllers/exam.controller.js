@@ -24,8 +24,8 @@ export const createExam = async (req, res) => {
             data: {
                 subjectId: parseInt(subjectId),
                 name: examName,
-                totalMarks: 5,
-                addedBy: 4,
+                totalMarks: 0,
+                addedBy: req.user.id,
             },
         });
 

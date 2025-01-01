@@ -31,25 +31,38 @@ const addMcq = async (req, res) => {
 export const addMcqBulk = async (req, res) => {
     const { examId, mcqs } = req.body;
 
-    const mcqData = mcqs.map((mcq) => ({
-        questionBody: mcq.questionBody,
-        questionBodyImage: mcq.questionBodyImage || "",
-        optionA: mcq.options[0],
-        optionB: mcq.options[1],
-        optionC: mcq.options[2],
-        optionD: mcq.options[3],
-        answer: mcq.answer,
-        point: parseInt(mcq.point),
-        examId: examId,
-    }));
+    if (!mcqs || mcqs.length === 0) {
+        return res.status(400).json({ message: "No MCQs provided" });
+    }
+
+    let totalMarks = 0;
+
+    const mcqData = mcqs.map((mcq) => {
+        totalMarks += parseInt(mcq.point);
+        return {
+            questionBody: mcq.questionBody,
+            questionBodyImage: mcq.questionBodyImage || "",
+            optionA: mcq.options[0],
+            optionB: mcq.options[1],
+            optionC: mcq.options[2],
+            optionD: mcq.options[3],
+            answer: mcq.answer,
+            point: parseInt(mcq.point),
+            examId: examId,
+        };
+    });
 
     const newMcqs = await db.mCQ.createMany({
         data: mcqData,
         skipDuplicates: true,
     });
 
+    const updatedExam = await db.exam.update({
+        where: { id: examId },
+        data: { totalMarks: totalMarks },
+    });
+
     console.log("New MCQs:", newMcqs);
-    // console.log();
     console.log("MCQs:", mcqData);
 
     return res
