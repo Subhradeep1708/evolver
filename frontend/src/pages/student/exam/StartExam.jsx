@@ -103,37 +103,40 @@ function StartExam({ handleStartExam }) {
             {/* Question Palette Section */}
             <VStack
                 align="flex-start"
-                spacing={6}
                 flexBasis={"1/3"}
                 flexDirection={"column"}
                 bg="white"
                 p={"6"}
                 borderRadius="md"
                 boxShadow="lg"
+                spaceY={6}
             >
                 <Text fontSize="2xl" fontWeight="semibold">
                     Question Palette:
                 </Text>
-                <HStack py={"2"}>
-                    <Circle size="30px" bg="green.400" />
-                    <Text fontSize={"lg"}>Submitted</Text>
-                </HStack>
-                <HStack py={"2"}>
-                    <Circle size="30px" bg="yellow.400" />
-                    <Text fontSize={"lg"}>Marked for Review</Text>
-                </HStack>
-                <HStack py={"2"}>
-                    <Circle size="30px" bg="blue.400" />
-                    <Text fontSize={"lg"}>Not Attempted</Text>
-                </HStack>
-                <HStack py={"2"}>
-                    <Circle size="30px" bg="red.400" />
-                    <Text fontSize={"lg"}>Attempted but Unsaved</Text>
-                </HStack>
-                <HStack py={"2"}>
-                    <Circle size="30px" bg="gray.300" />
-                    <Text fontSize={"lg"}>Not Visited</Text>
-                </HStack>
+                <Box spaceY={1}>
+                    <HStack py={"2"}>
+                        <Circle size="30px" bg="green.400" />
+                        <Text fontSize={"lg"}>Visited and Answered</Text>
+                    </HStack>
+                    <HStack py={"2"}>
+                        <Circle size="30px" bg="red.400" />
+                        <Text fontSize={"lg"}>Visited but not Answered</Text>
+                    </HStack>
+                    <HStack py={"2"}>
+                        <Box h="30px" w="30px" rounded={"md"} bg="purple.400" />
+                        <Text fontSize={"lg"}>Marked for Review</Text>
+                    </HStack>
+                    <HStack py={"2"}>
+                        <Circle size="30px" bg="black" />
+                        <Text fontSize={"lg"}>Selected Question</Text>
+                    </HStack>
+
+                    <HStack py={"2"}>
+                        <Circle size="30px" bg="gray.300" />
+                        <Text fontSize={"lg"}>Not Visited</Text>
+                    </HStack>
+                </Box>
             </VStack>
         </HStack>
     );
