@@ -16,7 +16,7 @@ const ExamLayout = () => {
 
         // Disable right-click context menu
         const handleRightClick = (event) => {
-            // event.preventDefault();
+            event.preventDefault();
         };
         document.addEventListener("contextmenu", handleRightClick);
 
