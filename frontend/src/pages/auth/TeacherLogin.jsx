@@ -5,10 +5,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { routes } from "../../utils/constants";
-import { useUser } from "../../contexts/userContext";
+import { useContext } from "react";
+import UserContext from "../../contexts/userContext";
+
 
 const TeacherLogin = () => {
-    const {user, setUser} = useUser();
+    const {user, setUser} = useContext(UserContext);
     const formik = useFormik({
         initialValues: {
             email: "",

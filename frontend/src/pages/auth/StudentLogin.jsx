@@ -5,14 +5,14 @@ import { LuUser } from "react-icons/lu";
 import { PasswordInput } from "../../components/ui/password-input";
 import * as Yup from "yup";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { routes } from "../../utils/constants";
-import { useUser } from "../../contexts/userContext";
+import UserContext from "../../contexts/userContext";
 const StudentLogin = () => {
 
     const [rollNoError, setRollNoError] = useState("Invalid Roll No");
-    const {user, setUser} = useUser();
+    const {user, setUser} = useContext(UserContext);
 
     const formik = useFormik({
         initialValues: {
