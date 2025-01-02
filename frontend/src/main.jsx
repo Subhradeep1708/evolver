@@ -17,9 +17,11 @@ import ExamPanel from "./pages/student/exam/ExamPanel.jsx";
 import StartExam from "./pages/student/exam/StartExam.jsx";
 import Dashboard from "./components/students/Dashboard.jsx";
 import Welcome from "./components/Welcome.jsx";
+import { UserProvider } from "./contexts/userContext.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
+        <UserProvider>
         <BrowserRouter>
             <Provider>
                 <Routes>
@@ -55,5 +57,6 @@ createRoot(document.getElementById("root")).render(
                 </Routes>
             </Provider>
         </BrowserRouter>
+        </UserProvider>
     </StrictMode>
 );

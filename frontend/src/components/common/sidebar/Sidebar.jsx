@@ -1,6 +1,6 @@
 import { Box, Link, VStack } from "@chakra-ui/react";
-import React from "react";
-import { useUser } from "../../../contexts/userContext";
+import React, { useContext } from "react";
+import UserContext from "../../../contexts/userContext";
 
 const Sidebar = () => {
     // Get the current pathname
@@ -8,7 +8,7 @@ const Sidebar = () => {
     // ! Change it to useLocation from React-Dom_Router
 
     console.log(currentPath);
-    const {user} = useUser();
+    const {user} = useContext(UserContext);
     const role = user.role;
 
     const links = {
