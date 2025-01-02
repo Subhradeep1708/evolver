@@ -2,7 +2,8 @@ import db from "../db/db.js";
 
 export const submitAnswer = async (req, res) => {
     try {
-        const studentId = req.user.id;
+        // const studentId = req.user.id;
+        const studentId = 3; //! For testing purposes
         const { examId, answers } = req.body;
 
         if (!answers || answers.length === 0) {
@@ -10,7 +11,7 @@ export const submitAnswer = async (req, res) => {
         }
 
         const exam = await db.exam.findUnique({
-            where: { id: examId },
+            where: { id: parseInt(examId) },
             include: { mcqs: true },
         });
 
@@ -19,7 +20,7 @@ export const submitAnswer = async (req, res) => {
         }
 
         const existingResult = await db.result.findFirst({
-            where: { studentId, examId },
+            where: { studentId: parseInt(studentId), examId: parseInt(examId) },
         });
 
         if (existingResult) {
@@ -56,8 +57,8 @@ export const submitAnswer = async (req, res) => {
             });
             await prisma.result.create({
                 data: {
-                    studentId,
-                    examId,
+                    studentId: parseInt(studentId),
+                    examId: parseInt(examId),
                     totalMarks,
                 },
             });

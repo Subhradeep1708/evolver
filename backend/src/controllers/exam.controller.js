@@ -52,6 +52,7 @@ export const getExamById = async (req, res) => {
             subject: true,
             mcqs: {
                 select: {
+                    id: true,
                     questionBody: true,
                     optionA: true,
                     optionB: true,
@@ -102,12 +103,11 @@ export const getExamByTeacherId = async (req, res) => {
 };
 
 const getAllExams = async (req, res) => {
-    const exams= await db.exam.findMany();
-    if(exams){
-        return res.status(200).json({exams});
-    }
-    else{
-        return res.status(404).json({message: "No exams found"});
+    const exams = await db.exam.findMany();
+    if (exams) {
+        return res.status(200).json({ exams });
+    } else {
+        return res.status(404).json({ message: "No exams found" });
     }
 };
 

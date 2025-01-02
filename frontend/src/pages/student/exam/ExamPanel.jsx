@@ -7,7 +7,6 @@ import {
     VStack,
     Text,
     SimpleGrid,
-    // Span,
 } from "@chakra-ui/react";
 import CountdownTimer from "../../../components/Timer.jsx";
 import axios from "axios";
@@ -36,7 +35,6 @@ const ExamPanel = ({ handleExitExam }) => {
                     const data = response.data;
                     const transformedMcqs = data.exam.mcqs.map((q, i) => ({
                         ...q,
-                        id: i + 1,
                         isMarkedForReview: false,
                         selectedOption: "",
                         isVisited: i === 0 ? true : false,
@@ -44,7 +42,7 @@ const ExamPanel = ({ handleExitExam }) => {
                     }));
                     setMcqs(transformedMcqs);
                     setLoading(false);
-                    console.log("Transformed MCQs:", transformedMcqs);
+                    // console.log("Transformed MCQs:", transformedMcqs);
                 }
             } catch (error) {
                 console.error(error);
@@ -96,6 +94,32 @@ const ExamPanel = ({ handleExitExam }) => {
     };
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    const submitExam = async () => {
+        try {
+            console.log("Submitting exam...");
+            console.log(mcqs);
+            const body = {
+                examId: examId,
+                answers: mcqs.map((q) => ({
+                    mcqId: q.id,
+                    selected: q.selectedOption[6],
+                })),
+            };
+            console.log("Body:", body);
+
+            const response = await axios.post(
+                "http://localhost:5000/api/answer/submit",
+                body
+            );
+
+            if (response.status === 200) {
+                console.log("Exam submitted successfully");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -367,6 +391,7 @@ const ExamPanel = ({ handleExitExam }) => {
                                 shadow={"md"}
                                 onClick={() => {
                                     handleExitExam();
+                                    submitExam();
                                 }}
                             >
                                 Submit Exam
