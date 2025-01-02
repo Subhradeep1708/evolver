@@ -1,4 +1,14 @@
-import { Box, Button, Fieldset, Input, Link, Span, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Fieldset,
+    Input,
+    Link,
+    Span,
+    Stack,
+    Text,
+    VStack,
+} from "@chakra-ui/react";
 import { Field } from "../../components/ui/field";
 import { InputGroup } from "../../components/ui/input-group";
 import { LuUser } from "react-icons/lu";
@@ -9,10 +19,11 @@ import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { routes } from "../../utils/constants";
 import UserContext from "../../contexts/userContext";
-const StudentLogin = () => {
+import { useNavigate } from "react-router";
 
-    const [rollNoError, setRollNoError] = useState("Invalid Roll No");
-    const {user, setUser} = useContext(UserContext);
+const StudentLogin = () => {
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -33,23 +44,25 @@ const StudentLogin = () => {
         },
     });
 
-
     const handleSubmit = async (values) => {
         const response = await axios.post(routes.studentLogin, values, {
             withCredentials: true,
         });
         if (response.status === 200) {
             const data = response.data.data;
+            console.log("id", response.data.data.id);
+            console.log("role", response.data.data.role);
+
             setUser({
                 id: data.id,
                 role: data.role,
             });
             console.log("Form Submitted:", response);
+            navigate("/dashboard");
         } else {
             console.log("Error:", response);
         }
     };
-
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -63,35 +76,27 @@ const StudentLogin = () => {
 
                 <Fieldset.Content>
                     <Field
-                        label="Roll Number"
-                        invalid={formik.touched.rollNo && formik.errors.rollNo}
-                        errorText={formik.touched.rollNo && formik.errors.rollNo}
+                        label="Email Address"
+                        invalid={formik.touched.email && formik.errors.email}
+                        errorText={formik.touched.email && formik.errors.email}
                     >
-                        <InputGroup
-                            flex="1"
-                            startElement={
-                                <Span p="2">
-                                    <LuUser />
-                                </Span>
-                            }
+                        <Input
+                            name="email"
                             w="100%"
-                        >
-                            <Input
-                                name="rollNo"
-                                w="100%"
-                                placeholder="GCECTB-R22-XXXX"
-                                value={formik.values.rollNo}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                        </InputGroup>
+                            placeholder="example@email.com"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
                     </Field>
                 </Fieldset.Content>
 
                 <Field
                     label="Password"
                     invalid={formik.touched.password && formik.errors.password}
-                    errorText={formik.touched.password && formik.errors.password}
+                    errorText={
+                        formik.touched.password && formik.errors.password
+                    }
                 >
                     <PasswordInput
                         name="password"
@@ -115,7 +120,6 @@ const StudentLogin = () => {
                 </Button>
             </Fieldset.Root>
         </form>
-
     );
 };
 

@@ -3,13 +3,11 @@ import React, { useContext } from "react";
 import UserContext from "../../../contexts/userContext";
 
 const Sidebar = () => {
-    // Get the current pathname
-    const currentPath = window.location.pathname; // Get the current pathname
-    // ! Change it to useLocation from React-Dom_Router
+    // console.log(currentPath);
+    const { user } = useContext(UserContext);
+    console.log("User: ", user);
 
-    console.log(currentPath);
-    const {user} = useContext(UserContext);
-    const role = user.role;
+    const role = user?.role;
 
     const links = {
         student: [
@@ -32,7 +30,7 @@ const Sidebar = () => {
                 id: 4,
                 name: "Edit Profile",
                 path: "/student/edit-profile",
-            }
+            },
         ],
         teacher: [
             {
@@ -59,14 +57,14 @@ const Sidebar = () => {
                 id: 5,
                 name: "Create Exam",
                 path: "/teacher/create-exam",
-            }
+            },
         ],
         controller: [
             {
                 id: 1,
                 name: "Dashboard",
                 path: "/controller/dashboard",
-            },  
+            },
             {
                 id: 2,
                 name: "Add Teacher",
@@ -102,10 +100,9 @@ const Sidebar = () => {
                 name: "All Subjects",
                 path: "/controller/all-subjects",
             },
-
         ],
+    };
 
-    }
     return (
         <VStack
             width="200px"
@@ -126,7 +123,6 @@ const Sidebar = () => {
                     hover={{
                         background: "blue.900",
                     }}
-                    background={currentPath === link.path ? "blue.900" : ""}
                 >
                     <Link href={link.path}>{link.name}</Link>
                 </Box>

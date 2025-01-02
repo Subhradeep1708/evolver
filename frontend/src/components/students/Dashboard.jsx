@@ -5,69 +5,36 @@ import ExamCard from "./ExamCard";
 
 const Dashboard = () => {
     const [exams, setExams] = useState([]);
-    // useEffect(() => {
-    //     axios
-    //         .get("http://localhost:5000/api/exams")
-    //         .then((res) => {
-    //             setExams(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    useEffect(() => {
+        const fetchExams = async () => {
+            const res = await axios.get("http://localhost:5000/api/exam");
+            if (res.status === 200) {
+                // setExams(res.data.data);
+                console.log(res.data.exams);
+                setExams(res.data.exams);
+            }
+        };
 
-    const examData = [
-        {
-            examName: "Exam 1",
-            addedBy: "Teacher 1",
-            totalMarks: 100,
-            description: "This is a description",
-            examLink: "/start/exam/1",
-        },
-        {
-            examName: "Exam 2",
-            addedBy: "Teacher 2",
-            totalMarks: 100,
-            description: "This is a description",
-            examLink: "/start/exam/2",
-        },
-        {
-            examName: "Exam 3",
-            addedBy: "Teacher 3",
-            totalMarks: 100,
-            description: "This is a description",
-            examLink: "/start/exam/3",
-        },
-        {
-            examName: "Exam 3",
-            addedBy: "Teacher 3",
-            totalMarks: 100,
-            description: "This is a description",
-            examLink: "/start/exam/3",
-        },
-        {
-            examName: "Exam 7",
-            addedBy: "Teacher 7",
-            totalMarks: 100,
-            description: "This is a description",
-            examLink: "/start/exam/7",
-        },
-    ];
+        fetchExams();
+    }, []);
+
+    console.log(exams);
 
     return (
         <Grid gap={4} w={"full"} templateColumns={"repeat(3, 1fr)"}>
-            {examData.map((exam, index) => (
+            {exams.map((e, index) => (
                 <ExamCard
                     key={index}
-                    examName={exam.examName}
-                    addedBy={exam.addedBy}
-                    totalMarks={exam.totalMarks}
-                    description={exam.description}
-                    examLink={exam.examLink}
+                    examName={e.name}
+                    addedBy={e.addedBy}
+                    totalMarks={e.totalMarks}
+                    // description={e.description}
+                    examLink={`/start/exam/${e.id}`}
                 />
             ))}
         </Grid>
         // </Box>
+        // <>Hello</>
     );
 };
 export default Dashboard;

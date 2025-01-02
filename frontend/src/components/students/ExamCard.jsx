@@ -3,7 +3,13 @@ import { useNavigate } from "react-router";
 
 // import { Button } from "@/components/ui/button"
 
-const ExamCard = ({ examName, addedBy, totalMarks, description, examLink }) => {
+const ExamCard = ({
+    examName,
+    addedBy,
+    totalMarks,
+    description = "This is fake.",
+    examLink,
+}) => {
     const navigate = useNavigate();
     return (
         <Card.Root

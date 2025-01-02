@@ -7,10 +7,11 @@ import axios from "axios";
 import { routes } from "../../utils/constants";
 import { useContext } from "react";
 import UserContext from "../../contexts/userContext";
-
+import { useNavigate } from "react-router";
 
 const TeacherLogin = () => {
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -31,7 +32,6 @@ const TeacherLogin = () => {
     });
 
     const handleSubmit = async (values) => {
-
         const response = await axios.post(routes.teacherLogin, values, {
             withCredentials: true,
         });
@@ -40,9 +40,9 @@ const TeacherLogin = () => {
             setUser({
                 id: data.id,
                 role: data.role,
-                
             });
             console.log("Form Submitted:", response);
+            navigate("/dashboard");
         } else {
             console.log("Error:", response);
         }
@@ -51,7 +51,7 @@ const TeacherLogin = () => {
         <form onSubmit={formik.handleSubmit}>
             <Fieldset.Root size="lg" maxW="md" spaceY="4">
                 <Stack>
-                    <Fieldset.Legend>Contact details</Fieldset.Legend>
+                    <Fieldset.Legend>Teacher Login</Fieldset.Legend>
                     <Fieldset.HelperText>
                         Please provide your contact details below.
                     </Fieldset.HelperText>

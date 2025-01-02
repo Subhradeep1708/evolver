@@ -1,6 +1,5 @@
 import { HStack, Box, VStack } from "@chakra-ui/react";
 import Sidebar from "../components/common/sidebar/Sidebar";
-import PropTypes from "prop-types";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router";
 import { UserProvider } from "../contexts/userContext";
