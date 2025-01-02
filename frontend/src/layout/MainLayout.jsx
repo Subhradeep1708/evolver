@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router";
 import { UserProvider } from "../contexts/userContext";
+import { Toaster } from "../components/ui/toaster";
 
 const MainLayout = () => {
     return (
@@ -26,9 +27,9 @@ const MainLayout = () => {
                     </Box>
                 </VStack>
             </HStack>
+            <Toaster />
         </UserProvider>
     );
 };
-
 
 export default MainLayout;

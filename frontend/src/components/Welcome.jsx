@@ -1,22 +1,16 @@
 import { Button, VStack } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { Toaster, toaster } from "./ui/toaster.jsx";
+// import { useRef, useState } from "react";
 
 function Welcome() {
-    const [count, setCount] = useState(0);
-    const countRef = useRef(count);
-
-    const increment = () => {
-        // setCount(count + 1);
-        countRef.current = countRef.current + 1;
-        console.log("Welcome:", countRef.current);
+    const sayHello = () => {
+        toaster.create({ title: "Hello Raktim" });
     };
-
-    console.log("Welcome:", countRef.current);
 
     return (
         <VStack>
-            {countRef.current}
-            <Button onClick={increment}>Increment</Button>
+            <Button onClick={sayHello}>Say Hello</Button>
+            <Toaster />
         </VStack>
     );
 }
