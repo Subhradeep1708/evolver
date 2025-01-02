@@ -1,6 +1,7 @@
 import { Box, Link, VStack } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import UserContext from "../../../contexts/userContext";
+import { NavLink } from "react-router";
 
 const Sidebar = () => {
     // console.log(currentPath);
@@ -124,7 +125,7 @@ const Sidebar = () => {
                         background: "blue.900",
                     }}
                 >
-                    <Link href={link.path}>{link.name}</Link>
+                    <NavLink to={link.path}>{link.name}</NavLink>
                 </Box>
             ))}
         </VStack>

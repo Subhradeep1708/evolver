@@ -4,7 +4,7 @@ import axios from "axios";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // null indicates no user is logged in
+    const [user, setUser] = useState({}); // null indicates no user is logged in
     const [isLoading, setIsLoading] = useState(true); // To manage loading state
     const [accessToken, setAccessToken] = useState(""); // Store access token in memory
 
