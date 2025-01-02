@@ -10,7 +10,7 @@ import { Box } from "@chakra-ui/react";
 const ExamLayout = () => {
     const pageRef = useRef(null);
     const fullScreenHandle = useFullScreenHandle();
-    const [page, setPage] = useState(3);
+    const [page, setPage] = useState(1);
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     useEffect(() => {
