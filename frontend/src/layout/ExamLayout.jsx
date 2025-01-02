@@ -4,11 +4,13 @@ import ExamPanel from "../pages/student/exam/ExamPanel";
 import StartExam from "../pages/student/exam/StartExam";
 import { useParams } from "react-router";
 import axios from "axios";
+import EndExam from "../pages/student/exam/EndExam";
+import { Box } from "@chakra-ui/react";
 
 const ExamLayout = () => {
     const pageRef = useRef(null);
     const fullScreenHandle = useFullScreenHandle();
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(3);
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     useEffect(() => {
@@ -80,7 +82,7 @@ const ExamLayout = () => {
     }, []);
 
     return (
-        <div ref={pageRef}>
+        <Box ref={pageRef}>
             {page === 1 && (
                 <div>
                     <StartExam handleStartExam={handleStartExam} />
@@ -88,9 +90,9 @@ const ExamLayout = () => {
             )}
             <FullScreen handle={fullScreenHandle}>
                 {page === 2 && <ExamPanel handleExitExam={handleExitExam} />}
-                {page === 3 && <p>Thank You</p>}
             </FullScreen>
-        </div>
+            {page === 3 && <EndExam />}
+        </Box>
     );
 };
 
