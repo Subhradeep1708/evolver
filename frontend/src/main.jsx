@@ -16,13 +16,14 @@ import ExamLayout from "./layout/ExamLayout.jsx";
 import ExamPanel from "./pages/student/exam/ExamPanel.jsx";
 import StartExam from "./pages/student/exam/StartExam.jsx";
 import Dashboard from "./components/students/Dashboard.jsx";
+import Welcome from "./components/Welcome.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <BrowserRouter>
             <Provider>
                 <Routes>
-                    <Route path="/" element={<p>Welcome to Evolver</p>} />
+                    <Route path="/" element={<Welcome />} />
                     <Route path="auth" element={<AuthLayout />}>
                         <Route path="student" element={<StudentLogin />} />
                         <Route path="teacher" element={<TeacherLogin />} />
