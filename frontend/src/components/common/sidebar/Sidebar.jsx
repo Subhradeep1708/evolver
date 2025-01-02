@@ -1,11 +1,12 @@
 import { Box, Link, VStack } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import UserContext from "../../../contexts/userContext";
+import UserContext from "../../../contexts/userContext.jsx";
 import { NavLink } from "react-router";
+import { useAppStore } from "../../../Store/index.js";
 
 const Sidebar = () => {
     // console.log(currentPath);
-    const { user } = useContext(UserContext);
+    const { user } = useAppStore();
     console.log("User: ", user);
 
     const role = user?.role;

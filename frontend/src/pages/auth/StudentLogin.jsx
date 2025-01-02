@@ -18,11 +18,11 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { routes } from "../../utils/constants";
-import UserContext, { UserProvider } from "../../contexts/userContext";
 import { useNavigate } from "react-router";
+import { useAppStore } from "../../Store/index.js";
 
 const StudentLogin = () => {
-    const { user, setUser } = useContext(UserContext);
+    const {user,setUser}=useAppStore();
     const navigate = useNavigate();
 
     const formik = useFormik({
@@ -52,11 +52,7 @@ const StudentLogin = () => {
             const data = response.data.data;
             console.log("id", response.data.data.id);
             console.log("role", response.data.data.role);
-
-            setUser({
-                id: data.id,
-                role: data.role,
-            });
+            setUser(data);
             console.log("Form Submitted:", response);
             navigate("/dashboard");
         } else {
@@ -65,7 +61,6 @@ const StudentLogin = () => {
     };
 
     return (
-        <UserProvider>
             <form onSubmit={formik.handleSubmit}>
                 <Fieldset.Root size="lg" maxW="md" spaceY="4">
                     <Stack>
@@ -138,7 +133,6 @@ const StudentLogin = () => {
                     </Button>
                 </Fieldset.Root>
             </form>
-        </UserProvider>
     );
 };
 
