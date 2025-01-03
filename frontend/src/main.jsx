@@ -32,12 +32,38 @@ createRoot(document.getElementById("root")).render(
                             <Route path="teacher" element={<TeacherLogin />} />
                         </Route>
                         <Route path="/" element={<MainLayout />}>
-                            {/* exams */}
+                            {/*Common  */}
                             <Route
                                 path="dashboard"
                                 element={<Dashboard />}
                             ></Route>
-                            {/* Add Student */}
+
+                            {
+                                // !Students
+                                // *My Results
+                            }
+
+                            {
+                                //! Teacher and Controllers
+                                // *Exams
+                                // *Add Exam
+                                // *Results
+                            }
+                            <Route
+                                path="exam/add"
+                                element={<ExamForm />}
+                            ></Route>
+                            {
+                                //! Controller Only
+                                // *Add Student
+                                // *Add Teacher
+                                // *Add Subject
+                                // *All Students
+                                // *All Teachers
+                                // *All Subjects Data
+                                // *All Teachers Data
+                                // *All Students Data
+                            }
                             <Route
                                 path="student/add"
                                 element={<StudentForm />}
@@ -50,16 +76,24 @@ createRoot(document.getElementById("root")).render(
                                 path="subject/add"
                                 element={<SubjectForm />}
                             ></Route>
-                            {/*  */}
+                            <Route path="student" element={<StudentForm />} />
                             <Route
-                                path="exam/add"
-                                element={<ExamForm />}
+                                path="teacher"
+                                element={<TeacherForm />}
                             ></Route>
+                            <Route
+                                path="subject"
+                                element={<SubjectForm />}
+                            ></Route>
+
+                            {/*  */}
+
                             <Route
                                 path="/exam/:examId/mcq"
                                 element={<McqForm />}
                             ></Route>
                         </Route>
+                        {/* Student Only - Exam Panel */}
                         <Route path="start" element={<ExamLayout />}>
                             <Route index element={<StartExam />} />
                             <Route
