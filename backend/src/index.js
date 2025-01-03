@@ -36,6 +36,7 @@ app.use("/api/mcq", mcqRouter);
 app.use("/api/answer", answerRouter);
 
 app.use("/api/result", resultRouter);
+// app.use("/api",  );
 
 app.listen(5000, () => {
     console.log("app is listening");
