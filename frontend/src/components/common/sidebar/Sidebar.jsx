@@ -26,6 +26,10 @@ const Sidebar = () => {
             alignItems="flex-start"
             background={"brand.dark"}
             color={"white"}
+            borderRadius={"24px"}
+            overflow={"hidden"}
+            p={"2"}
+      
         >
             {links[role]?.map((link) => (
                 <Box
@@ -37,6 +41,7 @@ const Sidebar = () => {
                     }
                     color={pathname === link.path ? "brand.dark" : "white"}
                     fontWeight="semibold"
+                    borderRadius={"16px"}
                 >
                     <NavLink key={link.id} to={link.path}>
                         {link.name}

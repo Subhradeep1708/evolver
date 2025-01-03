@@ -6,7 +6,7 @@ const customConfig = defineConfig({
             colors: {
                 brand: {
                     light: "#D6E6FE",
-                    dark: "#102353",
+                    dark: "#1D2974",
                 },
             },
         },

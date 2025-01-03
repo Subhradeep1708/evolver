@@ -18,6 +18,7 @@ const ExamCard = ({
             p={"4"}
             gap={"4"}
             variant={"elevated"}
+            borderRadius={"24px"}
         >
             <Card.Body gapY="4">
                 <Card.Title mt="2">{examName}</Card.Title>
@@ -33,7 +34,7 @@ const ExamCard = ({
                 {/* <Text fontSize="sm" color="red">
                     Due at 10th October at 10:00 AM
                 </Text> */}
-                <Button px={"3"} onClick={() => navigate(examLink)}>
+                <Button px={"3"} onClick={() => navigate(examLink)} bg={"#1D2974"}>
                     Start Exam
                 </Button>
             </Card.Footer>
