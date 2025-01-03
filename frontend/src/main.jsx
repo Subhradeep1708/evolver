@@ -15,7 +15,7 @@ import McqForm from "./components/forms/McqForm.jsx";
 import ExamLayout from "./layout/ExamLayout.jsx";
 import ExamPanel from "./pages/student/exam/ExamPanel.jsx";
 import StartExam from "./pages/student/exam/StartExam.jsx";
-import Dashboard from "./components/students/Dashboard.jsx";
+import Dashboard from "./pages/student/Dashboard.jsx";
 import Welcome from "./components/Welcome.jsx";
 import { UserProvider } from "./contexts/userContext.jsx";
 import { Toaster } from "./components/ui/toaster.jsx";

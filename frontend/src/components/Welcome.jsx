@@ -4,6 +4,7 @@ import {
     Heading,
     HStack,
     Image,
+    Span,
     Text,
     VStack,
 } from "@chakra-ui/react";
@@ -43,17 +44,37 @@ function Welcome() {
                 >
                     <Box zIndex={"11"} spaceY={"8"}>
                         <Heading size={"6xl"} color={"#324667"}>
-                            Evolver..
+                            Evolver
                         </Heading>
                         <Text fontSize={"xl"} maxW={"breakpoint-sm"}>
                             Welcome to the best online exam portal, test
                             yourself here. Get started by logging in.
                         </Text>
                     </Box>
-                    <Button p={"5"} size="lg" bg={"#D6E6FE"} color={"#102353"}>
-                        <NavLink to="/auth/student">Login to continue</NavLink>
-                        <FaArrowRight />
-                    </Button>
+                    <Box spaceY={"2"}>
+                        <Button
+                            p={"5"}
+                            size="lg"
+                            bg={"#D6E6FE"}
+                            color={"#102353"}
+                        >
+                            <NavLink to="/auth/student">
+                                Login to continue
+                            </NavLink>
+                            <FaArrowRight />
+                        </Button>
+                        <Text fontSize={"sm"} color={"#102353"}>
+                            Are you a teacher ?{" "}
+                            <NavLink
+                                to="/auth/teacher"
+                                // textDecoration="underline"
+                            >
+                                <Span textDecoration={"underline"}>
+                                    Log in here
+                                </Span>
+                            </NavLink>
+                        </Text>
+                    </Box>
                 </VStack>
                 <Box w={"40%"}>
                     <Image src="../../../public/image.png" />

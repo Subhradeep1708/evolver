@@ -1,7 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ExamCard from "./ExamCard";
+import ExamCard from "../../components/students/ExamCard";
 
 const Dashboard = () => {
     const [exams, setExams] = useState([]);

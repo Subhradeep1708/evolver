@@ -8,9 +8,10 @@ import { routes } from "../../utils/constants";
 import { useContext } from "react";
 import UserContext from "../../contexts/userContext";
 import { useNavigate } from "react-router";
+import { useAppStore } from "../../Store";
 
 const TeacherLogin = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useAppStore();
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
