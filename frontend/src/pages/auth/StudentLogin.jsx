@@ -22,7 +22,8 @@ import { useNavigate } from "react-router";
 import { useAppStore } from "../../Store/index.js";
 
 const StudentLogin = () => {
-    const {user,setUser}=useAppStore();
+    // const {user,setUser}=useAppStore();
+    const setUser = useAppStore((state) => state.setUser);
     const navigate = useNavigate();
 
     const formik = useFormik({
@@ -52,7 +53,11 @@ const StudentLogin = () => {
             const data = response.data.data;
             console.log("id", response.data.data.id);
             console.log("role", response.data.data.role);
-            setUser(data);
+            const newUser = {
+                id: data.id,
+                role: data.role,
+            };
+            setUser(newUser);
             console.log("Form Submitted:", response);
             navigate("/dashboard");
         } else {
@@ -61,78 +66,61 @@ const StudentLogin = () => {
     };
 
     return (
-            <form onSubmit={formik.handleSubmit}>
-                <Fieldset.Root size="lg" maxW="md" spaceY="4">
-                    <Stack>
-                        <Fieldset.Legend>Student Login</Fieldset.Legend>
-                        <Fieldset.HelperText>
-                            Please enter your login details below.
-                        </Fieldset.HelperText>
-                    </Stack>
+        <form onSubmit={formik.handleSubmit}>
+            <Fieldset.Root size="lg" maxW="md" spaceY="4">
+                <Stack>
+                    <Fieldset.Legend>Student Login</Fieldset.Legend>
+                    <Fieldset.HelperText>
+                        Please enter your login details below.
+                    </Fieldset.HelperText>
+                </Stack>
 
-                    <Fieldset.Content>
-                        <Field
-                            label="Email Address"
-                            invalid={
-                                formik.touched.email && formik.errors.email
-                            }
-                            errorText={
-                                formik.touched.email && formik.errors.email
-                            }
-                        >
-                            <Input
-                                name="email"
-                                w="100%"
-                                placeholder="example@email.com"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                        </Field>
-                    </Fieldset.Content>
-
+                <Fieldset.Content>
                     <Field
-                        label="Password"
-                        invalid={
-                            formik.touched.password && formik.errors.password
-                        }
-                        errorText={
-                            formik.touched.password && formik.errors.password
-                        }
+                        label="Email Address"
+                        invalid={formik.touched.email && formik.errors.email}
+                        errorText={formik.touched.email && formik.errors.email}
                     >
-                        <PasswordInput
-                            name="password"
-                            px={2}
-                            pr={4}
-                            value={formik.values.password}
+                        <Input
+                            name="email"
+                            w="100%"
+                            placeholder="example@email.com"
+                            value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         />
-                        {formik.touched.password && formik.errors.password && (
-                            <p style={{ color: "red" }}>
-                                {formik.errors.password}
-                            </p>
-                        )}
                     </Field>
+                </Fieldset.Content>
 
-                    <Link
-                        href="/forgot-password"
-                        fontSize="sm"
-                        color="gray.500"
-                    >
-                        Forgot Password?
-                    </Link>
+                <Field
+                    label="Password"
+                    invalid={formik.touched.password && formik.errors.password}
+                    errorText={
+                        formik.touched.password && formik.errors.password
+                    }
+                >
+                    <PasswordInput
+                        name="password"
+                        px={2}
+                        pr={4}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                        <p style={{ color: "red" }}>{formik.errors.password}</p>
+                    )}
+                </Field>
 
-                    <Button
-                        type="submit"
-                        alignSelf="flex-start"
-                        p={4}
-                        size="lg"
-                    >
-                        Login
-                    </Button>
-                </Fieldset.Root>
-            </form>
+                <Link href="/forgot-password" fontSize="sm" color="gray.500">
+                    Forgot Password?
+                </Link>
+
+                <Button type="submit" alignSelf="flex-start" p={4} size="lg">
+                    Login
+                </Button>
+            </Fieldset.Root>
+        </form>
     );
 };
 

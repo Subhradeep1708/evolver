@@ -7,7 +7,7 @@ import { links } from "./../../../utils/sidebar-links.js";
 
 const Sidebar = () => {
     // console.log(currentPath);
-    const { user } = useAppStore();
+    const user = useAppStore((state) => state.user);
     console.log("User: ", user);
 
     const role = user?.role;
