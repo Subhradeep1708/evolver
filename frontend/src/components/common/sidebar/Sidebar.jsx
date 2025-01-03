@@ -10,7 +10,7 @@ const Sidebar = () => {
     const { user } = useAppStore();
     console.log("User: ", user);
 
-    const role = user?.role || "controller";
+    const role = user?.role;
 
     return (
         <VStack
