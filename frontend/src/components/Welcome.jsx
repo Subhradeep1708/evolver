@@ -25,7 +25,7 @@ function Welcome() {
                 h={"200px"}
                 scale={"1.2"}
             />
-            <HomeNav />
+            {/* <HomeNav /> */}
             <HStack
                 h={"100vh"}
                 w={"100vw"}

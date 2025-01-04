@@ -19,14 +19,22 @@ import Dashboard from "./pages/student/Dashboard.jsx";
 import Welcome from "./components/Welcome.jsx";
 import { UserProvider } from "./contexts/userContext.jsx";
 import { Toaster } from "./components/ui/toaster.jsx";
-
+import LandingLayout from "./layout/LandingLayout.jsx";
+import Faq from "./pages/Landing/Faq.jsx";
+import About from "./pages/Landing/About.jsx";
+import Contact from "./pages/Landing/contact.jsx";
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <UserProvider>
             <BrowserRouter>
                 <Provider>
                     <Routes>
-                        <Route path="/" element={<Welcome />} />
+                        <Route path="/" element={<LandingLayout/>} >
+                            <Route index element={<Welcome/>}/>
+                            <Route path="about" element={<About/>}/>
+                            <Route path="contact" element={<Contact/>}/>
+                            <Route path="faq" element={<Faq/>}/>
+                        </Route>
                         <Route path="auth" element={<AuthLayout />}>
                             <Route path="student" element={<StudentLogin />} />
                             <Route path="teacher" element={<TeacherLogin />} />

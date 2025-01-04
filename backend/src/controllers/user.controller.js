@@ -10,7 +10,7 @@ const getStudentData = async (req, res) => {
             data: student,
         });
     } catch (error) {
-        throw new Error(error.message);
+       console.log(error.message);
     }
 };
 

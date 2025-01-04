@@ -12,6 +12,7 @@ const HomeNav = () => {
             my={"8"}
             rounded={"full"}
             justify={"space-evenly"}
+            zIndex={"10"}
         >
             {links.map((link) => (
                 <Box key={link.name} basis={"1/4"}>
