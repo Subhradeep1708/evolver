@@ -7,8 +7,8 @@ const answerRouter = Router();
 
 answerRouter.post(
     "/submit",
-    // isAuthenticated,
-    // checkStudentPermission,
+    isAuthenticated,
+    checkStudentPermission,
     submitAnswer
 );
 

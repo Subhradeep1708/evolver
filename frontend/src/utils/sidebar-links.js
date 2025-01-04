@@ -3,7 +3,7 @@ export const links = {
         {
             id: 1,
             name: "Dashboard",
-            path: "/student/dashboard",
+            path: "/dashboard",
         },
         {
             id: 2,
@@ -25,7 +25,7 @@ export const links = {
         {
             id: 1,
             name: "Dashboard",
-            path: "/teacher/dashboard",
+            path: "/dashboard",
         },
         {
             id: 2,
@@ -52,7 +52,7 @@ export const links = {
         {
             id: 1,
             name: "Dashboard",
-            path: "/controller/dashboard",
+            path: "/dashboard",
         },
         {
             id: 2,

@@ -2,13 +2,15 @@ import db from "../db/db.js";
 
 export const submitAnswer = async (req, res) => {
     try {
-        // const studentId = req.user.id;
-        const studentId = 3; //! For testing purposes
+        const studentId = req.user.id; //! For testing purposes
+        console.log("Student Id:", studentId);
+
         const { examId, answers } = req.body;
 
         if (!answers || answers.length === 0) {
             return res.status(400).json({ message: "No answers provided" });
         }
+        console.log("Answers provided");
 
         const exam = await db.exam.findUnique({
             where: { id: parseInt(examId) },
@@ -18,6 +20,8 @@ export const submitAnswer = async (req, res) => {
         if (!exam) {
             return res.status(404).json({ message: "Exam not found" });
         }
+
+        console.log("Exam found");
 
         const existingResult = await db.result.findFirst({
             where: { studentId: parseInt(studentId), examId: parseInt(examId) },
@@ -49,6 +53,10 @@ export const submitAnswer = async (req, res) => {
             };
         });
 
+        console.log("Answer data:", answerData);
+        console.log("Total marks:", totalMarks);
+        console.log("Submitting answers...");
+
         // Transaction for atomicity
         await db.$transaction(async (prisma) => {
             await prisma.answer.createMany({
@@ -63,6 +71,8 @@ export const submitAnswer = async (req, res) => {
                 },
             });
         });
+
+        console.log("Answers submitted successfully");
 
         return res
             .status(201)

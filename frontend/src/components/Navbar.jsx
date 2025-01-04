@@ -10,8 +10,10 @@ function Navbar() {
             h={"8vh"}
             justifyContent={"space-between"}
             p={3}
+            borderRadius={"24px"}
+            shadow={"md"}
         >
-            <Box>
+            <Box p={4}>
                 <Text>Raktim is on fire </Text>
                 <Text fontSize={"xs"}>Roll:1234</Text>
             </Box>

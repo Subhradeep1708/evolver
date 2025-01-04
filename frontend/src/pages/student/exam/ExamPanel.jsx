@@ -110,10 +110,13 @@ const ExamPanel = ({ handleExitExam }) => {
 
             const response = await axios.post(
                 "http://localhost:5000/api/answer/submit",
-                body
+                body,
+                {
+                    withCredentials: true,
+                }
             );
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 console.log("Exam submitted successfully");
             }
         } catch (error) {

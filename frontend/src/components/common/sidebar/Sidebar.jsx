@@ -1,6 +1,6 @@
 import { Box, Link, VStack } from "@chakra-ui/react";
 import React from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { useAppStore } from "../../../Store/index.js";
 
 import { links } from "./../../../utils/sidebar-links.js";
@@ -9,6 +9,9 @@ const Sidebar = () => {
     // console.log(currentPath);
     const user = useAppStore((state) => state.user);
     console.log("User: ", user);
+    const location = useLocation();
+    const pathname = location.pathname;
+    console.log("Pathname: ", pathname);
 
     const role = user?.role;
 
@@ -23,17 +26,26 @@ const Sidebar = () => {
             alignItems="flex-start"
             background={"brand.dark"}
             color={"white"}
+            borderRadius={"24px"}
+            overflow={"hidden"}
+            p={"2"}
+      
         >
             {links[role]?.map((link) => (
                 <Box
                     key={link.id}
                     w="full"
                     p={4}
-                    hover={{
-                        background: "blue.900",
-                    }}
+                    background={
+                        pathname === link.path ? "brand.light" : "brand.dark"
+                    }
+                    color={pathname === link.path ? "brand.dark" : "white"}
+                    fontWeight="semibold"
+                    borderRadius={"16px"}
                 >
-                    <NavLink to={link.path}>{link.name}</NavLink>
+                    <NavLink key={link.id} to={link.path}>
+                        {link.name}
+                    </NavLink>
                 </Box>
             ))}
         </VStack>

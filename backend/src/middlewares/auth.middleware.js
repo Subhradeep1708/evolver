@@ -31,6 +31,8 @@ export const isAuthenticated = (req, res, next) => {
             role: decoded.role,
         };
 
+        console.log("User authenticated:", req.user);
+
         // Proceed to the next middleware or route handler
         next();
     } catch (error) {
