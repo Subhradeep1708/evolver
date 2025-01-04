@@ -22,18 +22,18 @@ import { Toaster } from "./components/ui/toaster.jsx";
 import LandingLayout from "./layout/LandingLayout.jsx";
 import Faq from "./pages/Landing/Faq.jsx";
 import About from "./pages/Landing/About.jsx";
-import Contact from "./pages/Landing/contact.jsx";
+import Contact from "./pages/Landing/Contact.jsx";
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <UserProvider>
             <BrowserRouter>
                 <Provider>
                     <Routes>
-                        <Route path="/" element={<LandingLayout/>} >
-                            <Route index element={<Welcome/>}/>
-                            <Route path="about" element={<About/>}/>
-                            <Route path="contact" element={<Contact/>}/>
-                            <Route path="faq" element={<Faq/>}/>
+                        <Route path="/" element={<LandingLayout />}>
+                            <Route index element={<Welcome />} />
+                            <Route path="about" element={<About />} />
+                            <Route path="contact" element={<Contact />} />
+                            <Route path="faq" element={<Faq />} />
                         </Route>
                         <Route path="auth" element={<AuthLayout />}>
                             <Route path="student" element={<StudentLogin />} />

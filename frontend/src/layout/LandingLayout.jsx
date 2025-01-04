@@ -1,16 +1,16 @@
-import React from 'react'
-import { Box } from '@chakra-ui/react'
-import { Outlet } from 'react-router'
-import HomeNav from '../components/HomeNav'
+import React from "react";
+import { Box } from "@chakra-ui/react";
+import { Outlet } from "react-router";
+import HomeNav from "../components/HomeNav";
 const LandingLayout = () => {
-  return (
-    <Box>
-        <Box display={"flex"} justifyContent={"center"}>
-            <HomeNav/>
+    return (
+        <Box w="100vw" bg="" minH={"100vh"}>
+            <Box display={"flex"} justifyContent={"center"}>
+                <HomeNav />
+            </Box>
+            <Outlet />
         </Box>
-       <Outlet/>
-    </Box>
-  )
-}
+    );
+};
 
-export default LandingLayout
+export default LandingLayout;
