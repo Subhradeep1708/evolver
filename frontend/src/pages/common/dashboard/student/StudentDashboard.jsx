@@ -1,9 +1,9 @@
 import { Box, Grid } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ExamCard from "../../components/students/ExamCard";
+import ExamCard from "../../../../components/students/ExamCard.jsx";
 
-const Dashboard = () => {
+const StudentDashboard = () => {
     const [exams, setExams] = useState([]);
     useEffect(() => {
         const fetchExams = async () => {
@@ -37,6 +37,6 @@ const Dashboard = () => {
         // <>Hello</>
     );
 };
-export default Dashboard;
+export default StudentDashboard;
 
 // examName, addedBy, totalMarks, description, examLink

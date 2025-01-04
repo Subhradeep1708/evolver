@@ -378,7 +378,7 @@ const ExamPanel = ({ handleExitExam }) => {
                                             borderWidth={2}
                                             aspectRatio={"square"}
                                         >
-                                            {q.id}
+                                            {idx + 1}
                                         </Button>
                                     </Box>
                                 ))}

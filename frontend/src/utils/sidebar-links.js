@@ -1,24 +1,27 @@
 export const links = {
     student: [
+        // !Upcoming Exams in Evolver 2.0
         {
             id: 1,
             name: "Dashboard",
             path: "/dashboard",
         },
-        {
-            id: 2,
-            name: "Exams",
-            path: "/student/exams",
-        },
+        // !All Exams in Evolver 2.0
+
+        // {
+        //     id: 2,
+        //     name: "Exams",
+        //     path: "/student/exams",
+        // },
         {
             id: 3,
-            name: "Results",
-            path: "/student/results",
+            name: "My Results",
+            path: "/my-results",
         },
         {
             id: 4,
             name: "Edit Profile",
-            path: "/student/edit-profile",
+            path: "/edit-profile",
         },
     ],
     teacher: [
@@ -27,25 +30,25 @@ export const links = {
             name: "Dashboard",
             path: "/dashboard",
         },
-        {
-            id: 2,
-            name: "Exams",
-            path: "/teacher/exams",
-        },
+        // {
+        //     id: 2,
+        //     name: "Exams",
+        //     path: "/teacher/exams",
+        // },
         {
             id: 3,
-            name: "Results",
-            path: "/teacher/results",
+            name: "Exam Results",
+            path: "/exam-results",
         },
         {
             id: 4,
             name: "Edit Profile",
-            path: "/teacher/edit-profile",
+            path: "/edit-profile",
         },
         {
             id: 5,
             name: "Create Exam",
-            path: "/teacher/create-exam",
+            path: "/exam/add",
         },
     ],
     controller: [
@@ -67,7 +70,7 @@ export const links = {
         {
             id: 4,
             name: "Edit Profile",
-            path: "/controller/edit-profile",
+            path: "/edit-profile",
         },
         {
             id: 5,

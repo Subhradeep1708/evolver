@@ -116,6 +116,7 @@ model Result {
   student     Student  @relation(fields: [studentId], references: [id])
   exam        Exam     @relation(fields: [examId], references: [id])
 
+  // ! Add obtained marks
   @@map("result")
 }
 

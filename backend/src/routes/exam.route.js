@@ -5,6 +5,7 @@ import {
     createExam,
     getAllExams,
     getExamById,
+    getExamByTeacherId,
 } from "../controllers/exam.controller.js";
 
 const examRouter = Router();
@@ -27,6 +28,13 @@ examRouter.get(
     "/:id",
     // isAuthenticated,
     getExamById
+);
+
+examRouter.get(
+    "/teacher/:id",
+    isAuthenticated,
+    checkTeacherPermission,
+    getExamByTeacherId
 );
 
 export default examRouter;
