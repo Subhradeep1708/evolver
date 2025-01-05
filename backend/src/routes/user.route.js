@@ -8,7 +8,7 @@ import {
     getExamByStudentId,
     getExamByTeacherId,
 } from "../controllers/exam.controller.js";
-import { getAllStudent } from "../controllers/user.controller.js";
+import { getAllStudent, getAllTeacher } from "../controllers/user.controller.js";
 
 const userRouter = Router();
 
@@ -33,5 +33,12 @@ userRouter.get(
     // checkTeacherPermission,
     getAllStudent
 );
+
+userRouter.get(
+    "/teacher",
+    // isAuthenticated,
+    getAllTeacher
+
+)
 
 export default userRouter;

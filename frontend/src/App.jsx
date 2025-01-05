@@ -22,7 +22,12 @@ import Dashboard from "./pages/common/dashboard/Dashboard.jsx";
 import MyResults from "./pages/student/MyResults.jsx";
 import CreateExam from "./pages/teacher/CreateExam.jsx";
 import ExamResults from "./pages/teacher/ExamResults.jsx";
-
+import AddStudent from "./pages/teacher/controller/AddStudent.jsx";
+import AddTeacher from "./pages/teacher/controller/AddTeacher.jsx";
+import AddSubject from "./pages/teacher/controller/AddSubject.jsx";
+import AllStudent from "./pages/teacher/controller/AllStudent.jsx";
+import AllSubjects from "./pages/teacher/controller/AllSubjects.jsx";
+import AllTeachers from "./pages/teacher/controller/AllTeachers.jsx";
 function App() {
     return (
         <BrowserRouter>
@@ -77,19 +82,20 @@ function App() {
                             // *All Teachers Data
                             // *All Students Data
                         }
-                        <Route path="student/add" element={<StudentForm />} />
+                        <Route path="student/add" element={<AddStudent />} />
                         <Route
                             path="teacher/add"
-                            element={<TeacherForm />}
-                        ></Route>
+                            element={<AddTeacher/>}
+                        />
                         <Route
                             path="subject/add"
-                            element={<SubjectForm />}
-                        ></Route>
-                        <Route path="student" element={<StudentForm />} />
-                        <Route path="teacher" element={<TeacherForm />}></Route>
-                        <Route path="subject" element={<SubjectForm />}></Route>
+                            element={<AddSubject/>}
+                        />
+                        <Route path="student/all" element={<AllStudent/>}/>
+                        <Route path="teacher/all" element={<AllTeachers/>}/>
+                        <Route path="subject/all" element={<AllSubjects/>}/>
 
+                     
                         {/*  */}
 
                         <Route
@@ -110,16 +116,4 @@ function App() {
 
 export default App;
 
-const sampleTeacher = {
-    id: 1,
-    firstName: "John",
-    middleName: "",
-    lastName: "Doe",
-    email: "johdow@gmail.com",
-    phone: "08012345678",
-    address: "123, Lagos Street",
-    subjects: [
-        { id: 1, name: "Mathematics" },
-        { id: 2, name: "English" },
-    ],
-};
+
