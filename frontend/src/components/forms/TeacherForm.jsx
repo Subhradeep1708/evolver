@@ -26,9 +26,9 @@ const TeacherForm = ({ teacher = null }) => {
                 "http://localhost:5000/api/subject"
             );
             console.log(response.data.data);
-            setSubjects(response?.data?.data);
+           
             if (response.status == 200) {
-                // setSubjects(response.data.data);
+                setSubjects(response.data.data);
             }
         };
         fetchSubjects();
@@ -40,6 +40,7 @@ const TeacherForm = ({ teacher = null }) => {
             lastName: teacher?.lastName || "",
             middleName: teacher?.middleName || "",
             email: teacher?.email || "",
+            password:"123456",
             role: teacher?.role || "teacher",
             isController: teacher?.isController || false,
             subjects: teacher?.subjects?.map((sub) => sub.name) || [],
@@ -52,6 +53,7 @@ const TeacherForm = ({ teacher = null }) => {
             email: Yup.string()
                 .email("Invalid email address")
                 .required("Email is required"),
+            password: Yup.string().required("Password is required"),
             role: Yup.string().required("Role is required"),
             isController: Yup.boolean().required(),
             subjects: Yup.array().required("At least one subject is required"),
@@ -67,8 +69,12 @@ const TeacherForm = ({ teacher = null }) => {
     });
 
     const handleAdd = (values) => {
-        console.log("Add Teacher:", values);
-        // Call add teacher API or handle state update here
+        try{
+             const response = axios.post("http://localhost:5000/api/auth/teacher/register", values);
+            console.log(response.data);
+        }catch(err){
+            console.log(err)
+        }
     };
 
     const handleUpdate = (values) => {

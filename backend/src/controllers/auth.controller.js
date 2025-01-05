@@ -91,13 +91,13 @@ export const registerTeacher = async (req, res) => {
             firstName,
             lastName,
             middleName,
-            subjects,
+            subjects, // Array of subject IDs
         } = req.body;
+
         // Validate inputs
         if (!email || !password || !role || !lastName || !firstName) {
             return res.status(400).json({
-                message:
-                    "Email, password, role, first name, and last name are required",
+                message: "Email, password, role, first name, and last name are required",
             });
         }
 
@@ -122,7 +122,6 @@ export const registerTeacher = async (req, res) => {
         });
 
         // Create user
-
         const newUser = await db.user.create({
             data: {
                 email,
@@ -136,10 +135,17 @@ export const registerTeacher = async (req, res) => {
                     create: {
                         isController: role === "controller",
                         subjects: {
-                            connect: subjects.map((subject) => ({
-                                id: parseInt(subject),
+                            connect: subjects.map((subjectId) => ({
+                                id: parseInt(subjectId), // Ensure IDs are integers
                             })),
                         },
+                    },
+                },
+            },
+            include: {
+                teacher: {
+                    include: {
+                        subjects: true, // Include subjects in the response
                     },
                 },
             },
@@ -152,10 +158,10 @@ export const registerTeacher = async (req, res) => {
                 email: newUser.email,
                 role: newUser.role,
                 refreshToken: newUser.refreshToekn,
+                teacher: newUser.teacher, // Includes associated subjects
             },
         });
     } catch (error) {
-        // throw new Error(error.message);
         return res.status(400).json({ message: error.message });
     }
 };
