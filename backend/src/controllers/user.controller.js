@@ -10,7 +10,7 @@ const getStudentData = async (req, res) => {
             data: student,
         });
     } catch (error) {
-       console.log(error.message);
+        console.log(error.message);
     }
 };
 
@@ -22,12 +22,11 @@ export const getAllStudent = async (req, res) => {
                     select: {
                         firstName: true,
                         lastName: true,
-                        email: true
+                        email: true,
                     },
                 },
             },
         });
-
 
         return res.status(200).json({
             message: "All students retrieved successfully",
@@ -39,21 +38,28 @@ export const getAllStudent = async (req, res) => {
             message: "Internal server error",
         });
     }
-}
+};
 
-export const getAllTeacher = async(req, res) => {
+export const getAllTeacher = async (req, res) => {
     try {
-        
         const teachers = await db.teacher.findMany({
             include: {
                 user: {
                     select: {
                         firstName: true,
                         lastName: true,
-                        email: true
+                        email: true,
                     },
                 },
-                subjects: true,
+                subjects: {
+                    include: {
+                        subject: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                },
             },
         });
 
@@ -67,9 +73,6 @@ export const getAllTeacher = async(req, res) => {
             message: "Internal server error",
         });
     }
-}
+};
 
-const getTeacherData = async (req, res) => { };
-
-
-
+const getTeacherData = async (req, res) => {};

@@ -8,12 +8,12 @@ import env from "../lib/env.js";
 export const registerStudent = async (req, res) => {
     try {
         const {
+            firstName,
+            middleName,
+            lastName,
             email,
             password,
             role,
-            firstName,
-            lastName,
-            middleName,
             rollNo,
         } = req.body;
         // Validate inputs
@@ -25,7 +25,10 @@ export const registerStudent = async (req, res) => {
             !firstName ||
             !rollNo
         ) {
-            throw new Error("Email, password, and role are required");
+            return res.status(400).json({
+                message:
+                    "Email, password, role, first name, last name, and roll number are required",
+            });
         }
 
         if (password.length < 6) {
@@ -97,9 +100,17 @@ export const registerTeacher = async (req, res) => {
         // Validate inputs
         if (!email || !password || !role || !lastName || !firstName) {
             return res.status(400).json({
-                message: "Email, password, role, first name, and last name are required",
+                message:
+                    "Email, password, role, first name, and last name are required",
             });
         }
+
+        console.log("Subjects", subjects);
+        const formattedSubjects = subjects.map((subjectId) => ({
+            id: Number(subjectId),
+        }));
+
+        console.log("Formatted Subjects", formattedSubjects);
 
         if (password.length < 6) {
             return res.status(400).json({
@@ -110,7 +121,9 @@ export const registerTeacher = async (req, res) => {
         // Check if user already exists
         const existingUser = await db.user.findUnique({ where: { email } });
         if (existingUser) {
-            throw new Error("User already exists");
+            return res.status(400).json({
+                message: "User already exists",
+            });
         }
 
         // Hash password
@@ -121,7 +134,10 @@ export const registerTeacher = async (req, res) => {
             expiresIn: "15d",
         });
 
+        console.log("Creating new teacher....");
+
         // Create user
+
         const newUser = await db.user.create({
             data: {
                 email,
@@ -134,22 +150,23 @@ export const registerTeacher = async (req, res) => {
                 teacher: {
                     create: {
                         isController: role === "controller",
-                        subjects: {
-                            connect: subjects.map((subjectId) => ({
-                                id: parseInt(subjectId), // Ensure IDs are integers
-                            })),
-                        },
-                    },
-                },
-            },
-            include: {
-                teacher: {
-                    include: {
-                        subjects: true, // Include subjects in the response
                     },
                 },
             },
         });
+
+        console.log("New teacher created");
+
+        const formattedTeacherSubjectData = subjects.map((subjectId) => ({
+            teacherId: newUser.id,
+            subjectId: Number(subjectId),
+        }));
+
+        const connectSubjects = await db.teacherSubject.createMany({
+            data: formattedTeacherSubjectData,
+        });
+
+        console.log("Subjects connected");
 
         return res.status(201).json({
             message: "User registered successfully",

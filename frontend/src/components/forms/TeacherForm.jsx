@@ -25,8 +25,8 @@ const TeacherForm = ({ teacher = null }) => {
             const response = await axios.get(
                 "http://localhost:5000/api/subject"
             );
-            console.log(response.data.data);
-           
+            // console.log(response.data.data);
+
             if (response.status == 200) {
                 setSubjects(response.data.data);
             }
@@ -40,7 +40,7 @@ const TeacherForm = ({ teacher = null }) => {
             lastName: teacher?.lastName || "",
             middleName: teacher?.middleName || "",
             email: teacher?.email || "",
-            password:"123456",
+            password: "123456",
             role: teacher?.role || "teacher",
             isController: teacher?.isController || false,
             subjects: teacher?.subjects?.map((sub) => sub.name) || [],
@@ -69,11 +69,19 @@ const TeacherForm = ({ teacher = null }) => {
     });
 
     const handleAdd = (values) => {
-        try{
-             const response = axios.post("http://localhost:5000/api/auth/teacher/register", values);
+        try {
+            console.log("Add Teacher:", values);
+
+            const response = axios.post(
+                "http://localhost:5000/api/auth/teacher/register",
+                values,
+                {
+                    withCredentials: true,
+                }
+            );
             console.log(response.data);
-        }catch(err){
-            console.log(err)
+        } catch (err) {
+            console.log(err);
         }
     };
 
