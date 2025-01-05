@@ -81,6 +81,7 @@ export const registerStudent = async (req, res) => {
         return res.status(400).json({ message: error.message });
     }
 };
+
 export const registerTeacher = async (req, res) => {
     try {
         const {
@@ -134,7 +135,11 @@ export const registerTeacher = async (req, res) => {
                 teacher: {
                     create: {
                         isController: role === "controller",
-                        subjects,
+                        subjects: {
+                            connect: subjects.map((subject) => ({
+                                id: parseInt(subject),
+                            })),
+                        },
                     },
                 },
             },
@@ -288,7 +293,7 @@ export const loginTeacher = async (req, res) => {
     try {
         // Validate inputs
         const { email, password } = req.body;
-  
+
         if (!email || !password) {
             return res.status(400).json({
                 message: "Email and password are required",

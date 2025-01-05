@@ -8,10 +8,10 @@ import { links } from "./../../../utils/sidebar-links.js";
 const Sidebar = () => {
     // console.log(currentPath);
     const user = useAppStore((state) => state.user);
-    console.log("User: ", user);
+    // console.log("User: ", user);
     const location = useLocation();
     const pathname = location.pathname;
-    console.log("Pathname: ", pathname);
+    // console.log("Pathname: ", pathname);
 
     const role = user?.role;
 
@@ -29,7 +29,6 @@ const Sidebar = () => {
             borderRadius={"24px"}
             overflow={"hidden"}
             p={"2"}
-      
         >
             {links[role]?.map((link) => (
                 <Box

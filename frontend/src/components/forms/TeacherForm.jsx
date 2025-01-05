@@ -11,9 +11,28 @@ import {
 import { Field } from "../../components/ui/field";
 import * as Yup from "yup";
 import { Checkbox } from "../../components/ui/checkbox";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const TeacherForm = ({ teacher = null }) => {
     const isUpdateMode = !!teacher; // Determine if it's update mode
+    const [subjects, setSubjects] = useState([]);
+
+    useEffect(() => {
+        // Fetch subjects from API and set it to state
+
+        const fetchSubjects = async () => {
+            const response = await axios.get(
+                "http://localhost:5000/api/subject"
+            );
+            console.log(response.data.data);
+            setSubjects(response?.data?.data);
+            if (response.status == 200) {
+                // setSubjects(response.data.data);
+            }
+        };
+        fetchSubjects();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -56,14 +75,11 @@ const TeacherForm = ({ teacher = null }) => {
         console.log("Update Teacher:", values);
         // Call update teacher API or handle state update here
     };
-
-    const subjects = [
-        { id: 1, label: "Mathematics", name: "mathematics" },
-        { id: 2, label: "English", name: "english" },
-        { id: 3, label: "Physics", name: "physics" },
-        { id: 4, label: "Chemistry", name: "chemistry" },
-        { id: 5, label: "Biology", name: "biology" },
-    ];
+    // const subjects = [
+    //     { id: 1, name: "Mathematics" },
+    //     { id: 2, name: "English" },
+    //     { id: 3, name: "Physics" },
+    // ];
 
     return (
         <div>
@@ -168,18 +184,22 @@ const TeacherForm = ({ teacher = null }) => {
                         </Fieldset.Content>
                     </HStack>
                     <HStack>
-                        {subjects.map((subject) => (
+                        {subjects?.map((subject) => (
                             <Checkbox
                                 key={subject.id}
                                 name="subjects"
-                                value={subject.name}
+                                // value={subject.id}
+                                // checked={formik.values.subjects.includes(
+                                //     subject.id
+                                // )}
+                                value={String(subject.id)}
                                 checked={formik.values.subjects.includes(
-                                    subject.name
+                                    String(subject.id)
                                 )}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             >
-                                {subject.label}
+                                {subject.name}
                             </Checkbox>
                         ))}
                     </HStack>

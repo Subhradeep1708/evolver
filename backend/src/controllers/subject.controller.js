@@ -39,6 +39,8 @@ export const getAllSubjects = async (req, res) => {
             },
         });
 
+        console.log("Subjects: ", subjects);
+
         return res.status(200).json({
             message: "Subjects fetched successfully",
             data: subjects,
