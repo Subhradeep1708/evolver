@@ -92,7 +92,7 @@ const getExamByStudentId = async (req, res) => {
 };
 
 export const getExamByTeacherId = async (req, res) => {
-    // ! @Raktim-Mitra
+   
     const { id } = req.params;
     // const id = req.user.id;
 

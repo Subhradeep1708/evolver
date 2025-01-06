@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     loginStudent,
     loginTeacher,
+    logout,
     registerStudent,
     registerTeacher,
 } from "../controllers/auth.controller.js";
@@ -15,9 +16,6 @@ authRouter.post("/teacher/login", loginTeacher);
 authRouter.post("/student/register", registerStudent);
 authRouter.post("/teacher/register", registerTeacher);
 
-authRouter.get("/logout", (req, res) => {
-    res.clearCookie("accessToken");
-    res.send("Logged out successfully");
-});
+authRouter.get("/logout/:userId", logout);
 
 export default authRouter;

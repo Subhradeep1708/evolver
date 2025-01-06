@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./ui/menu";
 import { RxAvatar } from "react-icons/rx";
+import Logout from "./Logout";
 
 function Navbar() {
     return (
@@ -29,7 +30,7 @@ function Navbar() {
                         <RxAvatar size={"36"} />
                     </MenuTrigger>
                     <MenuContent p={3}>
-                        <MenuItem value="logout">Log Out</MenuItem>
+                        <MenuItem value="logout"><Logout/></MenuItem>
                         <MenuItem value="login">Log In</MenuItem>
                     </MenuContent>
                 </MenuRoot>

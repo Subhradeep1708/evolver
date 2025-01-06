@@ -32,13 +32,17 @@ export const registerStudent = async (req, res) => {
         }
 
         if (password.length < 6) {
-            throw new Error("Password must be at least 6 characters");
+            return res.status(400).json({
+                message: "Password must be at least 6 characters",
+            });
         }
 
         // Check if user already exists
         const existingUser = await db.user.findUnique({ where: { email } });
         if (existingUser) {
-            throw new Error("User already exists");
+            return res.status(400).json({
+                message: "User already exists",
+            });
         }
 
         // Hash password
@@ -80,7 +84,7 @@ export const registerStudent = async (req, res) => {
             },
         });
     } catch (error) {
-        // throw new Error(error.message);
+        
         return res.status(400).json({ message: error.message });
     }
 };
@@ -377,25 +381,30 @@ export const loginTeacher = async (req, res) => {
     }
 };
 
-export const logout = async (id) => {
+export const logout = async (req,res) => {
     try {
-        // Validate input
-        if (!id) {
-            return res.status(400).json({
-                message: "User ID is required",
-            });
+       const {userId} = req.params;
+    
+      
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required" });
         }
 
-        // Clear refresh token
+        
         await db.user.update({
-            where: { id },
-            data: { refreshToekn: null },
+            where: { id: Number(userId) },
+            data: { refreshToekn: null }, // Assuming `refreshToken` field in user table
         });
 
-        return {
-            message: "Logout successful",
-        };
+       
+        res.clearCookie("accessToken", {
+            httpOnly: true, // Secure cookie for HTTP only
+            sameSite: "Strict", // Prevent CSRF
+        });
+
+        return res.status(200).json({ message: "Logout successful" });
     } catch (error) {
-        throw new Error(error.message);
+        console.error("Logout error:", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };

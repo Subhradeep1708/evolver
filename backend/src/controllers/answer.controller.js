@@ -39,7 +39,7 @@ export const submitAnswer = async (req, res) => {
             const mcq = exam.mcqs.find((q) => q.id === ans.mcqId);
             if (!mcq) {
                 console.error(`Invalid MCQ ID: ${ans.mcqId}`);
-                throw new Error("Invalid MCQ submitted");
+                return null;
             }
 
             const isCorrect = mcq.answer === ans.selected;

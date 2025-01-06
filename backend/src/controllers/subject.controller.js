@@ -22,7 +22,7 @@ export const addSubject = async (req, res) => {
             data: newSubject,
         });
     } catch (error) {
-        // throw new Error(error.message);
+      
         return res.status(400).json({
             message: error.message || "An error occurred",
         });
@@ -36,14 +36,43 @@ export const getAllSubjects = async (req, res) => {
                 id: true,
                 name: true,
                 description: true,
+                teachers: {
+                    select: {
+                        teacher: {
+                            select: {
+                                id: true,
+                                user: {
+                                    select: {
+                                        firstName: true,
+                                        lastName: true,
+                                        email: true,
+                                    },
+                                },
+                                isController: true,
+                            },
+                        },
+                    },
+                },
             },
         });
 
-        // console.log("Subjects: ", subjects);
+        // Transform the response to include only relevant teacher data
+        const transformedSubjects = subjects.map((subject) => ({
+            id: subject.id,
+            name: subject.name,
+            description: subject.description,
+            teachers: subject.teachers.map((teacherSubject) => ({
+                id: teacherSubject.teacher.id,
+                firstName: teacherSubject.teacher.user.firstName,
+                lastName: teacherSubject.teacher.user.lastName,
+                email: teacherSubject.teacher.user.email,
+                isController: teacherSubject.teacher.isController,
+            })),
+        }));
 
         return res.status(200).json({
             message: "Subjects fetched successfully",
-            data: subjects,
+            data: transformedSubjects,
         });
     } catch (error) {
         return res.status(400).json({
