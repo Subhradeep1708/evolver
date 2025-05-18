@@ -1,12 +1,25 @@
 import { Box, Center } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../Store";
+import { useEffect } from "react";
+
 function AuthLayout() {
     const user = useAppStore((state) => state.user);
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
-    if (user.id && user.role) {
+    useEffect(() => {
+        const checkLoggedIn = () => {
+            if (user.id === null && user.role === null) {
+                navigate("/");
+            }
+        };
+
+        checkLoggedIn();
+    }, [user.id, user.role, navigate, pathname]);
+
+    if (user.id !== null && user.role !== null) {
         navigate("/dashboard");
     }
 

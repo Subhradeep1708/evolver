@@ -84,7 +84,6 @@ export const registerStudent = async (req, res) => {
             },
         });
     } catch (error) {
-        
         return res.status(400).json({ message: error.message });
     }
 };
@@ -381,22 +380,19 @@ export const loginTeacher = async (req, res) => {
     }
 };
 
-export const logout = async (req,res) => {
+export const logout = async (req, res) => {
     try {
-       const {userId} = req.params;
-    
-      
+        const { userId } = req.params;
+
         if (!userId) {
             return res.status(400).json({ message: "User ID is required" });
         }
 
-        
         await db.user.update({
             where: { id: Number(userId) },
             data: { refreshToekn: null }, // Assuming `refreshToken` field in user table
         });
 
-       
         res.clearCookie("accessToken", {
             httpOnly: true, // Secure cookie for HTTP only
             sameSite: "Strict", // Prevent CSRF

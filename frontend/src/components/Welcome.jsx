@@ -13,6 +13,7 @@ import { NavLink } from "react-router";
 import HomeNav from "./HomeNav";
 
 function Welcome() {
+    // const user = userAppStore((state) => state.user);
     return (
         <VStack position={"relative"}>
             <Image

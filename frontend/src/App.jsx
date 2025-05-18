@@ -28,7 +28,9 @@ import AddSubject from "./pages/teacher/controller/AddSubject.jsx";
 import AllStudent from "./pages/teacher/controller/AllStudent.jsx";
 import AllSubjects from "./pages/teacher/controller/AllSubjects.jsx";
 import AllTeachers from "./pages/teacher/controller/AllTeachers.jsx";
+import { useAppStore } from "./Store/index.js";
 function App() {
+    const user = useAppStore((state) => state.user);
     return (
         <BrowserRouter>
             <Provider>
@@ -83,19 +85,12 @@ function App() {
                             // *All Students Data
                         }
                         <Route path="student/add" element={<AddStudent />} />
-                        <Route
-                            path="teacher/add"
-                            element={<AddTeacher/>}
-                        />
-                        <Route
-                            path="subject/add"
-                            element={<AddSubject/>}
-                        />
-                        <Route path="student/all" element={<AllStudent/>}/>
-                        <Route path="teacher/all" element={<AllTeachers/>}/>
-                        <Route path="subject/all" element={<AllSubjects/>}/>
+                        <Route path="teacher/add" element={<AddTeacher />} />
+                        <Route path="subject/add" element={<AddSubject />} />
+                        <Route path="student/all" element={<AllStudent />} />
+                        <Route path="teacher/all" element={<AllTeachers />} />
+                        <Route path="subject/all" element={<AllSubjects />} />
 
-                     
                         {/*  */}
 
                         <Route
@@ -115,5 +110,3 @@ function App() {
 }
 
 export default App;
-
-

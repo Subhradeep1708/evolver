@@ -2,18 +2,31 @@ import { HStack, Box, VStack } from "@chakra-ui/react";
 import Sidebar from "../components/common/sidebar/Sidebar.jsx";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router";
-import { UserProvider } from "../contexts/userContext.jsx";
+import { UserProvider } from "../contexts/UserContext.jsx";
 import { Toaster } from "../components/ui/toaster";
 
 const MainLayout = () => {
     return (
         <UserProvider>
             <HStack bg={"bg.muted"} display={"flex"} gap={0} h={"100vh"}>
-                <Box w={"20%"} h={"100%"} py={2} px={"4"} outline={"none"}
-                            border={"none"}>
+                <Box
+                    w={"20%"}
+                    h={"100%"}
+                    py={2}
+                    px={"4"}
+                    outline={"none"}
+                    border={"none"}
+                >
                     <Sidebar />
                 </Box>
-                <VStack background={"bg.muted"} gap={0} flexGrow={1} h={"100%"} pt={"4"}pr={"4"} >
+                <VStack
+                    background={"bg.muted"}
+                    gap={0}
+                    flexGrow={1}
+                    h={"100%"}
+                    pt={"4"}
+                    pr={"4"}
+                >
                     <Navbar />
                     <Box
                         background={""}
