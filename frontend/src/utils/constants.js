@@ -1,4 +1,4 @@
-const origin = "http://localhost:5000";
+const origin = import.meta.env.VITE_ORIGIN;
 const auth_routes = "api/auth";
 export const routes = {
     studentLogin: `${origin}/${auth_routes}/student/login`,

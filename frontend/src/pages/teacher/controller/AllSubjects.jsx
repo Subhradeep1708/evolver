@@ -7,7 +7,7 @@ const AllSubjects = () => {
         const getSubjects = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:5000/api/subject"
+                    `${import.meta.env.VITE_ORIGIN}/api/subject`
                 );
                 setSubject(response.data.data);
                 console.log(response.data.data);

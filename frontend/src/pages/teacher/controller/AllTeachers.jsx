@@ -7,7 +7,7 @@ const AllTeachers = () => {
         const fetchTeacher = async () => {
             try {
                 const res = await axios.get(
-                    "http://localhost:5000/api/user/teacher"
+                    `${import.meta.env.VITE_ORIGIN}/api/user/teacher`
                 );
                 setTeachers(res.data.data);
                 console.log(res.data);

@@ -30,7 +30,7 @@ const ExamResults = () => {
         const fetchExamData = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/api/exam/teacher/${user.id}`,
+                    `${import.meta.env.VITE_ORIGIN}/api/exam/teacher/${user.id}`,
                     { withCredentials: true }
                 );
                 const data = res.data;
@@ -47,7 +47,7 @@ const ExamResults = () => {
         const fetchExamResult = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/api/result/${examId}`,
+                    `${import.meta.env.VITE_ORIGIN}/api/result/${examId}`,
                     { withCredentials: true }
                 );
                 const data = res.data;

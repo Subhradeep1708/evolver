@@ -6,7 +6,7 @@ const AllStudent = () => {
     useEffect(() => {
         const fetchStudent = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/user/student')
+                const res = await axios.get('${import.meta.env.VITE_ORIGIN}/api/user/student')
                 setStudents(res.data.data)
                 console.log(res.data)
             } catch (error) {

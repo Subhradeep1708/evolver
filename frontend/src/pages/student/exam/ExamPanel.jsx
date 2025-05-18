@@ -28,7 +28,7 @@ const ExamPanel = ({ handleExitExam }) => {
         const fetchExamData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/exam/${examId}`
+                    `${import.meta.env.VITE_ORIGIN}/api/exam/${examId}`
                 );
 
                 if (response.status === 200) {
@@ -109,7 +109,7 @@ const ExamPanel = ({ handleExitExam }) => {
             console.log("Body:", body);
 
             const response = await axios.post(
-                "http://localhost:5000/api/answer/submit",
+                `${import.meta.env.VITE_ORIGIN}/api/answer/submit`,
                 body,
                 {
                     withCredentials: true,

@@ -10,7 +10,7 @@ const MyResults = () => {
     useEffect(() => {
         const fetchResults = async () => {
             const response = await axios.get(
-                `http://localhost:5000/api/result/student/${user.id}`,
+                `${import.meta.env.VITE_ORIGIN}/api/result/student/${user.id}`,
                 {
                     withCredentials: true,
                 }

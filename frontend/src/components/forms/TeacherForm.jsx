@@ -23,7 +23,7 @@ const TeacherForm = ({ teacher = null }) => {
 
         const fetchSubjects = async () => {
             const response = await axios.get(
-                "http://localhost:5000/api/subject"
+                `${import.meta.env.VITE_ORIGIN}/api/subject`
             );
             // console.log(response.data.data);
 
@@ -73,7 +73,7 @@ const TeacherForm = ({ teacher = null }) => {
             console.log("Add Teacher:", values);
 
             const response = axios.post(
-                "http://localhost:5000/api/auth/teacher/register",
+                `${import.meta.env.VITE_ORIGIN}/api/auth/teacher/register`,
                 values,
                 {
                     withCredentials: true,

@@ -9,7 +9,7 @@ const TeacherDashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(
-                `http://localhost:5000/api/exam/teacher/${user.id}`,
+                `${import.meta.env.VITE_ORIGIN}/api/exam/teacher/${user.id}`,
                 {
                     withCredentials: true,
                 }

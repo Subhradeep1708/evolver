@@ -12,7 +12,7 @@ const Logout = () => {
         try {
            
             const response = await axios.get(
-                `http://localhost:5000/api/auth/logout/${user.id}`,
+                `${import.meta.env.VITE_ORIGIN}/api/auth/logout/${user.id}`,
                 { withCredentials: true } // Ensure cookies are sent with the request
             );
             if (response.status === 200) {
