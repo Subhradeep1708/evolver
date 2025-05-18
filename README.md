@@ -49,3 +49,7 @@ TODO:
 
 - Rectify Login Signup
 ```
+
+frontend - vercel/netlify  
+backend - render  
+database - neon DB
