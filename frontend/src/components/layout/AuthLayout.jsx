@@ -8,6 +8,8 @@ function AuthLayout() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
+     
+
     useEffect(() => {
         // Redirect to dashboard if logged in
         if (user.id !== null && user.role !== null) {
