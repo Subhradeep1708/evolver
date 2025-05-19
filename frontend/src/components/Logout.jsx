@@ -2,17 +2,17 @@ import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useAppStore } from "../Store";
 import { useNavigate } from "react-router";
+import { routes } from "../utils/constants.js";
 
 const Logout = () => {
     const user = useAppStore((state) => state.user);
-   
+
     const setUser = useAppStore((state) => state.setUser);
     const navigate = useNavigate();
     const handleLogout = async () => {
         try {
-           
             const response = await axios.get(
-                `${import.meta.env.VITE_ORIGIN}/api/auth/logout/${user.id}`,
+                `${routes.logout}/${user.id}`,
                 { withCredentials: true } // Ensure cookies are sent with the request
             );
             if (response.status === 200) {
