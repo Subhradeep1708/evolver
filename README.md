@@ -48,6 +48,7 @@ Edit Profile
 TODO:
 
 - Rectify Login Signup
+- Student add
 ```
 
 frontend - vercel/netlify  
