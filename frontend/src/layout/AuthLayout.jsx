@@ -9,19 +9,14 @@ function AuthLayout() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
+     
+
     useEffect(() => {
-        const checkLoggedIn = () => {
-            if (user.id === null && user.role === null) {
-                navigate("/");
-            }
-        };
-
-        checkLoggedIn();
-    }, [user.id, user.role, navigate, pathname]);
-
-    if (user.id !== null && user.role !== null) {
-        navigate("/dashboard");
-    }
+        // Redirect to dashboard if logged in
+        if (user.id !== null && user.role !== null) {
+            navigate("/dashboard");
+        }
+    }, [user.id, user.role, navigate]);
 
     return (
         <Box>

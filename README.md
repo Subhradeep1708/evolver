@@ -54,3 +54,13 @@ TODO:
 frontend - vercel/netlify  
 backend - render  
 database - neon DB
+
+
+{
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
