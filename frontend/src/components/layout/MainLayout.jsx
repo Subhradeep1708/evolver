@@ -1,9 +1,9 @@
 import { HStack, Box, VStack } from "@chakra-ui/react";
-import Sidebar from "../components/common/sidebar/Sidebar.jsx";
-import Navbar from "../components/Navbar";
+import Sidebar from "../common/sidebar/Sidebar.jsx";
+import Navbar from "../Navbar.jsx";
 import { Outlet } from "react-router";
-import { UserProvider } from "../contexts/UserContext.jsx";
-import { Toaster } from "../components/ui/toaster";
+import { UserProvider } from "../../contexts/UserContext.jsx";
+import { Toaster } from "../ui/toaster.jsx";
 
 const MainLayout = () => {
     return (
