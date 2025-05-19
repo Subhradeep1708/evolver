@@ -5,8 +5,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { routes } from "../../utils/constants";
-import { useContext } from "react";
-import UserContext from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
 import { useAppStore } from "../../Store";
 
