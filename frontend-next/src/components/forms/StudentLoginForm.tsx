@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAppContext } from "@/context/AppContext";
 
 const formSchema = z.object({
     email: z.string().email().min(5),
@@ -24,6 +26,9 @@ const formSchema = z.object({
 });
 
 export function StudentLoginForm() {
+    const { login } = useAppContext();
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -33,9 +38,14 @@ export function StudentLoginForm() {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
+        // console.log(values);
+        login(values.email, values.password, "student")
+            .then(() => {
+                router.push("/student");
+            })
+            .catch((error) => {
+                console.error("Login failed", error);
+            });
     }
 
     return (

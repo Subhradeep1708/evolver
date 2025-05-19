@@ -15,6 +15,8 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAppContext } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string().email().min(5),
@@ -24,6 +26,10 @@ const formSchema = z.object({
 });
 
 export function TeacherLoginForm() {
+    // const { user, setUser } = useAppContext();
+    const { login } = useAppContext();
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -33,9 +39,13 @@ export function TeacherLoginForm() {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
+        login(values.email, values.password, "teacher")
+            .then(() => {
+                router.push("/teacher");
+            })
+            .catch((error) => {
+                console.error("Login failed", error);
+            });
     }
 
     return (
