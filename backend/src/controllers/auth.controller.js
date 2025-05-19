@@ -98,6 +98,7 @@ export const registerTeacher = async (req, res) => {
             lastName,
             middleName,
             subjects, // Array of subject IDs
+            isController,
         } = req.body;
 
         // Validate inputs
