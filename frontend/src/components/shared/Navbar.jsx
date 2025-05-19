@@ -30,7 +30,7 @@ function Navbar() {
                         <RxAvatar size={"36"} />
                     </MenuTrigger>
                     <MenuContent p={3}>
-                        <MenuItem value="logout"><Logout/></MenuItem>
+                        <MenuItem value="logout"><Logout /></MenuItem>
                         <MenuItem value="login">Log In</MenuItem>
                     </MenuContent>
                 </MenuRoot>

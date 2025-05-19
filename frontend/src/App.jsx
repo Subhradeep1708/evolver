@@ -12,7 +12,7 @@ import McqForm from "./components/forms/McqForm.jsx";
 import ExamLayout from "./components/layout/ExamLayout.jsx";
 import ExamPanel from "./pages/student/exam/ExamPanel.jsx";
 import StartExam from "./pages/student/exam/StartExam.jsx";
-import Welcome from "./components/Welcome.jsx";
+import Welcome from "./components/shared/Welcome.jsx";
 import { Toaster } from "./components/ui/toaster.jsx";
 import LandingLayout from "./components/layout/LandingLayout.jsx";
 import Faq from "./pages/Landing/Faq.jsx";
