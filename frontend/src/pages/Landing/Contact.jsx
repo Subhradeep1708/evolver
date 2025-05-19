@@ -9,7 +9,7 @@ import {
     Button,
     Fieldset,
 } from "@chakra-ui/react";
-import { Field } from "../../components/ui/field";
+import { Field } from "../../components/chakra-ui/field";
 
 const Contact = () => {
     return (

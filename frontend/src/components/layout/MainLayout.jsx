@@ -1,13 +1,12 @@
 import { HStack, Box, VStack } from "@chakra-ui/react";
-import Sidebar from "../components/common/sidebar/Sidebar.jsx";
-import Navbar from "../components/Navbar";
+import Sidebar from "../common/sidebar/Sidebar.jsx";
+import Navbar from "../shared/Navbar.jsx";
 import { Outlet } from "react-router";
-import { UserProvider } from "../contexts/UserContext.jsx";
-import { Toaster } from "../components/ui/toaster";
+import { Toaster } from "../chakra-ui/toaster.js";
 
 const MainLayout = () => {
     return (
-        <UserProvider>
+        <Box>
             <HStack bg={"bg.muted"} display={"flex"} gap={0} h={"100vh"}>
                 <Box
                     w={"20%"}
@@ -41,7 +40,7 @@ const MainLayout = () => {
                 </VStack>
             </HStack>
             <Toaster />
-        </UserProvider>
+        </Box>
     );
 };
 

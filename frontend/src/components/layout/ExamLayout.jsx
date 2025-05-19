@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import ExamPanel from "../pages/student/exam/ExamPanel";
-import StartExam from "../pages/student/exam/StartExam";
+import ExamPanel from "../../pages/student/exam/ExamPanel";
+import StartExam from "../../pages/student/exam/StartExam";
 import { useParams } from "react-router";
 import axios from "axios";
-import EndExam from "../pages/student/exam/EndExam";
+import EndExam from "../../pages/student/exam/EndExam";
 import { Box } from "@chakra-ui/react";
 
 const ExamLayout = () => {
