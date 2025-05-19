@@ -1,6 +1,6 @@
 import { Button, Fieldset, Input, Stack } from "@chakra-ui/react";
-import { Field } from "../../components/ui/field";
-import { PasswordInput } from "../../components/ui/password-input";
+import { Field } from "../../components/chakra-ui/field";
+import { PasswordInput } from "../../components/chakra-ui/password-input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";

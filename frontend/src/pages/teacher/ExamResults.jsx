@@ -15,7 +15,7 @@ import {
     DialogRoot,
     DialogTitle,
     DialogTrigger,
-} from "../../components/ui/dialog";
+} from "../../components/chakra-ui/dialog";
 // import { DialogRoot, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogCloseTrigger, DialogBody } from "@radix-ui/react-dialog";
 import { FaBox, FaEye } from "react-icons/fa";
 
@@ -30,7 +30,9 @@ const ExamResults = () => {
         const fetchExamData = async () => {
             try {
                 const res = await axios.get(
-                    `${import.meta.env.VITE_ORIGIN}/api/exam/teacher/${user.id}`,
+                    `${import.meta.env.VITE_ORIGIN}/api/exam/teacher/${
+                        user.id
+                    }`,
                     { withCredentials: true }
                 );
                 const data = res.data;

@@ -8,9 +8,9 @@ import {
     NativeSelectRoot,
     Stack,
 } from "@chakra-ui/react";
-import { Field } from "../../components/ui/field";
+import { Field } from "../chakra-ui/field.js";
 import * as Yup from "yup";
-import { Checkbox } from "../../components/ui/checkbox";
+import { Checkbox } from "../chakra-ui/checkbox.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { routes } from "../../utils/constants.js";

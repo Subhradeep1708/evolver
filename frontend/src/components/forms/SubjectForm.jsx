@@ -1,7 +1,7 @@
 import { Button, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Field } from "../ui/field";
+import { Field } from "../chakra-ui/field";
 
 const SubjectForm = () => {
     const formik = useFormik({

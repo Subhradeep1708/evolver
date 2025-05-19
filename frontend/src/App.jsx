@@ -1,4 +1,4 @@
-import { Provider } from "./components/ui/provider.jsx";
+import { Provider } from "./components/chakra-ui/provider.js";
 import { BrowserRouter, Routes, Route } from "react-router";
 import StudentLogin from "./pages/auth/StudentLogin.jsx";
 import TeacherLogin from "./pages/auth/TeacherLogin.jsx";

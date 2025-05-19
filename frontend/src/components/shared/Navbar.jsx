@@ -1,5 +1,10 @@
 import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./../ui/menu";
+import {
+    MenuContent,
+    MenuItem,
+    MenuRoot,
+    MenuTrigger,
+} from "../chakra-ui/menu";
 import { RxAvatar } from "react-icons/rx";
 import Logout from "./Logout";
 

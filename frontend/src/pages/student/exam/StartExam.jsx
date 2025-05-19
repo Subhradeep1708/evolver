@@ -7,7 +7,7 @@ import {
     Circle,
     Span,
 } from "@chakra-ui/react";
-import { Checkbox } from "./../../../components/ui/checkbox.jsx";
+import { Checkbox } from "../../../components/chakra-ui/checkbox.js";
 
 function StartExam({ handleStartExam }) {
     return (

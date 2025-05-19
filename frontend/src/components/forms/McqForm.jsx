@@ -17,8 +17,8 @@ import {
     NativeSelectField,
     NativeSelectRoot,
 } from "@chakra-ui/react";
-import { Field } from "../ui/field";
-import { NumberInputRoot, NumberInputField } from "../ui/number-input";
+import { Field } from "../chakra-ui/field";
+import { NumberInputRoot, NumberInputField } from "../chakra-ui/number-input";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegImage } from "react-icons/fa";
 import { HiUpload } from "react-icons/hi";
