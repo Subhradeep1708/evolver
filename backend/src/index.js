@@ -19,11 +19,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
     cors({
-        origin: [process.env.CLIENT_URL],
+        origin: [process.env.CLIENT_URL, "http://localhost:5173"],
         methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
         credentials: true,
     })
 );
+// app.use(cors());
 // Routes
 
 app.use("/api/auth", authRouter);

@@ -24,6 +24,7 @@ import { FaRegImage } from "react-icons/fa";
 import { routes } from "../../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { useAppStore } from "../../Store";
 // import { Card } from "../ui/card";
 
 const ExamForm = () => {
@@ -39,6 +40,7 @@ const ExamForm = () => {
     ]);
 
     const [subjects, setSubjects] = useState([]);
+    const user = useAppStore((state) => state.user);
     // const [csvFile, setCsvFile] = useState(null);
 
     useEffect(() => {
@@ -58,7 +60,7 @@ const ExamForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            subjectId: 0,
+            subjectId: "",
             examName: "",
         },
         validationSchema: Yup.object({
@@ -73,7 +75,13 @@ const ExamForm = () => {
 
     const handleSubmit = async (values) => {
         console.log("Form values:", values);
-        const res = await axios.post(routes.addExam, values);
+        const res = await axios.post(
+            routes.addExam,
+            { ...values, userId: user.id },
+            {
+                withCredentials: true,
+            }
+        );
         if (res.status === 201) {
             console.log("Exam created successfully");
             const data = res.data.data;
