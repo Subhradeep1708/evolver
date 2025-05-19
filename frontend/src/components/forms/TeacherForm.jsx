@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { Checkbox } from "../../components/ui/checkbox";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { routes } from "../../utils/constants.js";
 
 const TeacherForm = ({ teacher = null }) => {
     const isUpdateMode = !!teacher; // Determine if it's update mode
@@ -22,9 +23,7 @@ const TeacherForm = ({ teacher = null }) => {
         // Fetch subjects from API and set it to state
 
         const fetchSubjects = async () => {
-            const response = await axios.get(
-                `${import.meta.env.VITE_ORIGIN}/api/subject`
-            );
+            const response = await axios.get(routes.getAllSubject);
             // console.log(response.data.data);
 
             if (response.status == 200) {
