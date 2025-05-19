@@ -1,8 +1,8 @@
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
-import { useAppStore } from "../Store";
+import { useAppStore } from "../../Store";
 import { useNavigate } from "react-router";
-import { routes } from "../utils/constants.js";
+import { routes } from "../../utils/constants.js";
 
 const Logout = () => {
     const user = useAppStore((state) => state.user);

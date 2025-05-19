@@ -9,10 +9,10 @@ import {
     Text,
     VStack,
 } from "@chakra-ui/react";
-import { Field } from "../../components/ui/field";
-import { InputGroup } from "../../components/ui/input-group";
+import { Field } from "../../components/chakra-ui/field.js";
+import { InputGroup } from "../../components/chakra-ui/input-group.js";
 import { LuUser } from "react-icons/lu";
-import { PasswordInput } from "../../components/ui/password-input";
+import { PasswordInput } from "../../components/chakra-ui/password-input.js";
 import * as Yup from "yup";
 import axios from "axios";
 import { useContext, useState } from "react";

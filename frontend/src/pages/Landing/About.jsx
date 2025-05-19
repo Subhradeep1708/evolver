@@ -13,13 +13,13 @@ const About = () => {
                 About Us
             </Heading>
             <VStack align="stretch" spacing={6} mx="auto" py={4}>
-                <Text fontSize={"lg"} lineHeight={"tall"}>
+                <p className="text-lg text-red-800">
                     Welcome to our platform! We are dedicated to providing an
                     efficient and secure online examination experience for
                     students and instructors alike. Our mission is to simplify
                     the examination process while ensuring a fair and seamless
                     testing environment.
-                </Text>
+                </p>
                 <Text fontSize={"lg"} lineHeight={"tall"}>
                     Our platform offers features such as automated progress
                     saving, customizable examination settings, and real-time

@@ -3,7 +3,7 @@ import {
     AccordionItemContent,
     AccordionItemTrigger,
     AccordionRoot,
-} from "../../components/ui/accordion";
+} from "../../components/chakra-ui/accordion";
 import React from "react";
 import { Box, Heading, VStack } from "@chakra-ui/react";
 
@@ -38,8 +38,12 @@ const Faq = () => {
 
     return (
         <Box px={12} py={32} w={"full"} minH={"100vh"}>
-            <Heading color={"brand.dark"}
- mb={6} textAlign="left" fontSize={"3xl"}>
+            <Heading
+                color={"brand.dark"}
+                mb={6}
+                textAlign="left"
+                fontSize={"3xl"}
+            >
                 Frequently Asked Questions
             </Heading>
             <VStack align="stretch" mx="auto" py={4}>
@@ -52,13 +56,10 @@ const Faq = () => {
                                 fontWeight="semibold"
                                 h={16}
                                 fontSize={"lg"}
-                                
                             >
                                 {item.title}
                             </AccordionItemTrigger>
-                            <AccordionItemContent px={4} pb={4} fontSize={"md"}
-                            
-                            >
+                            <AccordionItemContent px={4} pb={4} fontSize={"md"}>
                                 {item.text}
                             </AccordionItemContent>
                         </AccordionItem>

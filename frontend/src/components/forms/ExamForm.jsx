@@ -7,7 +7,6 @@ import {
     Input,
     Stack,
     Fieldset,
-    HStack,
     Text,
     Box,
     Grid,
@@ -16,16 +15,11 @@ import {
     NativeSelectField,
     NativeSelectRoot,
 } from "@chakra-ui/react";
-import { Field } from "../ui/field";
-import { HiUpload } from "react-icons/hi";
-import { NumberInputRoot, NumberInputField } from "../ui/number-input";
-import { AiOutlineDelete } from "react-icons/ai";
-import { FaRegImage } from "react-icons/fa";
+import { Field } from "../chakra-ui/field";
 import { routes } from "../../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useAppStore } from "../../Store";
-// import { Card } from "../ui/card";
 
 const ExamForm = () => {
     let navigate = useNavigate();

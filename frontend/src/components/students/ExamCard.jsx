@@ -1,8 +1,6 @@
 import { Avatar, Button, Card, HStack, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 
-// import { Button } from "@/components/ui/button"
-
 const ExamCard = ({
     examName,
     addedBy,
@@ -34,7 +32,11 @@ const ExamCard = ({
                 {/* <Text fontSize="sm" color="red">
                     Due at 10th October at 10:00 AM
                 </Text> */}
-                <Button px={"3"} onClick={() => navigate(examLink)} bg={"#1D2974"}>
+                <Button
+                    px={"3"}
+                    onClick={() => navigate(examLink)}
+                    bg={"#1D2974"}
+                >
                     Start Exam
                 </Button>
             </Card.Footer>

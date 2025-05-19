@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Button, Fieldset, HStack, Input, Stack } from "@chakra-ui/react";
-import { Field } from "../../components/ui/field";
+import { Field } from "../chakra-ui/field";
 import * as Yup from "yup";
 
 const StudentForm = ({ student }) => {
