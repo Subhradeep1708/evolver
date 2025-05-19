@@ -1,5 +1,4 @@
 import { Box, Center } from "@chakra-ui/react";
-import PropTypes from "prop-types";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../../Store";
 import { useEffect } from "react";
