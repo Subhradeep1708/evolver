@@ -1,3 +1,4 @@
+import NavBar from "@/components/NavBar";
 import React from "react";
 
 function layout({
@@ -6,8 +7,10 @@ function layout({
     children: React.ReactNode;
 }>) {
     return (
-        <div>
-            {/* Navbar */}
+        <div className="w-full">
+           <div className="w-full h-[8vh] my-8 rounded-full flex justify-evenly items-center ">
+            <NavBar/>
+           </div>
             {children}
         </div>
     );
