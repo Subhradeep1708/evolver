@@ -27,13 +27,15 @@ import { Input } from "@/components/ui/input";
 const formSchema = z.object({
     subjectId:z.string().min(1, "Subject ID is required"),
     examName: z.string().min(1, "Subject name is required"),
+    duration: z.coerce.number().min(1, "Duration is required"),
+    noOfQuestions: z.coerce.number().min(1, "Total questions is required"), 
 });
 //demo subjects
 const subjects = [
-    { id: "1", name: "Mathematics" },
-    { id: "2", name: "Science" },
-    { id: "3", name: "History" },
-];
+  {id: "1", name: "Mathematics"},
+  {id: "2", name: "Physics"},
+  {id: "3", name: "Chemistry"},
+]
 
 export function ExamAddForm() {
     const form = useForm<z.infer<typeof formSchema>>({
@@ -41,6 +43,8 @@ export function ExamAddForm() {
         defaultValues: {
             subjectId: "",
             examName: "",
+            duration: 0,
+            noOfQuestions: 0,
         },
     });
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -99,7 +103,34 @@ export function ExamAddForm() {
             </FormItem>
           )}
         />
-
+        {/* Duration Input */}
+        <FormField
+          control={form.control}
+          name="duration"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Duration (in minutes)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter duration" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* Total Questions Input */}
+        <FormField
+          control={form.control}
+          name="noOfQuestions"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Total Questions</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter total questions" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit" className="w-full">
           Submit
         </Button>
