@@ -6,7 +6,7 @@ const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
     return (
         <SidebarProvider open={true}>
             <AppSidebar />
-            <main>
+            <main className="w-full">
                 {/* <SidebarTrigger /> */}
                 {children}
             </main>
