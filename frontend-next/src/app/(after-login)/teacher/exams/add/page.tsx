@@ -1,7 +1,8 @@
+import { ExamAddForm } from "@/components/forms/ExamAddForm";
 import React from "react";
 
-function page() {
-    return <div>add exam</div>;
+function examAdd() {
+    return <div><ExamAddForm/></div>;
 }
 
-export default page;
+export default examAdd;

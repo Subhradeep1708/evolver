@@ -58,7 +58,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             }
         } catch (error) {
             console.error("Login failed", error);
-            throw error; // Optionally re-throw to handle in UI
+           
         }
     };
 

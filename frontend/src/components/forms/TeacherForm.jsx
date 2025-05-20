@@ -43,7 +43,7 @@ const TeacherForm = ({ teacher = null }) => {
             role: teacher?.role || "teacher",
             isController: teacher?.isController || false,
             subjects: teacher?.subjects?.map((sub) => sub.name) || [],
-        },
+        }, 
 
         validationSchema: Yup.object({
             firstName: Yup.string().required("First name is required"),
