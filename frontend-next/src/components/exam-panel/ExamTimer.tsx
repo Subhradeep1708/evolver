@@ -34,8 +34,8 @@ export const ExamTimer = ({ durationInMinutes, onTimeUp }: TimerProps) => {
     };
 
     return (
-        <div className="text-center px-4 py-2 bg-gray-100 rounded-lg shadow text-lg font-semibold w-fit mx-auto">
-            ⏳ Time Left:{" "}
+        <div className="text-center px-2 py-1 bg-gray-100 rounded-lg shadow text-lg font-semibold">
+            Time Left:{" "}
             <span className="text-red-600">{formatTime(timeLeft)}</span>
         </div>
     );

@@ -1,3 +1,5 @@
+import { Button } from "../ui/button";
+
 type QuestionNavigationProps = {
     currentQuestionId: number;
     totalQuestions: number;
@@ -15,28 +17,30 @@ const QuestionNavigation: React.FC<QuestionNavigationProps> = ({
 }) => {
     return (
         <div className="flex justify-between items-center space-x-4">
-            <button
-                onClick={onPrev}
-                disabled={currentQuestionId === 1}
-                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-            >
-                Previous
-            </button>
+            <div className="flex space-x-4">
+                <Button
+                    onClick={onPrev}
+                    disabled={currentQuestionId === 1}
+                    className="px-4 py-2 bg-gray-600 rounded disabled:opacity-50"
+                >
+                    Previous
+                </Button>
 
-            <button
-                onClick={onMarkForReview}
-                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-            >
-                Mark for Review
-            </button>
+                <Button
+                    onClick={onMarkForReview}
+                    className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+                >
+                    Mark for Review
+                </Button>
+            </div>
 
-            <button
+            <Button
                 onClick={onNext}
                 disabled={currentQuestionId === totalQuestions}
-                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+                className="px-4 py-2 bg-gray-600 rounded disabled:opacity-50"
             >
                 Next
-            </button>
+            </Button>
         </div>
     );
 };

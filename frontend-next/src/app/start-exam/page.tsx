@@ -45,6 +45,69 @@ const fakeExam = {
             optionD: "C++",
             answer: "C",
         },
+        {
+            id: 4,
+            questionBody: "What is the largest planet in our solar system?",
+            optionA: "Earth",
+            optionB: "Mars",
+            optionC: "Jupiter",
+            optionD: "Saturn",
+            answer: "C",
+        },
+        {
+            id: 5,
+            questionBody: "What is the chemical symbol for gold?",
+            optionA: "Au",
+            optionB: "Ag",
+            optionC: "Fe",
+            optionD: "Pb",
+            answer: "A",
+        },
+        {
+            id: 6,
+            questionBody: "What is the speed of light?",
+            optionA: "300,000 km/s",
+            optionB: "150,000 km/s",
+            optionC: "1,000 km/s",
+            optionD: "3,000 km/s",
+            answer: "A",
+        },
+        {
+            id: 7,
+            questionBody: "Who wrote 'Romeo and Juliet'?",
+            optionA: "Charles Dickens",
+            optionB: "William Shakespeare",
+            optionC: "Mark Twain",
+            optionD: "Jane Austen",
+            answer: "B",
+        },
+        {
+            id: 8,
+            questionBody: "What is the boiling point of water?",
+            optionA: "0°C",
+            optionB: "100°C",
+            optionC: "50°C",
+            optionD: "25°C",
+            answer: "B",
+        },
+        {
+            id: 9,
+            questionBody: "What is the powerhouse of the cell?",
+            optionA: "Nucleus",
+            optionB: "Mitochondria",
+            optionC: "Ribosome",
+            optionD: "Endoplasmic Reticulum",
+            answer: "B",
+        },
+        {
+            id: 10,
+            questionBody: "What is the largest mammal?",
+            optionA: "Elephant",
+            optionB: "Blue Whale",
+            optionC: "Giraffe",
+            optionD: "Great White Shark",
+            answer: "B",
+        },
     ],
 };
 
@@ -66,7 +129,7 @@ export default function ExamPanelPage() {
     );
 
     const [statuses, setStatuses] = useState(initStatuses);
-    const [timeLeft] = useState(10 * 60); // 10 minutes example
+    const [timeLeft] = useState(10);
 
     const currentQuestion = fakeExam.mcqs.find(
         (q) => q.id === currentQuestionId
@@ -91,19 +154,25 @@ export default function ExamPanelPage() {
 
     // Handle question select from pallet
     const handleSelectQuestion = (id: number) => {
-        setCurrentQuestionId(id);
-
         setStatuses((prev) =>
-            prev.map((q) => ({
-                ...q,
-                status:
-                    q.id === id
-                        ? "current"
-                        : q.status === "current"
-                        ? "unattempted"
-                        : q.status,
-            }))
+            prev.map((q) => {
+                if (q.id === id) {
+                    // New current question
+                    return { ...q, status: "current" };
+                }
+                if (q.status === "current") {
+                    // Previous current question - mark notAnswered if no answer else answered
+                    const answered = answers[q.id];
+                    return {
+                        ...q,
+                        status: answered ? "answered" : "notAnswered",
+                    };
+                }
+                return q;
+            })
         );
+
+        setCurrentQuestionId(id);
     };
 
     // Navigation handlers
@@ -130,12 +199,11 @@ export default function ExamPanelPage() {
         );
     };
 
-    // Submit Handler
     const handleSubmit = () => {
-        alert("Submit exam logic here");
+        console.log("Submitting exam with answers:", answers);
+        console.log("Statuses:", statuses);
     };
 
-    // Initialize current question status on first render and update on currentQuestionId change
     useEffect(() => {
         setStatuses((prev) =>
             prev.map((q) => ({
@@ -147,7 +215,7 @@ export default function ExamPanelPage() {
 
     return (
         <div className="p-6 max-w-8xl mx-auto">
-            <div className="flex">
+            <div className="flex flex-row justify-between items-center bg-amber-100 rounded-2xl px-6">
                 <ExamHeader
                     examName={fakeExam.name}
                     totalQuestions={fakeExam.mcqs.length}
@@ -159,9 +227,9 @@ export default function ExamPanelPage() {
                 />
             </div>
             <div className="flex flex-row md:flex-row gap-4">
-                <div className="basis-3/4">
+                <div className="basis-3/4 ">
                     <DisplayedQuestion
-                        className="my-6"
+                        className="my-6 s"
                         question={currentQuestion}
                         selectedOption={answers[currentQuestionId] ?? null}
                         setSelectedOption={handleSelectOption}
