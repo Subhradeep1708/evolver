@@ -20,17 +20,18 @@ const apiRoutes = {
 
     //*subject-routes
     getSubject: `${origin}/${subject_routes}`, // add subject id to get specific subject
+    updateSubject: `${origin}/${subject_routes}`, // add subject id to update specific subject (PUT)
 
     //*exam-routes
     getExam: `${origin}/${exam_routes}`, // add exam id to get specific exam
     getExamByTeacher: `${origin}/${exam_routes}/teacher`, // add teacher id to get specific exam
 
     //*mcq-routes
-    addMcq: `${origin}/${mcq_routes}`, 
-    
+    addMcq: `${origin}/${mcq_routes}`,
+
     //*answer-routes
     submitAnswer: `${origin}/${answer_routes}/submit`, // add exam id to get specific exam
-    
+
     //*result-routes
     getResult: `${origin}/${result_routes}`, // add exam id to get specific exam
     getResultByStudent: `${origin}/${result_routes}/student`, // add student id to get specific exam

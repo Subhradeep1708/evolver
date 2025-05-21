@@ -9,9 +9,12 @@ import {
 } from "@/components/ui/table";
 import apiRoutes from "@/lib/routes";
 import axios from "axios";
+import { Edit, Edit2, Edit2Icon } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Subject = {
+    id?: string | number;
     name: string;
     description: string;
     teachers: {
@@ -43,6 +46,7 @@ const AllSubjects = () => {
                         <TableHead>Name</TableHead>
                         <TableHead>Description</TableHead>
                         <TableHead>Teachers</TableHead>
+                        <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -56,6 +60,14 @@ const AllSubjects = () => {
                                         {teacher.firstName} {teacher.lastName}
                                     </span>
                                 ))}
+                            </TableCell>
+                            <TableCell>
+                                <Link href={`/teacher/subjects/${item.id}`}>
+                                    <Edit2Icon
+                                        className="hover:bg-gray-200 rounded p-1"
+                                        size={28}
+                                    />
+                                </Link>
                             </TableCell>
                         </TableRow>
                     ))}

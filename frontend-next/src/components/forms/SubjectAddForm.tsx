@@ -15,25 +15,57 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
+import { SubjectFormTypes } from "@/types/form-types";
+import axios from "axios";
+import apiRoutes from "@/lib/routes";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
 });
 
-export function SubjectAddForm() {
+export function SubjectAddForm({
+    subject,
+}: {
+    subject?: SubjectFormTypes | null;
+}) {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            name: "",
-            description: "",
-        },
+        defaultValues: subject
+            ? {
+                  name: subject.name,
+                  description: subject.description,
+              }
+            : undefined,
     });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Submitted:", values);
-        form.reset(); // Clear form
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            if (subject) {
+                // Update existing subject
+                const res = await axios.put(
+                    `${apiRoutes.updateSubject}/${subject.id}`,
+                    values
+                );
+                if (res.status === 200) {
+                    console.log("Subject updated successfully");
+                    form.reset();
+                    router.push("/teacher/subjects");
+                } else {
+                    console.error("Error updating subject");
+                }
+                console.log("Updating subject:", subject.id, values);
+            } else {
+                // Create new subject
+                console.log("Creating new subject:", values);
+            }
+            console.log("Submitted:", values);
+            // Clear form
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        }
     };
 
     return (
@@ -43,7 +75,7 @@ export function SubjectAddForm() {
                 className="space-y-8 w-full max-w-lg mx-auto p-6"
             >
                 <h1 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 text-center">
-                    Add Subject
+                    {subject ? "Edit Subject" : "Add Subject"}
                 </h1>
 
                 <FormField
@@ -53,7 +85,10 @@ export function SubjectAddForm() {
                         <FormItem>
                             <FormLabel>Subject Name</FormLabel>
                             <FormControl>
-                                <Input placeholder="Enter subject name" {...field} />
+                                <Input
+                                    placeholder="Enter subject name"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormDescription>
                                 Name of the subject to be added.
@@ -70,7 +105,10 @@ export function SubjectAddForm() {
                         <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                                <Input placeholder="Enter description" {...field} />
+                                <Input
+                                    placeholder="Enter description"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormDescription>
                                 A brief description of the subject.

@@ -22,7 +22,6 @@ export const addSubject = async (req, res) => {
             data: newSubject,
         });
     } catch (error) {
-      
         return res.status(400).json({
             message: error.message || "An error occurred",
         });
@@ -112,23 +111,36 @@ export const getSubjectById = async (req, res) => {
     }
 };
 
-// const subjects = [
-//     {
-//         id: 1,
-//         name: "Mathematics",
-//         description:
-//             "Mathematics is the study of numbers, quantity, space, structure, and change.",
-//     },
-//     {
-//         id: 2,
-//         name: "English",
-//         description:
-//             "English is a West Germanic language first spoken in early medieval England, which has become the leading language of international discourse in the 21st century.",
-//     },
-//     {
-//         id: 3,
-//         name: "Data Structures and Algorithms",
-//         description:
-//             "Data structures and algorithms are the building blocks of programming. They are the foundation of computer science.",
-//     },
-// ];
+export const updateSubject = async (req, res) => {
+    try {
+        const { subjectId } = req.params;
+        // API should be /api/subject/:subjectId
+        const { name, description } = req.body;
+
+        if (!name || !description) {
+            return res.status(400).json({
+                message: "Name and description are required",
+            });
+        }
+
+        const updatedSubject = await db.subject.update({
+            where: {
+                id: parseInt(subjectId),
+            },
+            data: {
+                name,
+                description,
+            },
+        });
+
+        return res.status(200).json({
+            message: "Subject updated successfully",
+            data: updatedSubject,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message:
+                error.message || "An error occurred while updating subject",
+        });
+    }
+};
