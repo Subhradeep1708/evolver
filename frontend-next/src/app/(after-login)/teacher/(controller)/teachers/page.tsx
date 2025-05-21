@@ -81,9 +81,9 @@ const AllTeachers = () => {
                             {/* <TableCell>{item.attemptedOn}</TableCell> */}
                             <TableCell>
                                 {item.subjects.map((subject) => (
-                                    <span key={subject.id}>
+                                    <small key={subject.id}>
                                         {getAbbreviation(subject.subject.name)},{" "}
-                                    </span>
+                                    </small>
                                 ))}
                             </TableCell>
                         </TableRow>
