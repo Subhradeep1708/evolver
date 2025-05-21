@@ -7,6 +7,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import apiRoutes from "@/lib/routes";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -26,9 +27,7 @@ const AllStudent = () => {
     useEffect(() => {
         const fetchStudent = async () => {
             try {
-                const res = await axios.get(
-                    "${import.meta.env.VITE_ORIGIN}/api/user/student"
-                );
+                const res = await axios.get(apiRoutes.getStudent);
                 setStudents(res.data.data);
                 console.log(res.data);
             } catch (error) {
