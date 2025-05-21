@@ -32,7 +32,7 @@ const StudentDashboardPage = () => {
             const res = await axios.get(apiRoutes.getExam);
             if (res.status === 200) {
                 // setExams(res.data.data);
-                console.log(res.data.exams);
+                console.log(res);
                 setExams(res.data.exams);
             }
         };
