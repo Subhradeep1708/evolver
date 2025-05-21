@@ -10,7 +10,9 @@ import {
 
 const subjectRouter = Router();
 
-subjectRouter.post("/", isAuthenticated, checkControllerPermission, addSubject);
+subjectRouter.post("/", 
+    // isAuthenticated, checkControllerPermission,
+     addSubject);
 
 subjectRouter.get("/", getAllSubjects);
 

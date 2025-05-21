@@ -19,6 +19,7 @@ import { SubjectFormTypes } from "@/types/form-types";
 import axios from "axios";
 import apiRoutes from "@/lib/routes";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -58,11 +59,14 @@ export function SubjectAddForm({
                 }
                 console.log("Updating subject:", subject.id, values);
             } else {
-                // Create new subject
-                console.log("Creating new subject:", values);
+                const response = await axios.post(
+                    `${apiRoutes.getSubject}`,
+                    values
+                );
+                console.log("Subject added successfully:", response);
+                toast.success("Subject added successfully");
+                form.reset();
             }
-            console.log("Submitted:", values);
-            // Clear form
         } catch (error) {
             console.error("Error submitting form:", error);
         }
