@@ -7,10 +7,12 @@ const StudentDashboard = () => {
     const [exams, setExams] = useState([]);
     useEffect(() => {
         const fetchExams = async () => {
-            const res = await axios.get(`${import.meta.env.VITE_ORIGIN}/api/exam`);
+            const res = await axios.get(
+                `${import.meta.env.VITE_ORIGIN}/api/exam`
+            );
             if (res.status === 200) {
                 // setExams(res.data.data);
-                console.log(res.data.exams);
+                console.log(res);
                 setExams(res.data.exams);
             }
         };
