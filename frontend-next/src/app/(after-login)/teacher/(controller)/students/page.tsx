@@ -9,13 +9,16 @@ import {
 } from "@/components/ui/table";
 import apiRoutes from "@/lib/routes";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 type Student = {
+    id: string | number;
     rollNo: string;
     user: {
         firstName: string;
         lastName: string;
+        middleName: string;
         email: string;
     };
     attemptedOn: string;
@@ -45,6 +48,7 @@ const AllStudent = () => {
                         <TableHead>Roll No</TableHead>
                         <TableHead>Student Name</TableHead>
                         <TableHead>Email</TableHead>
+                        <TableHead>Actions</TableHead>
                         {/* <TableHead>Branch Name</TableHead> */}
                         {/* <TableHead>Admission Year</TableHead> */}
                     </TableRow>
@@ -54,11 +58,17 @@ const AllStudent = () => {
                         <TableRow key={index}>
                             <TableCell>{item.rollNo}</TableCell>
                             <TableCell>
-                                {item.user.firstName} {item.user.lastName}
+                                {item.user.firstName} {item.user.middleName}{" "}
+                                {item.user.lastName}
                             </TableCell>
                             <TableCell>{item.user.email}</TableCell>
                             {/* <TableCell>{item.attemptedOn}</TableCell> */}
                             <TableCell>{item.totalMarks}</TableCell>
+                            <TableCell>
+                                <Link href={`/teacher/students/${item.id}`}>
+                                    Edit
+                                </Link>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

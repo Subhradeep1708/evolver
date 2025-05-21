@@ -18,6 +18,7 @@ import axios from "axios";
 import apiRoutes from "@/lib/routes";
 import toast from "react-hot-toast";
 import { StudentFormTypes } from "@/types/form-types";
+import { useRouter } from "next/navigation";
 
 const studentFormSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -29,37 +30,63 @@ const studentFormSchema = z.object({
 
 type StudentFormValues = z.infer<typeof studentFormSchema>;
 
-export function StudentAddForm({ student }: { student?: StudentFormTypes | null }) {
+export function StudentAddForm({
+    student,
+}: {
+    student?: StudentFormTypes | null;
+}) {
     const form = useForm<StudentFormValues>({
         resolver: zodResolver(studentFormSchema),
         defaultValues: {
-            firstName: student?.firstName || "",
-            middleName: student?.middleName || "",
-            lastName: student?.lastName || "",
-            email: student?.email || "",
+            firstName: student?.user.firstName || "",
+            middleName: student?.user.middleName || "",
+            lastName: student?.user.lastName || "",
+            email: student?.user.email || "",
             rollNo: student?.rollNo || "",
         },
     });
+
+    const router = useRouter();
 
     async function onSubmit(values: StudentFormValues) {
         try {
             if (student) {
                 // update student
+                const response = await axios.put(
+                    `${apiRoutes.updateStudent}/${student.id}`,
+                    {
+                        ...values,
+                        id: student.id,
+                    }
+                );
+                if (response.status === 200) {
+                    toast.success("Student updated successfully");
+                    form.reset();
+                    router.push("/teacher/students");
+                } else {
+                    toast.error(
+                        response.data.message || "Failed to update student"
+                    );
+                }
             } else {
-                const response = await axios.post(`
-                ${apiRoutes.studentRegister}`, {
-                    ...values,
-                    password: "123456",
-                    role: "student"
-                })
-
+                const response = await axios.post(
+                    `
+                ${apiRoutes.studentRegister}`,
+                    {
+                        ...values,
+                        password: "123456",
+                        role: "student",
+                    }
+                );
 
                 if (response.status === 200) {
                     toast.success("Student added successfully");
                     form.reset();
+                    router.push("/teacher/students");
                 } else {
-                    toast.error(response.data.message || "Failed to add student");
-
+                    toast.error(
+                        response.data.message || "Failed to add student"
+                    );
                 }
             }
         } catch (error: any) {
@@ -89,7 +116,10 @@ export function StudentAddForm({ student }: { student?: StudentFormTypes | null 
                             <FormItem>
                                 <FormLabel>First Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="First Name" {...field} />
+                                    <Input
+                                        placeholder="First Name"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -103,7 +133,10 @@ export function StudentAddForm({ student }: { student?: StudentFormTypes | null 
                             <FormItem>
                                 <FormLabel>Middle Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Middle Name (optional)" {...field} />
+                                    <Input
+                                        placeholder="Middle Name (optional)"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

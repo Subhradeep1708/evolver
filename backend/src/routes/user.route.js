@@ -8,17 +8,25 @@ import {
     getExamByStudentId,
     getExamByTeacherId,
 } from "../controllers/exam.controller.js";
-import { getAllStudent, getAllTeacher } from "../controllers/user.controller.js";
+import {
+    getAllStudent,
+    getAllTeacher,
+    getStudentData,
+    editStudentById,
+} from "../controllers/user.controller.js";
 
 const userRouter = Router();
-
+userRouter.put(
+    "/student/:studentId",
+    // isAuthenticated,
+    // checkStudentPermission,
+    editStudentById
+);
 userRouter.get(
     "/student/:studentId",
-    isAuthenticated,
-    checkTeacherPermission,
-    (req, res) => {
-        res.send("Hello, world!");
-    }
+    // isAuthenticated,
+    // checkTeacherPermission,
+    getStudentData
 );
 
 userRouter.get(
@@ -38,7 +46,6 @@ userRouter.get(
     "/teacher",
     // isAuthenticated,
     getAllTeacher
-
-)
+);
 
 export default userRouter;

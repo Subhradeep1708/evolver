@@ -17,6 +17,7 @@ const apiRoutes = {
     //*user-routes
     getStudent: `${origin}/${user_routes}/student`, // add student id to get specific student
     getTeacher: `${origin}/${user_routes}/teacher`, // add teacher id to get specific teacher
+    updateStudent: `${origin}/${user_routes}/student`, // add student id to update specific student (PUT)
 
     //*subject-routes
     getSubject: `${origin}/${subject_routes}`, // add subject id to get specific subject
