@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table";
 import { FaEye } from "react-icons/fa";
 import { useAppContext } from "@/context/AppContext";
+import apiRoutes from "@/lib/routes";
 
 type Exam = {
     id: string;
@@ -48,7 +49,7 @@ const page = () => {
         const fetchExamData = async () => {
             try {
                 const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_ORIGIN}/api/exam/teacher/${user.id}`,
+                   `${apiRoutes.getExamByTeacher}/${user?.userId}`,
                     {
                         withCredentials: true,
                     }
@@ -59,14 +60,14 @@ const page = () => {
             }
         };
         fetchExamData();
-    }, [user.id]);
+    }, [user?.userId]);
 
     useEffect(() => {
         const fetchExamResult = async () => {
             if (!examId) return;
             try {
                 const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_ORIGIN}/api/result/${examId}`,
+                    `${apiRoutes.getResult}/${examId}`,
                     {
                         withCredentials: true,
                     }
