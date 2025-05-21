@@ -16,6 +16,7 @@ const EditSubject = async ({ params }: { params: Promise<{ id: string }> }) => {
                 id: res.data.data.id,
                 name: res.data.data.name,
                 description: res.data.data.description,
+
             };
         } else {
             console.error("Error fetching subject");

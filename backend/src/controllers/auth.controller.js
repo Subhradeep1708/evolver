@@ -17,6 +17,10 @@ export const registerStudent = async (req, res) => {
             rollNo,
         } = req.body;
         // Validate inputs
+
+        console.log(req.body);
+
+
         if (
             !email ||
             !password ||
@@ -25,6 +29,8 @@ export const registerStudent = async (req, res) => {
             !firstName ||
             !rollNo
         ) {
+            console.log("Missing required fields");
+
             return res.status(400).json({
                 message:
                     "Email, password, role, first name, last name, and roll number are required",
@@ -74,7 +80,7 @@ export const registerStudent = async (req, res) => {
 
         // console.log("new user")
 
-        return res.send({
+        return res.json({
             message: "User registered successfully",
             data: {
                 id: newUser.id,

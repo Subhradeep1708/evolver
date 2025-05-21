@@ -14,33 +14,57 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import axios from "axios";
+import apiRoutes from "@/lib/routes";
+import toast from "react-hot-toast";
+import { StudentFormTypes } from "@/types/form-types";
 
 const studentFormSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
     middleName: z.string().optional(),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Invalid email address"),
-    rollNumber: z.string().min(1, "Roll number is required"),
+    rollNo: z.string().min(1, "Roll number is required"),
 });
 
 type StudentFormValues = z.infer<typeof studentFormSchema>;
 
-export function StudentAddForm() {
+export function StudentAddForm({ student }: { student?: StudentFormTypes | null }) {
     const form = useForm<StudentFormValues>({
         resolver: zodResolver(studentFormSchema),
         defaultValues: {
-            firstName: "",
-            middleName: "",
-            lastName: "",
-            email: "",
-            rollNumber: "",
+            firstName: student?.firstName || "",
+            middleName: student?.middleName || "",
+            lastName: student?.lastName || "",
+            email: student?.email || "",
+            rollNo: student?.rollNo || "",
         },
     });
 
-    function onSubmit(values: StudentFormValues) {
-        console.log("Submitted Student Details:", values);
-        //role:student has to be added in the api call
-        form.reset();
+    async function onSubmit(values: StudentFormValues) {
+        try {
+            if (student) {
+                // update student
+            } else {
+                const response = await axios.post(`
+                ${apiRoutes.studentRegister}`, {
+                    ...values,
+                    password: "123456",
+                    role: "student"
+                })
+
+
+                if (response.status === 200) {
+                    toast.success("Student added successfully");
+                    form.reset();
+                } else {
+                    toast.error(response.data.message || "Failed to add student");
+
+                }
+            }
+        } catch (error: any) {
+            toast.error(error.message || "Failed to add student");
+        }
     }
 
     return (
@@ -117,7 +141,7 @@ export function StudentAddForm() {
 
                 <FormField
                     control={form.control}
-                    name="rollNumber"
+                    name="rollNo"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Roll Number</FormLabel>

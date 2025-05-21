@@ -75,4 +75,36 @@ export const getAllTeacher = async (req, res) => {
     }
 };
 
-const getTeacherData = async (req, res) => {};
+export const getTeacherData = async (req, res) => { };
+
+export const editStudentById = async (req, res) => {
+    try {
+        const { id, email, password, firstName, lastName, middleName, rollNo } = req.body;
+        const student = await db.student.findUnique({
+            where: id,
+        });
+        if (!student) {
+            return res.status(404).json({
+                message: "Student not found",
+            });
+        }
+        const updatedStudent = await db.student.update({
+            where: id,
+            data: {
+                user: {
+                    update: {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        password: password,
+                        middleName: middleName,
+                        rollNo: rollNo,
+                    },
+                },
+            },
+        });
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}

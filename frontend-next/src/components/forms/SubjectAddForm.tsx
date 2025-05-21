@@ -36,9 +36,9 @@ export function SubjectAddForm({
         resolver: zodResolver(formSchema),
         defaultValues: subject
             ? {
-                  name: subject.name,
-                  description: subject.description,
-              }
+                name: subject.name,
+                description: subject.description,
+            }
             : undefined,
     });
 
