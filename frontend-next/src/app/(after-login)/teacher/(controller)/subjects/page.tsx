@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/table";
 import apiRoutes from "@/lib/routes";
 import axios from "axios";
-import { Edit, Edit2, Edit2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaEdit } from "react-icons/fa";
 
 type Subject = {
     id?: string | number;
@@ -63,9 +63,10 @@ const AllSubjects = () => {
                             </TableCell>
                             <TableCell>
                                 <Link href={`/teacher/subjects/${item.id}`}>
-                                    <Edit2Icon
+                                    <FaEdit
                                         className="hover:bg-gray-200 rounded p-1"
                                         size={28}
+                                        color="black"
                                     />
                                 </Link>
                             </TableCell>
