@@ -5,14 +5,26 @@ import {
     addSubject,
     getAllSubjects,
     getSubjectById,
+    updateSubject,
 } from "../controllers/subject.controller.js";
 
 const subjectRouter = Router();
 
 subjectRouter.post("/", isAuthenticated, checkControllerPermission, addSubject);
 
-subjectRouter.get("/",  getAllSubjects);
+subjectRouter.get("/", getAllSubjects);
 
-subjectRouter.get("/:subjectId", isAuthenticated, getSubjectById);
+subjectRouter.get(
+    "/:subjectId",
+    // isAuthenticated,
+    getSubjectById
+);
+
+subjectRouter.put(
+    "/:subjectId",
+    // isAuthenticated,
+    // checkControllerPermission,
+    updateSubject
+);
 
 export default subjectRouter;
