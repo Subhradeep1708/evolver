@@ -41,7 +41,7 @@ const teacherFormSchema = z.object({
 
 type TeacherFormValues = z.infer<typeof teacherFormSchema>;
 type Subject = {
-    id: string ;
+    id: string;
     name: string;
     description: string;
     teachers: {
@@ -52,8 +52,8 @@ type Subject = {
         isController: boolean;
     }[];
 };
-export function TeacherAddForm({teacher}:{teacher?: TeacherFormTypes | null}) {
-    const [subjects,setSubjects] =useState<Subject[]>([])
+export function TeacherAddForm({ teacher }: { teacher?: TeacherFormTypes | null }) {
+    const [subjects, setSubjects] = useState<Subject[]>([])
     const form = useForm<TeacherFormValues>({
         resolver: zodResolver(teacherFormSchema),
         defaultValues: {
@@ -67,18 +67,33 @@ export function TeacherAddForm({teacher}:{teacher?: TeacherFormTypes | null}) {
     });
     const router = useRouter();
     async function onSubmit(values: TeacherFormValues) {
-        const response = await axios.post(`${apiRoutes.teacherRegister}`, {
-            ...values,
-            password: "123456",
-            isController: values.role === "controller" ? true : false,
-        });
-        console.log(response);
-        if (response.status === 201) {
-            toast.success("Teacher added successfully");
-            form.reset();
-            router.push("/teacher/teachers");
+        if (teacher) {
+            const response = await axios.put(`${apiRoutes.updateTeacher}`, {
+                ...values,
+                isController: values.role === "controller" ? true : false,
+            });
+            console.log(response);
+            if (response.status === 200) {
+                toast.success("Teacher Updated successfully");
+                form.reset();
+                router.push("/teacher/teachers");
+            } else {
+                toast.error("Failed to add teacher");
+            }
         } else {
-            toast.error("Failed to add teacher");
+            const response = await axios.post(`${apiRoutes.teacherRegister}`, {
+                ...values,
+                password: "123456",
+                isController: values.role === "controller" ? true : false,
+            });
+            console.log(response);
+            if (response.status === 201) {
+                toast.success("Teacher added successfully");
+                form.reset();
+                router.push("/teacher/teachers");
+            } else {
+                toast.error("Failed to add teacher");
+            }
         }
     }
     useEffect(() => {

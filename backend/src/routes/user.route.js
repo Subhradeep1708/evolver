@@ -11,6 +11,7 @@ import {
     getStudentData,
     editStudentById,
     getTeacherData,
+    editTeacherById,
 } from "../controllers/user.controller.js";
 
 const userRouter = Router();
@@ -31,7 +32,7 @@ userRouter.get(
     "/teacher/:teacherId",
     // isAuthenticated,
     // checkTeacherPermission,
-   getTeacherData
+    getTeacherData
 );
 userRouter.get(
     "/student",
@@ -45,5 +46,12 @@ userRouter.get(
     // isAuthenticated,
     getAllTeacher
 );
+
+userRouter.put(
+    "/teacher/:teacherId",
+    // isAuthenticated,
+    // checkTeacherPermission,
+    editTeacherById
+)
 
 export default userRouter;
