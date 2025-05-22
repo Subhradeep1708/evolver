@@ -6,6 +6,7 @@ function examAdd() {
         // Handle the form submission here
         console.log("Form submitted with values:", values);
         // You can make an API call or perform any other action with the values
+        //? create the exam in database and navigate to the mcq page:/teacher/exams/add/mcq/examId
     };
     return (
         <div className="w-full">
