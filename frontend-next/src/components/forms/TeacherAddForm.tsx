@@ -27,6 +27,7 @@ import apiRoutes from "@/lib/routes";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { TeacherFormTypes } from "@/types/form-types";
 
 //dummy subjects data
 const teacherFormSchema = z.object({
@@ -51,7 +52,7 @@ type Subject = {
         isController: boolean;
     }[];
 };
-export function TeacherAddForm({teacher}:{teacher?: TeacherFormValues | null}) {
+export function TeacherAddForm({teacher}:{teacher?: TeacherFormTypes | null}) {
     const [subjects,setSubjects] =useState<Subject[]>([])
     const form = useForm<TeacherFormValues>({
         resolver: zodResolver(teacherFormSchema),
