@@ -183,3 +183,75 @@ export const editStudentById = async (req, res) => {
         });
     }
 };
+
+export const editTeacherById = async (req, res) => {
+    try {
+        const { id, email, password, firstName, lastName, middleName, subjects, isController, role } =
+            req.body;
+
+        console.log("req.body", req.body);
+
+        if (!id) {
+            return res.status(400).json({ message: "Teacher ID is required" });
+        }
+
+        const userUpdateData = {
+            ...(firstName && { firstName }),
+            ...(lastName && { lastName }),
+            ...(email && { email }),
+            ...(password && { password }),
+            role,
+            middleName,
+        };
+
+        const user = await db.user.findUnique({ where: { id } });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const updatedUser = await db.user.update({
+            where: { id },
+            data: userUpdateData,
+
+        });
+
+
+        if (!updatedUser) {
+            return res.status(400).json({
+                message: "No valid fields provided to update",
+            });
+        }
+        if (isController) {
+            const teacher = await db.teacher.findUnique({ where: { id } });
+            if (!teacher) {
+                return res.status(404).json({ message: "Teacher not found" });
+            }
+
+            const updatedTeacher = await db.teacher.update({
+                where: { id },
+                data: { isController },
+            });
+        }
+        if (subjects) {
+            const teacher = await db.teacher.findUnique({ where: { id } });
+            if (!teacher) {
+                return res.status(404).json({ message: "Teacher not found" });
+            }
+
+            const updatedTeacher = await db.teacher.update({
+                where: { id },
+                data: { subjects },
+            });
+        }
+
+        return res.status(200).json({
+            message: "Update successful",
+            data: updatedUser,
+        });
+    } catch (error) {
+        console.error("Error updating teacher:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+}
