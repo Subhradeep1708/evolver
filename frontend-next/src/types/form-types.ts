@@ -14,3 +14,18 @@ export type StudentFormTypes = {
         email: string;
     };
 };
+
+export type TeacherFormTypes = {
+    id: number | string;
+    user: {
+        firstName: string;
+        lastName: string;
+        email: string;
+    };
+    subjects: {
+        id: number | string;
+        subject: {
+            name: string;
+        };
+    }[];
+};

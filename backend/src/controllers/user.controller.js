@@ -59,6 +59,7 @@ export const getAllTeacher = async (req, res) => {
                 user: {
                     select: {
                         firstName: true,
+                        middleName: true,
                         lastName: true,
                         email: true,
                     },
@@ -87,7 +88,39 @@ export const getAllTeacher = async (req, res) => {
     }
 };
 
-export const getTeacherData = async (req, res) => {};
+export const getTeacherData = async (req, res) => {
+    try {
+        const { teacherId } = req.params;
+        const teacher = await db.teacher.findUnique({
+            where: { id: parseInt(teacherId) },
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        email: true,
+                        middleName: true,
+                    },
+                },
+                subjects: {
+                    include: {
+                        subject: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        return res.status(200).json({
+            message: "Teacher data retrieved successfully",
+            data: teacher,
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 export const editStudentById = async (req, res) => {
     try {

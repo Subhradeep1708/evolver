@@ -15,17 +15,20 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+} from "@/components/ui/select";
+import axios from "axios";
+import apiRoutes from "@/lib/routes";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 //dummy subjects data
-const subjects = [
-    { id: 1, name: "Mathematics" },
-    { id: 2, name: "Science" },
-    { id: 3, name: "English" },
-    { id: 4, name: "History" },
-    { id: 5, name: "Geography" },
-];
 const teacherFormSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
     middleName: z.string().optional(),
@@ -36,8 +39,20 @@ const teacherFormSchema = z.object({
 });
 
 type TeacherFormValues = z.infer<typeof teacherFormSchema>;
-
+type Subject = {
+    id: string ;
+    name: string;
+    description: string;
+    teachers: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        isController: boolean;
+    }[];
+};
 export function TeacherAddForm() {
+    const [subjects,setSubjects] =useState<Subject[]>([])
     const form = useForm<TeacherFormValues>({
         resolver: zodResolver(teacherFormSchema),
         defaultValues: {
@@ -49,24 +64,45 @@ export function TeacherAddForm() {
             subjects: [],
         },
     });
-
-    function onSubmit(values: TeacherFormValues) {
-        console.log("Submitted Teacher Details:", values);
-        //password and isController has to be added in the api call
-        form.reset();
+    const router = useRouter();
+    async function onSubmit(values: TeacherFormValues) {
+        const response = await axios.post(`${apiRoutes.teacherRegister}`, {
+            ...values,
+            password: "123456",
+            isController: values.role === "controller" ? true : false,
+        });
+        console.log(response);
+        if (response.status === 201) {
+            toast.success("Teacher added successfully");
+            form.reset();
+            router.push("/teacher/teachers");
+        } else {
+            toast.error("Failed to add teacher");
+        }
     }
-    return(
-         <Form {...form}>
+    useEffect(() => {
+        const fetchSubjects = async () => {
+            try {
+                const res = await axios.get(apiRoutes.getSubject);
+                setSubjects(res.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchSubjects();
+    }, []);
+    return (
+        <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6 max-w-3xl mx-auto p-6"
             >
                 <h1 className="text-3xl font-semibold text-center border-b pb-2">
-                   Add Teacher
+                    Add Teacher
                 </h1>
 
                 <p className="text-sm text-muted-foreground text-center">
-                   Provide the teacher details below.
+                    Provide the teacher details below.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -77,7 +113,10 @@ export function TeacherAddForm() {
                             <FormItem>
                                 <FormLabel>First Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="First Name" {...field} />
+                                    <Input
+                                        placeholder="First Name"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -91,7 +130,10 @@ export function TeacherAddForm() {
                             <FormItem>
                                 <FormLabel>Middle Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Middle Name (optional)" {...field} />
+                                    <Input
+                                        placeholder="Middle Name (optional)"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -143,8 +185,12 @@ export function TeacherAddForm() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="teacher">Teacher</SelectItem>
-                                    <SelectItem value="controller">Controller</SelectItem>
+                                    <SelectItem value="teacher">
+                                        Teacher
+                                    </SelectItem>
+                                    <SelectItem value="controller">
+                                        Controller
+                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                             <FormMessage />
@@ -165,14 +211,23 @@ export function TeacherAddForm() {
                                 >
                                     <FormControl>
                                         <Checkbox
-                                            checked={field.value?.includes(String(subject.id))}
+                                            checked={field.value?.includes(
+                                                String(subject.id)
+                                            )}
                                             onCheckedChange={(checked) => {
                                                 const id = String(subject.id);
                                                 if (checked) {
-                                                    field.onChange([...(field.value || []), id]);
+                                                    field.onChange([
+                                                        ...(field.value || []),
+                                                        id,
+                                                    ]);
                                                 } else {
                                                     field.onChange(
-                                                        (field.value || []).filter((val) => val !== id)
+                                                        (
+                                                            field.value || []
+                                                        ).filter(
+                                                            (val) => val !== id
+                                                        )
                                                     );
                                                 }
                                             }}
@@ -192,5 +247,5 @@ export function TeacherAddForm() {
                 </Button>
             </form>
         </Form>
-    )
+    );
 }

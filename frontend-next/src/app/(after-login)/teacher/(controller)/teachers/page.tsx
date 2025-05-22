@@ -62,10 +62,10 @@ const AllTeachers = () => {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Student Name</TableHead>
+                        <TableHead>Teacher Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Subjects</TableHead>
-
+                        <TableHead>Actions</TableHead>
                         {/* <TableHead>Branch Name</TableHead> */}
                         {/* <TableHead>Admission Year</TableHead> */}
                     </TableRow>
@@ -85,6 +85,9 @@ const AllTeachers = () => {
                                         {getAbbreviation(subject.subject.name)},{" "}
                                     </small>
                                 ))}
+                            </TableCell>
+                            <TableCell>
+                                <a href={`/teacher/teachers/${item.id}`}>Edit</a>
                             </TableCell>
                         </TableRow>
                     ))}
