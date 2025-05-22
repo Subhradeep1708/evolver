@@ -51,7 +51,7 @@ type Subject = {
         isController: boolean;
     }[];
 };
-export function TeacherAddForm() {
+export function TeacherAddForm({teacher}:{teacher?: TeacherFormValues | null}) {
     const [subjects,setSubjects] =useState<Subject[]>([])
     const form = useForm<TeacherFormValues>({
         resolver: zodResolver(teacherFormSchema),
