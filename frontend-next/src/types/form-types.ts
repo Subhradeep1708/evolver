@@ -19,6 +19,7 @@ export type TeacherFormTypes = {
     id: number | string;
     user: {
         firstName: string;
+        middleName?: string;
         lastName: string;
         email: string;
     };

@@ -4,15 +4,13 @@ import {
     checkStudentPermission,
     checkTeacherPermission,
 } from "../middlewares/permissions.middleware.js";
-import {
-    getExamByStudentId,
-    getExamByTeacherId,
-} from "../controllers/exam.controller.js";
+
 import {
     getAllStudent,
     getAllTeacher,
     getStudentData,
     editStudentById,
+    getTeacherData,
 } from "../controllers/user.controller.js";
 
 const userRouter = Router();
@@ -31,9 +29,9 @@ userRouter.get(
 
 userRouter.get(
     "/teacher/:teacherId",
-    isAuthenticated,
-    checkTeacherPermission,
-    getExamByTeacherId
+    // isAuthenticated,
+    // checkTeacherPermission,
+   getTeacherData
 );
 userRouter.get(
     "/student",
