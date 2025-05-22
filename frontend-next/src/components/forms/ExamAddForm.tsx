@@ -78,7 +78,7 @@ export function ExamAddForm() {
                 ...values,
                 totalMarks: values.noOfQuestions,
                 addedBy: user?.userId,
-            });
+            },{withCredentials: true});
 
             if (res.status === 201) {
                 const examId = res.data.id;

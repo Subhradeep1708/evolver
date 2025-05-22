@@ -173,6 +173,7 @@ const McqAddForm = ({ noOfQuestions, examId }: McqAddFormProps) => {
                             type="number"
                             placeholder="Enter -ve marks"
                             max={0}
+                            disabled
                             {...field}
                           />
                         </FormControl>
