@@ -11,25 +11,19 @@ const deleteExam = async (req, res) => {
 
 export const createExam = async (req, res) => {
     try {
-        const { examName, subjectId } = req.body;
+        const { examName, subjectId, duration,noOfQuestions,totalMarks,addedBy } = req.body;
+         
 
-        //TODO: examDate, examTime, examDuration, examType add these later to the db
-
-        // if (req.user.role === "student") {
-        //     return res
-        //         .status(403)
-        //         .json({ message: "You are not authorized to create an exam" });
-        // }
-        console.log("creating examm....", req.body);
-
-        console.log(req.user);
+        console.log(req.body);
 
         const newExam = await db.exam.create({
             data: {
                 subjectId: parseInt(subjectId),
                 name: examName,
-                totalMarks: 0,
-                addedBy: parseInt(req.body.userId),
+                noOfQuestions: noOfQuestions,
+                totalMarks: totalMarks,
+                durationInMinutes: duration,
+                addedBy: parseInt(addedBy),
             },
         });
 
@@ -39,7 +33,7 @@ export const createExam = async (req, res) => {
 
         return res
             .status(201)
-            .json({ message: "Exam created successfully", data: newExam });
+            .json({ message: "Exam created successfully",data:newExam });
     } catch (error) {
         console.error("Error creating exam:", error);
         return res.status(500).json({ message: "An error occurred" });

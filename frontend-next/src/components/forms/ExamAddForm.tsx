@@ -21,6 +21,12 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import apiRoutes from "@/lib/routes";
+import toast from "react-hot-toast";
+import { useAppContext } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     subjectId: z.string().min(1, "Subject ID is required"),
@@ -28,18 +34,24 @@ const formSchema = z.object({
     duration: z.coerce.number().min(1, "Duration is required"),
     noOfQuestions: z.coerce.number().min(1, "Total questions is required"),
 });
-//demo subjects
-const subjects = [
-    { id: "1", name: "Mathematics" },
-    { id: "2", name: "Physics" },
-    { id: "3", name: "Chemistry" },
-];
 
-export function ExamAddForm({
-    handleSubmit,
-}: {
-    handleSubmit: (values: z.infer<typeof formSchema>) => Promise<void>;
-}) {
+type Subject = {
+    id: string;
+    name: string;
+    description: string;
+    teachers: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        isController: boolean;
+    }[];
+};
+
+export function ExamAddForm() {
+     const [subjects, setSubjects] = useState<Subject[]>([])
+     const {user}=useAppContext();
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,10 +61,35 @@ export function ExamAddForm({
             noOfQuestions: 0,
         },
     });
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // console.log("Submitted:", values);
-        handleSubmit(values); // Call the parent function to handle submission
-        form.reset(); // Clear form
+    useEffect(() => {
+            const fetchSubjects = async () => {
+                try {
+                    const res = await axios.get(apiRoutes.getSubject);
+                    setSubjects(res.data.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+            fetchSubjects();
+        }, []);
+  async  function onSubmit(values: z.infer<typeof formSchema>) {
+          try{
+                 const res =await axios.post(apiRoutes.createExam,{
+                    ...values,
+                    totalMarks: values.noOfQuestions,
+                    addedBy: user?.userId
+                 });
+               
+               if(res.status===201){
+                    const examId=res.data.id;
+                    toast.success("Exam created successfully");
+                    router.push(`/teacher/exams/add/${examId}`);
+                    form.reset();
+
+               }
+          }catch(error){
+                toast.error("Error creating exam");
+            }
     }
 
     return (
