@@ -68,7 +68,7 @@ const McqAddForm = ({ noOfQuestions, examId }: McqAddFormProps) => {
     console.log("Submitting...");
     const data = {
       examId,
-      questions: values.question.map((question) => ({
+      mcqs: values.question.map((question) => ({
         question: question.question,
         options: {
           A: question.optionA,

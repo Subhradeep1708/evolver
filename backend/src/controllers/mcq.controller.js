@@ -40,12 +40,12 @@ export const addMcqBulk = async (req, res) => {
     const mcqData = mcqs.map((mcq) => {
         totalMarks += parseInt(mcq.point);
         return {
-            questionBody: mcq.questionBody,
+            questionBody: mcq.question,
             questionBodyImage: mcq.questionBodyImage || "",
-            optionA: mcq.options[0],
-            optionB: mcq.options[1],
-            optionC: mcq.options[2],
-            optionD: mcq.options[3],
+            optionA: mcq.options.A,
+            optionB: mcq.options.B,
+            optionC: mcq.options.C,
+            optionD: mcq.options.D,
             answer: mcq.answer,
             point: parseInt(mcq.point),
             examId: examId,

@@ -49,8 +49,8 @@ type Subject = {
 };
 
 export function ExamAddForm() {
-     const [subjects, setSubjects] = useState<Subject[]>([])
-     const {user}=useAppContext();
+    const [subjects, setSubjects] = useState<Subject[]>([]);
+    const { user } = useAppContext();
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -62,34 +62,33 @@ export function ExamAddForm() {
         },
     });
     useEffect(() => {
-            const fetchSubjects = async () => {
-                try {
-                    const res = await axios.get(apiRoutes.getSubject);
-                    setSubjects(res.data.data);
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            fetchSubjects();
-        }, []);
-  async  function onSubmit(values: z.infer<typeof formSchema>) {
-          try{
-                 const res =await axios.post(apiRoutes.createExam,{
-                    ...values,
-                    totalMarks: values.noOfQuestions,
-                    addedBy: user?.userId
-                 });
-               
-               if(res.status===201){
-                    const examId=res.data.id;
-                    toast.success("Exam created successfully");
-                    router.push(`/teacher/exams/add/${examId}`);
-                    form.reset();
-
-               }
-          }catch(error){
-                toast.error("Error creating exam");
+        const fetchSubjects = async () => {
+            try {
+                const res = await axios.get(apiRoutes.getSubject);
+                setSubjects(res.data.data);
+            } catch (error) {
+                console.log(error);
             }
+        };
+        fetchSubjects();
+    }, []);
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            const res = await axios.post(apiRoutes.createExam, {
+                ...values,
+                totalMarks: values.noOfQuestions,
+                addedBy: user?.userId,
+            });
+
+            if (res.status === 201) {
+                const examId = res.data.id;
+                toast.success("Exam created successfully");
+                router.push(`/teacher/exams/add/${examId}`);
+                form.reset();
+            }
+        } catch (error) {
+            toast.error("Error creating exam");
+        }
     }
 
     return (
