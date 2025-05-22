@@ -1,5 +1,5 @@
 import db from "../db/db.js";
-
+//leaderboard
 export const getExamResults = async (req, res) => {
     try {
         const { examId } = req.params;

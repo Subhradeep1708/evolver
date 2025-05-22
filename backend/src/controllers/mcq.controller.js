@@ -12,7 +12,7 @@ const deleteMcq = async (req, res) => {
 const addMcq = async (req, res) => {
     const { question, questionImage, options, correctOption, examId } =
         req.body;
-
+    
     await db.mCQ.create({
         data: {
             questionBody: question,
@@ -40,14 +40,14 @@ export const addMcqBulk = async (req, res) => {
     const mcqData = mcqs.map((mcq) => {
         totalMarks += parseInt(mcq.point);
         return {
-            questionBody: mcq.questionBody,
-            questionBodyImage: mcq.questionBodyImage || "",
-            optionA: mcq.options[0],
-            optionB: mcq.options[1],
-            optionC: mcq.options[2],
-            optionD: mcq.options[3],
+            questionBody: mcq.question,
+            questionBodyImage: mcq?.questionBodyImage || "",
+            optionA: mcq.options.A,
+            optionB: mcq.options.B,
+            optionC: mcq.options.C,
+            optionD: mcq.options.D,
             answer: mcq.answer,
-            point: parseInt(mcq.point),
+            point: parseInt(mcq.marksForCorrectAnswer),
             examId: examId,
         };
     });

@@ -1,3 +1,5 @@
+import { create } from "domain";
+
 export const origin = process.env.ORIGIN || "http://localhost:5000";
 const auth_routes = "api/auth";
 const user_routes = "api/user";
@@ -24,9 +26,11 @@ const apiRoutes = {
   getSubject: `${origin}/${subject_routes}`, // add subject id to get specific subject
   updateSubject: `${origin}/${subject_routes}`, // add subject id to update specific subject (PUT)
 
+
   //*exam-routes
   getExam: `${origin}/${exam_routes}`, // add exam id to get specific exam
   getExamByTeacher: `${origin}/${exam_routes}/teacher`, // add teacher id to get specific exam
+  createExam: `${origin}/${exam_routes}`, 
 
   //*mcq-routes
   addMcq: `${origin}/${mcq_routes}`,
