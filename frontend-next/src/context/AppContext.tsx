@@ -10,7 +10,7 @@ import axios from "axios";
 import apiRoutes from "@/lib/routes";
 
 interface User {
-    userId: string;
+    userId: string|number;
     role: string;
     isLoggedIn: boolean;
 }
@@ -45,17 +45,19 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
                     withCredentials: true,
                 }
             ); // handle response
+            console.log("Login response", response.data);
             if (response.status === 200) {
                 const data = response.data.data;
                 console.log("Login successful", data);
                 setUser({
-                    userId: data.userId,
+                    userId: data.id,
                     role: data.role,
                     isLoggedIn: true,
                 });
             } else {
                 console.error("Login failed", response);
             }
+           
         } catch (error) {
             console.error("Login failed", error);
            

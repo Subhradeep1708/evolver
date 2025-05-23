@@ -74,6 +74,7 @@ export function ExamAddForm() {
     }, []);
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
+            console.log(user)
             const res = await axios.post(apiRoutes.createExam, {
                 ...values,
                 totalMarks: values.noOfQuestions,

@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <AppProvider>
+       
             <SidebarProvider open={true}>
                 <AppSidebar />
                 <main className="w-full">
@@ -14,7 +14,7 @@ const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
                     {children}
                 </main>
             </SidebarProvider>
-        </AppProvider>
+       
     );
 };
 
