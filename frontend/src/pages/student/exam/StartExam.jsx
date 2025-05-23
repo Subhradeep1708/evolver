@@ -9,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { Checkbox } from "../../../components/chakra-ui/checkbox.js";
 
-function StartExam({ handleStartExam }) {
+function StartExam(
+    // { handleStartExam }
+) {
     return (
         <HStack
             spacing={10}
