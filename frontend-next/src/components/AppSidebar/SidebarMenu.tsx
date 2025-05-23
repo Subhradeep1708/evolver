@@ -35,7 +35,7 @@ const items = [
     },
     {
         title: "Exams",
-        url: "/teacher/exmas",
+        url: "/teacher/exams/add",
         // icon: Inbox,
         roles: ["teacher", "controller"],
     },

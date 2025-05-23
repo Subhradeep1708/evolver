@@ -260,3 +260,18 @@ export default function ExamPanelPage() {
         </div>
     );
 }
+/*
+const [step, setStep] = useState("rules");
+<div>
+     {
+        step === "rules" && (.....)
+     }
+        {
+        step === "exam" && (
+           .....
+        )}  
+        {
+        step === "result" && (....)
+}
+</div>
+*/
