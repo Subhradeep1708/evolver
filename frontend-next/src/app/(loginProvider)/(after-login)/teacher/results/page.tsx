@@ -20,8 +20,9 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { FaEye } from "react-icons/fa";
-import { useAppContext } from "@/context/AppContext";
+
 import apiRoutes from "@/lib/routes";
+import { useAppStore } from "@/store";
 
 type Exam = {
     id: string;
@@ -43,7 +44,7 @@ const page = () => {
     const [examId, setExamId] = useState<string | null>(null);
     const [result, setResult] = useState<Result[] | null>(null);
 
-    const {user} = useAppContext();
+    const user=useAppStore((state)=>state.user)
 
     useEffect(() => {
         const fetchExamData = async () => {

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useAppContext } from "@/context/AppContext";
+
 import apiRoutes from "@/lib/routes";
 import { useAppStore } from "@/store";
 

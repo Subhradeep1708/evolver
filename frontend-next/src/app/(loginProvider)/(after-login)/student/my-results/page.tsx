@@ -6,8 +6,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useAppContext } from "@/context/AppContext";
+
 import apiRoutes from "@/lib/routes";
+import { useAppStore } from "@/store";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -21,7 +22,7 @@ type Result = {
 };
 
 function MyResultsPage() {
-    const { user } = useAppContext();
+    const user = useAppStore((state) => state.user);
     const [data, setData] = useState<Result[]>([]);
     useEffect(() => {
         const fetchResults = async () => {
