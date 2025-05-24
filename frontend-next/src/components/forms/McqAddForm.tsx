@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "../ui/card";
+import apiRoutes from "@/lib/routes";
+import axios from "axios";
 
 type McqAddFormProps = {
   noOfQuestions: number;
@@ -64,12 +66,14 @@ const McqAddForm = ({ noOfQuestions, examId }: McqAddFormProps) => {
       })),
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Submitting...");
-    const data = {
+async  function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+       console.log("Submitting...");
+        const data = {
       examId,
       mcqs: values.question.map((question) => ({
         question: question.question,
+        questionImage:"",
         options: {
           A: question.optionA,
           B: question.optionB,
@@ -82,7 +86,11 @@ const McqAddForm = ({ noOfQuestions, examId }: McqAddFormProps) => {
       })),
     };
     console.log("Submitted:", data);
+    const response= await axios.post(`${apiRoutes.addMcq}`,data)
     form.reset(); // Clear form
+     } catch (error) {
+         console.log(error)
+     }
   }
   return (
     <div className="w-full max-w-5xl mx-auto p-6">
