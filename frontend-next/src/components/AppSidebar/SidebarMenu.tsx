@@ -1,5 +1,8 @@
+"use client";
 import React from "react";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
+import { useAppStore } from "@/store";
+import { title } from "process";
 
 // Menu items.
 const items = [
@@ -9,12 +12,7 @@ const items = [
         // icon: Home,
         roles: ["student"],
     },
-    {
-        title: "Edit Profile",
-        url: "/student/edit-profile",
-        // icon: Home,
-        roles: ["student"],
-    },
+
     {
         title: "My Results",
         url: "/student/my-results",
@@ -35,15 +33,20 @@ const items = [
     },
     {
         title: "Exams",
-        url: "/teacher/exams/add",
+        url: "/teacher/exams",
         // icon: Inbox,
         roles: ["teacher", "controller"],
+    },
+    {
+        title: "Add Exams",
+        url: "/teacher/exams/add",
+        roles: ["controller", "teacher"],
     },
     {
         title: "Results",
         url: "/teacher/results",
         // icon: Inbox,
-        roles: ["teacher", "controller"],
+        roles: ["controller"],
     },
     {
         title: "All Students",
@@ -84,7 +87,9 @@ const items = [
 ];
 
 const SidebarMenuLinks = () => {
-    const userRole = "teacher";
+    // const userRole = "teacher";
+    const user = useAppStore((state) => state.user);
+    const userRole = user?.role || "guest"; // Default to 'guest' if no user or role is found
     return (
         <SidebarMenu>
             {items
