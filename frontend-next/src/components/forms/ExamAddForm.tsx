@@ -28,7 +28,6 @@ import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store";
-import { log } from "console";
 
 const formSchema = z.object({
     subjectId: z.string().min(1, "Subject ID is required"),
@@ -91,13 +90,14 @@ export function ExamAddForm() {
             );
 
             if (res.status === 201) {
-                const examId = res.data.id;
+                const examId = res.data.data.id;
                 toast.success("Exam created successfully");
-                router.push(`/teacher/exams/add/${examId}`);
                 form.reset();
+                router.push(`/teacher/exams/add/${examId}`);
             }
-        } catch (error) {
+        } catch (error: any) {
             toast.error("Error creating exam");
+            console.error("Error creating exam:", error);
         }
     }
 
@@ -110,7 +110,6 @@ export function ExamAddForm() {
                 <h1 className="text-3xl font-semibold text-center border-b pb-4">
                     Create Exam
                 </h1>
-
                 {/* Subject Select */}
                 <FormField
                     control={form.control}
@@ -120,8 +119,9 @@ export function ExamAddForm() {
                             <FormLabel>Subject</FormLabel>
                             <FormControl>
                                 <Select
-                                    onValueChange={field.onChange}
                                     defaultValue={field.value}
+                                    onValueChange={field.onChange}
+                                    // value={field.value}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select subject" />

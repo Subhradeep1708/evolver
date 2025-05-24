@@ -2,7 +2,6 @@
 import React from "react";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import { useAppStore } from "@/store";
-import { title } from "process";
 
 // Menu items.
 const items = [

@@ -1,12 +1,13 @@
 import McqAddForm from "@/components/forms/McqAddForm";
 import React from "react";
 
-function examAdd() {
+async function McqAddPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params; // Extracting the exam ID from params
     return (
         <div className="w-full">
-            <McqAddForm noOfQuestions={3} examId="1" />
+            {id && <McqAddForm noOfQuestions={3} examId={id} />}
         </div>
     );
 }
 
-export default examAdd;
+export default McqAddPage;
