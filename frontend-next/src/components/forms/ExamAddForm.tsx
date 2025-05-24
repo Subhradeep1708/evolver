@@ -27,6 +27,8 @@ import apiRoutes from "@/lib/routes";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
+import { useAppStore } from "@/store";
+import { log } from "console";
 
 const formSchema = z.object({
     subjectId: z.string().min(1, "Subject ID is required"),
@@ -50,7 +52,7 @@ type Subject = {
 
 export function ExamAddForm() {
     const [subjects, setSubjects] = useState<Subject[]>([]);
-    const { user } = useAppContext();
+    const user = useAppStore((state) => state.user);
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -72,14 +74,21 @@ export function ExamAddForm() {
         };
         fetchSubjects();
     }, []);
+    // useEffect(() => {
+    //     console.log("user", user);
+    // }, [user]);
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            console.log(user)
-            const res = await axios.post(apiRoutes.createExam, {
-                ...values,
-                totalMarks: values.noOfQuestions,
-                addedBy: user?.userId,
-            },{withCredentials: true});
+            console.log(user);
+            const res = await axios.post(
+                apiRoutes.createExam,
+                {
+                    ...values,
+                    totalMarks: values.noOfQuestions,
+                    addedBy: user?.userId,
+                },
+                { withCredentials: true }
+            );
 
             if (res.status === 201) {
                 const examId = res.data.id;

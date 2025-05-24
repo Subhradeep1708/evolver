@@ -19,14 +19,19 @@ type Exam = {
     id: string | number;
 };
 import { useRouter } from "next/navigation";
+import { useAppStore } from "@/store";
 
 const StudentDashboardPage = () => {
     const [exams, setExams] = useState<Exam[]>([]);
+    const user=useAppStore((state)=>state.user);
     const router = useRouter();
     const handleStartExam = (examId: any) => {
         router.push(`/start/exam/${examId}`);
     };
-
+    // useEffect(() => {
+    //     console.log("user details:",user)
+    // }, [user])
+    
     useEffect(() => {
         const fetchExams = async () => {
             const res = await axios.get(apiRoutes.getExam);
