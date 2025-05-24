@@ -15,7 +15,7 @@ interface AppState {
 export const useAppStore = create<AppState>()(
     persist(
         (set) => ({
-            user: { id: undefined, role: undefined, isLoggedIn: undefined},
+            user: { userId: undefined, role: undefined, isLoggedIn: undefined},
             setUser: (newUser) =>
                 set({
                     user: {
