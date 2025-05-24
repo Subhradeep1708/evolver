@@ -17,6 +17,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import apiRoutes from "@/lib/routes";
+import { useAppStore } from "@/store";
 
 const formSchema = z.object({
     email: z.string().email().min(5),
@@ -26,10 +29,9 @@ const formSchema = z.object({
 });
 
 export function TeacherLoginForm() {
-    // const { user, setUser } = useAppContext();
-    const { login } = useAppContext();
+   const setUser = useAppStore((state) => state.setUser);
     const router = useRouter();
-
+ 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -38,14 +40,24 @@ export function TeacherLoginForm() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        login(values.email, values.password, "teacher")
-            .then(() => {
-                router.push("/teacher");
-            })
-            .catch((error) => {
-                console.error("Login failed", error);
-            });
+ async   function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+          const response=await axios.post(`${apiRoutes.teacherLogin}`,values,{ withCredentials: true,});
+           if (response.status === 200) {
+                const data = response.data.data;
+                console.log("Login successful", data);
+                setUser({
+                    userId: data.id,
+                    role: data.role,
+                    isLoggedIn: true,
+                });
+                 router.push("/teacher");
+            } else {
+                console.error("Login failed", response);
+            }
+       } catch (error) {
+        console.log(error)
+       }
     }
 
     return (
