@@ -32,8 +32,8 @@ examRouter.get(
 
 examRouter.get(
     "/teacher/:id",
-    isAuthenticated,
-    checkTeacherPermission,
+    // isAuthenticated,
+    // checkTeacherPermission,
     getExamByTeacherId
 );
 

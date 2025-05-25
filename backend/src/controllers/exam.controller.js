@@ -41,7 +41,7 @@ export const createExam = async (req, res) => {
 };
 
 export const getExamById = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
     const exam = await db.exam.findUnique({
         where: {
             id: parseInt(id),
@@ -90,7 +90,8 @@ const getExamByStudentId = async (req, res) => {
 };
 
 export const getExamByTeacherId = async (req, res) => {
-    const { id } = req.params;
+   try {
+     const { id } = req.params;
     // const id = req.user.id;
 
     const exams = await db.exam.findMany({
@@ -107,6 +108,10 @@ export const getExamByTeacherId = async (req, res) => {
     });
 
     return res.status(200).json({ exams });
+   } catch (error) {
+    console.log(error.message)
+     return res.status(500).json({ message: "An error occurred" });
+   }
 };
 
 const getAllExams = async (req, res) => {
