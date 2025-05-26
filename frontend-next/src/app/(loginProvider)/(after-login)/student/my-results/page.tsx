@@ -36,7 +36,7 @@ function MyResultsPage() {
             setData(response.data.results);
         };
         fetchResults();
-    }, []);
+    }, [user]);
 
     const formatDateAndTime = (date: any) => {
         const d = new Date(date);

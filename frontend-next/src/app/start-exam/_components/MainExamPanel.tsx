@@ -117,9 +117,31 @@ export default function MainExamPanel({ examId }: { examId: string }) {
         );
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log("Submitting exam with answers:", answers);
         console.log("Statuses:", statuses);
+        const formattedAnswers = Object.entries(answers).map(
+            ([key, value]) => ({
+                mcqId: parseInt(key),
+                selected: value,
+            })
+        );
+
+        try {
+            const response = await axios.post(
+                `${apiRoutes.submitAnswer}`,
+                {
+                    examId,
+                    answers: formattedAnswers,
+                },
+                { withCredentials: true }
+            );
+            if (response.status === 201) {
+                console.log("Exam submitted successfully");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
