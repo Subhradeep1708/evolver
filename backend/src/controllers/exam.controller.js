@@ -11,8 +11,14 @@ const deleteExam = async (req, res) => {
 
 export const createExam = async (req, res) => {
     try {
-        const { examName, subjectId, duration,noOfQuestions,totalMarks,addedBy } = req.body;
-         
+        const {
+            examName,
+            subjectId,
+            duration,
+            noOfQuestions,
+            totalMarks,
+            addedBy,
+        } = req.body;
 
         console.log(req.body);
 
@@ -33,7 +39,7 @@ export const createExam = async (req, res) => {
 
         return res
             .status(201)
-            .json({ message: "Exam created successfully",data:newExam });
+            .json({ message: "Exam created successfully", data: newExam });
     } catch (error) {
         console.error("Error creating exam:", error);
         return res.status(500).json({ message: "An error occurred" });
@@ -41,7 +47,7 @@ export const createExam = async (req, res) => {
 };
 
 export const getExamById = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
     const exam = await db.exam.findUnique({
         where: {
             id: parseInt(id),
@@ -66,6 +72,7 @@ export const getExamById = async (req, res) => {
     if (!exam) {
         return res.status(404).json({ message: "Exam not found" });
     }
+    console.log("Exam details:", exam);
 
     return res.status(200).json({
         message: "Exam fetched",
@@ -90,28 +97,28 @@ const getExamByStudentId = async (req, res) => {
 };
 
 export const getExamByTeacherId = async (req, res) => {
-   try {
-     const { id } = req.params;
-    // const id = req.user.id;
+    try {
+        const { id } = req.params;
+        // const id = req.user.id;
 
-    const exams = await db.exam.findMany({
-        where: {
-            addedBy: parseInt(id),
-        },
-        include: {
-            subject: {
-                select: {
-                    name: true,
+        const exams = await db.exam.findMany({
+            where: {
+                addedBy: parseInt(id),
+            },
+            include: {
+                subject: {
+                    select: {
+                        name: true,
+                    },
                 },
             },
-        },
-    });
+        });
 
-    return res.status(200).json({ exams });
-   } catch (error) {
-    console.log(error.message)
-     return res.status(500).json({ message: "An error occurred" });
-   }
+        return res.status(200).json({ exams });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ message: "An error occurred" });
+    }
 };
 
 const getAllExams = async (req, res) => {

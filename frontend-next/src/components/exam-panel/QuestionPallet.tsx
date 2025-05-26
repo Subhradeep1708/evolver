@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 
-type QuestionStatus =
+export type QuestionStatus =
     | "unattempted" // gray
     | "answered" // green (attempted & answered)
     | "notAnswered" // red (attempted & not answered)

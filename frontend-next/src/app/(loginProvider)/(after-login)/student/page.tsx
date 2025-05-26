@@ -7,31 +7,34 @@ import {
     CardContent,
     CardDescription,
     CardFooter,
+    CardHeader,
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 type Exam = {
-    examName: string;
-    addedBy: string;
-    totalMarks: number;
-    description: string;
     id: string | number;
+    name: string;
+    addedBy?: string;
+    totalMarks: number;
+    durationInMinutes?: number | string;
+    noOfQuestions: number | string;
+    // description: string;
 };
 import { useRouter } from "next/navigation";
-import { useAppStore } from "@/store";
+// import { useAppStore } from "@/store";
 
 const StudentDashboardPage = () => {
     const [exams, setExams] = useState<Exam[]>([]);
-    const user=useAppStore((state)=>state.user);
+    // const user = useAppStore((state) => state.user);
     const router = useRouter();
     const handleStartExam = (examId: any) => {
-        router.push(`/start/exam/${examId}`);
+        router.push(`/start-exam/${examId}`);
     };
     // useEffect(() => {
     //     console.log("user details:",user)
     // }, [user])
-    
+
     useEffect(() => {
         const fetchExams = async () => {
             const res = await axios.get(apiRoutes.getExam);
@@ -46,25 +49,30 @@ const StudentDashboardPage = () => {
     }, []);
     console.log(exams);
     return (
-        <div>
-            StudentDashboardPage
+        <div className="p-12 space-y-12">
+            <h1 className="text-2xl font-semibold">Student Dashboard Page</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {exams.map((exam, i) => {
                     return (
                         <div key={i}>
                             <Card>
-                                <CardContent>
-                                    <CardTitle>{exam.examName}</CardTitle>
-                                    {exam.addedBy}
-                                    {exam.totalMarks} Marks
+                                <CardHeader>
+                                    <CardTitle>{exam.name}</CardTitle>
                                     <CardDescription>
-                                        {exam.description}
+                                        {exam.addedBy && (
+                                            <div>Added By: {exam.addedBy}</div>
+                                        )}
+                                        <div>
+                                            Duration: {exam.durationInMinutes}{" "}
+                                            minutes
+                                        </div>
                                     </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    {" "}
+                                    Total Marks: {exam.totalMarks}
                                 </CardContent>
                                 <CardFooter>
-                                    {/* <Text fontSize="sm" color="red">
-                                            Due at 10th October at 10:00 AM
-                                        </Text> */}
                                     <Button
                                         onClick={() => handleStartExam(exam.id)}
                                     >
