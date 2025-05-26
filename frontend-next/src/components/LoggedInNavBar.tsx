@@ -33,7 +33,7 @@ const LoggedInNavBar = () => {
             }
         };
         getUserName();
-    }, []);
+    }, [user]);
 
     const handleLogout = async () => {
         try {
