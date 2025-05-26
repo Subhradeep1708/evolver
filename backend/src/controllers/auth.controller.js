@@ -340,8 +340,8 @@ export const logout = async (req, res) => {
         res.clearCookie("accessToken", {
             httpOnly: true, // Secure cookie for HTTP only
             secure: false, // Set to true if using HTTPS
-            path: "/",
             sameSite: "Lax",
+            path: "/",
             // sameSite: "Strict", // Prevent CSRF
         });
 

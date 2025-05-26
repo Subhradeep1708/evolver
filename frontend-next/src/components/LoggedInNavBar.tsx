@@ -38,7 +38,9 @@ const LoggedInNavBar = () => {
     const handleLogout = async () => {
         try {
             const response = await axios.post(
-                `${apiRoutes.logout}/${user.userId}`
+                `${apiRoutes.logout}/${user.userId}`,
+                {},
+                { withCredentials: true }
             );
             if (response.status === 200) {
                 console.log("Logged out successfully");
