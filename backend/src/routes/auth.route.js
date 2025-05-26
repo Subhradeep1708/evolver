@@ -16,6 +16,6 @@ authRouter.post("/teacher/login", loginTeacher);
 authRouter.post("/student/register", registerStudent);
 authRouter.post("/teacher/register", registerTeacher);
 
-authRouter.get("/logout/:userId", logout);
+authRouter.post("/logout/:userId", logout);
 
 export default authRouter;

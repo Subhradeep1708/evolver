@@ -20,7 +20,6 @@ export const registerStudent = async (req, res) => {
 
         console.log(req.body);
 
-
         if (
             !email ||
             !password ||
@@ -193,70 +192,6 @@ export const registerTeacher = async (req, res) => {
     }
 };
 
-// export const login = async (req, res) => {
-//     try {
-//         // Validate inputs
-//         const { email, password, rollNo } = req.body;
-
-//         if (!email || !password) {
-//             return res.status(400).json({
-//                 message: "Email and password are required",
-//             });
-//         }
-
-//         // Find user by email
-//         const user = await db.user.findUnique({ where: { email } });
-//         if (!user) {
-//             return res.status(400).json({
-//                 message: "User not found",
-//             });
-//         }
-
-//         // Verify password
-//         const validPassword = await bcrypt.compare(password, user.password);
-//         if (!validPassword) {
-//             return res.status(400).json({
-//                 message: "Invalid password",
-//             });
-//         }
-
-//         // Generate access and refresh tokens
-//         const accessToken = jwt.sign(
-//             { id: user.id, role: user.role },
-//             env.auth.accessTokenSecret,
-//             { expiresIn: "1d" }
-//         );
-
-//         const refreshToken = jwt.sign(
-//             { id: user.id, role: user.role },
-//             env.auth.refreshTokenSecret,
-//             { expiresIn: "15d" }
-//         );
-
-//         // Update refresh token in database
-//         await db.user.update({
-//             where: { id: user.id },
-//             data: { refreshToekn: refreshToken },
-//         });
-//         // add to cookies
-//         res.cookie("accessToken", accessToken, {
-//             httpOnly: true,
-//             secure: env.isProduction,
-//         });
-//         return res.status(200).json({
-//             message: "Login successful",
-//             data: {
-//                 id: user.id,
-//                 email: user.email,
-//                 role: user.role,
-//                 refreshToken: refreshToken,
-//             },
-//         });
-//     } catch (error) {
-//         return res.status(400).json({ message: error.message });
-//     }
-// };
-
 export const loginStudent = async (req, res) => {
     try {
         // Validate inputs
@@ -307,6 +242,7 @@ export const loginStudent = async (req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
             secure: false,
+            sameSite: "Lax",
         });
         return res.status(200).json({
             message: "Login successful",
@@ -372,6 +308,7 @@ export const loginTeacher = async (req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
             secure: false,
+            sameSite: "Lax",
         });
         return res.status(200).json({
             message: "Login successful",
@@ -402,7 +339,10 @@ export const logout = async (req, res) => {
 
         res.clearCookie("accessToken", {
             httpOnly: true, // Secure cookie for HTTP only
-            sameSite: "Strict", // Prevent CSRF
+            secure: false, // Set to true if using HTTPS
+            path: "/",
+            sameSite: "Lax",
+            // sameSite: "Strict", // Prevent CSRF
         });
 
         return res.status(200).json({ message: "Logout successful" });

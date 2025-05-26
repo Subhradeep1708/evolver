@@ -1,5 +1,40 @@
 import db from "../db/db.js";
 
+export const getUserName = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        console.log("userId", userId);
+
+        const user = await db.user.findUnique({
+            where: { id: parseInt(userId) },
+            select: {
+                firstName: true,
+                lastName: true,
+                middleName: true,
+                email: true,
+            },
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const fullName = `${user.firstName} ${
+            user.middleName ? user.middleName + " " : ""
+        }${user.lastName}`;
+        return res.status(200).json({
+            message: "User name retrieved successfully",
+            data: {
+                fullName,
+                email: user.email,
+            },
+        });
+    } catch (error) {
+        console.error("Error retrieving user name:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+};
+
 export const getStudentData = async (req, res) => {
     try {
         const { studentId } = req.params;
@@ -186,8 +221,17 @@ export const editStudentById = async (req, res) => {
 
 export const editTeacherById = async (req, res) => {
     try {
-        const { id, email, password, firstName, lastName, middleName, subjects, isController, role } =
-            req.body;
+        const {
+            id,
+            email,
+            password,
+            firstName,
+            lastName,
+            middleName,
+            subjects,
+            isController,
+            role,
+        } = req.body;
 
         console.log("req.body", req.body);
 
@@ -212,9 +256,7 @@ export const editTeacherById = async (req, res) => {
         const updatedUser = await db.user.update({
             where: { id },
             data: userUpdateData,
-
         });
-
 
         if (!updatedUser) {
             return res.status(400).json({
@@ -254,4 +296,4 @@ export const editTeacherById = async (req, res) => {
             message: "Internal server error",
         });
     }
-}
+};

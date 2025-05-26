@@ -12,13 +12,14 @@ const apiRoutes = {
     teacherLogin: `${origin}/${auth_routes}/teacher/login`,
     studentRegister: `${origin}/${auth_routes}/student/register`,
     teacherRegister: `${origin}/${auth_routes}/teacher/register`,
-    logout: `${origin}/${auth_routes}/logout`,
+    logout: `${origin}/${auth_routes}/logout`, // add user id to logout specific user
 
     //*user-routes
     getStudent: `${origin}/${user_routes}/student`, // add student id to get specific student
     getTeacher: `${origin}/${user_routes}/teacher`, // add teacher id to get specific teacher
     updateStudent: `${origin}/${user_routes}/student`, // add student id to update specific student (PUT)
     updateTeacher: `${origin}/${user_routes}/teacher`, // add teacher id to update specific teacher (PUT)
+    getUserName: `${origin}/${user_routes}/username`, // add user id to get specific user name
 
     //*subject-routes
     getSubject: `${origin}/${subject_routes}`, // add subject id to get specific subject

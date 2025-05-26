@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
@@ -27,13 +28,15 @@ export default function HomePage() {
                         </p>
                     </div>
                     <div className="space-y-2">
-                        <Link
-                            href="/auth/student"
-                            className="inline-flex items-center gap-2 bg-[#D6E6FE] text-[#102353] px-6 py-3 text-lg rounded-lg hover:bg-[#c3dbfc] transition"
+                        <Button
+                            asChild
+                            className="inline-flex items-center gap-2 bg-[#D6E6FE] text-[#102353] px-6 py-6 text-lg rounded-sm hover:bg-[#c3dbfc] transition"
                         >
-                            Login to continue
-                            <FaArrowRight />
-                        </Link>
+                            <Link href="/auth/student">
+                                Login to continue
+                                <FaArrowRight />
+                            </Link>
+                        </Button>
                         <p className="text-sm text-[#102353]">
                             Are you a teacher?{" "}
                             <Link
