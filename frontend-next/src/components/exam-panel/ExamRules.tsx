@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 
-export default function StartExam() {
+export default function ExamRules({onStartExam}:{onStartExam:()=>void}) {
   const [agreed, setAgreed] = useState(false);
   const router = useRouter();
 
   const handleStartExam = () => {
     if (agreed) {
-      router.push("/start-exam/questions");
+       onStartExam();
     } else {
       alert("Please agree to the instructions before proceeding.");
     }

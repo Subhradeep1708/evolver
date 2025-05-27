@@ -216,10 +216,28 @@ const submitExamByStudentId = async (req, res) => {
     return res.status(200).json({ score });
 };
 
+const getNoOfQuestions = async (req, res) => {
+    const {id}=req.params;
+    try{
+        const noOfQuestions = await db.exam.findUnique({
+            where: {
+                id: parseInt(id),
+            },
+            select: {
+                noOfQuestions: true,
+            },
+        });
+        return res.status(200).json({ noOfQuestions });
+    }catch(error){
+        console.log(error.message);
+        return res.status(500).json({ message: "An error occurred" });
+    }
+}
 export {
     deleteExam,
     getLeaderboard,
     getExamByStudentId,
     getAllExams,
     submitExamByStudentId,
+    getNoOfQuestions
 };

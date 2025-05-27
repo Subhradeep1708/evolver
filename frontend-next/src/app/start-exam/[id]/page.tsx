@@ -1,4 +1,5 @@
 import MainExamPanel from "../_components/MainExamPanel";
+import MultiPageExam from "../_components/MultiPageExam";
 
 export default async function ExamPanelPage({
     params,
@@ -7,7 +8,7 @@ export default async function ExamPanelPage({
 }) {
     const { id } = await params;
 
-    return <MainExamPanel examId={id} />;
+    return <MultiPageExam examId={id} />;
 }
 /*
 const [step, setStep] = useState("rules");

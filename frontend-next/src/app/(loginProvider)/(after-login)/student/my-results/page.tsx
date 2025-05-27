@@ -35,7 +35,7 @@ function MyResultsPage() {
             );
             setData(response.data.results);
         };
-        fetchResults();
+       if(user?.userId) fetchResults();
     }, [user]);
 
     const formatDateAndTime = (date: any) => {

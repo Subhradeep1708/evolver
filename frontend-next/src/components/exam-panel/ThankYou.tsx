@@ -17,7 +17,7 @@ export default function EndExam() {
                 <p className="text-lg text-center">
                     You have successfully ended the exam. <br />
                     <button
-                        onClick={() => router.push("/dashboard")}
+                        onClick={() => router.push("/student")}
                         className="text-blue-500 underline mt-2"
                     >
                         Go back to dashboard

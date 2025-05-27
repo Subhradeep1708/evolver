@@ -32,7 +32,9 @@ const LoggedInNavBar = () => {
                 console.error("Failed to fetch user name:", error);
             }
         };
-        getUserName();
+        if (user.userId) {
+            getUserName();
+        }
     }, [user]);
 
     const handleLogout = async () => {
