@@ -25,12 +25,6 @@ const items = [
         roles: ["teacher", "controller"],
     },
     {
-        title: "Edit Profile",
-        url: "/teacher/edit-profile",
-        // icon: Inbox,
-        roles: ["teacher", "controller"],
-    },
-    {
         title: "Exams",
         url: "/teacher/exams",
         // icon: Inbox,
@@ -45,7 +39,7 @@ const items = [
         title: "Results",
         url: "/teacher/results",
         // icon: Inbox,
-        roles: ["controller"],
+        roles: ["controller","teacher"],
     },
     {
         title: "All Students",

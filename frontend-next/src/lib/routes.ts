@@ -29,7 +29,7 @@ const apiRoutes = {
     getExam: `${origin}/${exam_routes}`, // add exam id to get specific exam
     getExamByTeacher: `${origin}/${exam_routes}/teacher`, // add teacher id to get specific exam
     createExam: `${origin}/${exam_routes}`,
-
+    getNoOfQuestions: `${origin}/${exam_routes}/noOfQuestions`, // add exam id to get specific exam
     //*mcq-routes
     addMcq: `${origin}/${mcq_routes}`,
 

@@ -6,6 +6,7 @@ import {
     getAllExams,
     getExamById,
     getExamByTeacherId,
+    getNoOfQuestions
 } from "../controllers/exam.controller.js";
 
 const examRouter = Router();
@@ -36,5 +37,10 @@ examRouter.get(
     // checkTeacherPermission,
     getExamByTeacherId
 );
-
+examRouter.get(
+    "/noOfQuestions/:id",
+    // isAuthenticated,
+    // checkTeacherPermission,
+   getNoOfQuestions
+)
 export default examRouter;

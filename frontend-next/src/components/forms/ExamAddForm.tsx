@@ -63,8 +63,6 @@ export function ExamAddForm() {
         },
     });
     useEffect(() => {
-      
-        
         const fetchSubjects = async () => {
             try {
                 const res = await axios.get(apiRoutes.getSubject);
@@ -113,37 +111,40 @@ export function ExamAddForm() {
                     Create Exam
                 </h1>
                 {/* Subject Select */}
-                <FormField
-                    control={form.control}
-                    name="subjectId"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Subject</FormLabel>
-                            <FormControl>
-                                <Select
-                                    defaultValue={field.value}
-                                    onValueChange={field.onChange}
-                                    // value={field.value}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select subject" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {subjects.map((subject) => (
-                                            <SelectItem
-                                                key={subject.id}
-                                                value={subject.id}
-                                            >
-                                                {subject.name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                {subjects && subjects.length > 0 && (
+                    <FormField
+                        control={form.control}
+                        name="subjectId"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Subject</FormLabel>
+                                
+                                    <Select
+                                        value={field.value}
+                                        onValueChange={field.onChange}
+                                        // value={field.value}
+                                    ><FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select subject" />
+                                        </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {subjects.map((subject) => (
+                                                <SelectItem
+                                                    key={subject.id}
+                                                    value={subject.id}
+                                                >
+                                                    {subject.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                            
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                )}
 
                 {/* Exam Name Input */}
                 <FormField
