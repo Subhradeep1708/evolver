@@ -122,7 +122,27 @@ export const getExamByTeacherId = async (req, res) => {
 };
 
 const getAllExams = async (req, res) => {
-    const exams = await db.exam.findMany();
+    const exams = await db.exam.findMany({
+        include: {
+            teacher: {
+                include: {
+                    user: {
+                        select: {
+                            firstName: true,
+                            middleName: true,
+                            lastName: true,
+                        },
+                    },
+                },
+            },
+            subject: {
+                select: {
+                    name: true,
+                },
+            },
+        },
+    });
+
     if (exams) {
         return res.status(200).json({ exams });
     } else {
