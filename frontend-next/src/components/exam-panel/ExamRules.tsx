@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 
-export default function StartExam() {
+export default function ExamRules() {
   const [agreed, setAgreed] = useState(false);
   const router = useRouter();
 

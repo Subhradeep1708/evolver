@@ -16,17 +16,27 @@ type Exam = {
     id: string | number;
     name: string;
     addedBy?: string;
+    teacher: {
+        user: {
+            firstName: string;
+            lastName: string;
+        };
+    },
+    subject: {
+        name: string;
+    };
     totalMarks: number;
     durationInMinutes?: number | string;
     noOfQuestions: number | string;
     // description: string;
 };
 import { useRouter } from "next/navigation";
+import { useAppStore } from "@/store";
 // import { useAppStore } from "@/store";
 
 const StudentDashboardPage = () => {
     const [exams, setExams] = useState<Exam[]>([]);
-    // const user = useAppStore((state) => state.user);
+    const user = useAppStore((state) => state.user);
     const router = useRouter();
     const handleStartExam = (examId: any) => {
         router.push(`/start-exam/${examId}`);
@@ -45,9 +55,11 @@ const StudentDashboardPage = () => {
             }
         };
 
-        fetchExams();
-    }, []);
-    console.log(exams);
+        if(user){
+            fetchExams();
+        }
+    }, [user]);
+
     return (
         <div className="p-12 space-y-12">
             <h1 className="text-2xl font-semibold">Student Dashboard Page</h1>
@@ -60,7 +72,7 @@ const StudentDashboardPage = () => {
                                     <CardTitle>{exam.name}</CardTitle>
                                     <CardDescription>
                                         {exam.addedBy && (
-                                            <div>Added By: {exam.addedBy}</div>
+                                            <div>Added By: {exam.teacher.user.firstName} {exam.teacher.user.lastName}</div>
                                         )}
                                         <div>
                                             Duration: {exam.durationInMinutes}{" "}
@@ -69,8 +81,8 @@ const StudentDashboardPage = () => {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    {" "}
-                                    Total Marks: {exam.totalMarks}
+                                   <p>Subject: {exam.subject.name}</p> 
+                                    <p>Total Marks: {exam.totalMarks}</p>
                                 </CardContent>
                                 <CardFooter>
                                     <Button
