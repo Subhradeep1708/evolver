@@ -105,7 +105,7 @@ const page = () => {
                                 {exam.totalMarks}
                             </TableCell>
                             <TableCell>
-                                <Dialog>
+                                <Dialog >
                                     <DialogTrigger asChild>
                                         <Button
                                             variant="outline"
@@ -117,7 +117,7 @@ const page = () => {
                                             View
                                         </Button>
                                     </DialogTrigger>
-                                    <DialogContent className="max-w-4xl">
+                                    <DialogContent >
                                         <DialogHeader>
                                             <DialogTitle>
                                                 {exam.name} - Leaderboard
@@ -126,7 +126,9 @@ const page = () => {
                                                 Results for this exam
                                             </DialogDescription>
                                         </DialogHeader>
-                                        <Leaderboard result={result} />
+                                       <div >
+                                         <Leaderboard result={result} />
+                                       </div>
                                     </DialogContent>
                                 </Dialog>
                             </TableCell>
@@ -143,8 +145,8 @@ type LeaderboardProps = {
 const Leaderboard: React.FC<LeaderboardProps> = ({ result }) => {
     const formatDate = (date: string) => new Date(date).toLocaleString();
     return (
-        <div className="mt-4 overflow-x-auto">
-            <Table>
+      
+            <Table className="w-full p-2">
                 <TableHeader>
                     <TableRow>
                         <TableHead>Rank</TableHead>
@@ -170,7 +172,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ result }) => {
                     ))}
                 </TableBody>
             </Table>
-        </div>
+       
     );
 };
 
