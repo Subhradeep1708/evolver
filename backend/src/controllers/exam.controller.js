@@ -99,20 +99,44 @@ const getExamByStudentId = async (req, res) => {
 export const getExamByTeacherId = async (req, res) => {
     try {
         const { id } = req.params;
-        // const id = req.user.id;
-
-        const exams = await db.exam.findMany({
+        const teacher = await db.teacher.findUnique({
             where: {
-                addedBy: parseInt(id),
+                id: parseInt(id),
             },
-            include: {
-                subject: {
-                    select: {
-                        name: true,
-                    },
-                },
+            select: {
+                isController: true,
             },
         });
+        // const id = req.user.id;
+        let exams;
+
+        if (!teacher) {
+            return res.status(404).json({ message: "Teacher not found" });
+        }
+        if (teacher.isController) {
+            exams = await db.exam.findMany({
+                include: {
+                    subject: {
+                        select: {
+                            name: true,
+                        },
+                    },
+                },
+            });
+        } else {
+            exams = await db.exam.findMany({
+                where: {
+                    addedBy: parseInt(id),
+                },
+                include: {
+                    subject: {
+                        select: {
+                            name: true,
+                        },
+                    },
+                },
+            });
+        }
 
         return res.status(200).json({ exams });
     } catch (error) {
