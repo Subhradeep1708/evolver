@@ -26,7 +26,7 @@ type Mcq = {
     answer: OptionKey;
 };
 
-export default function MainExamPanel({ examId }: { examId: string }) {
+export default function MainExamPanel({ examId,onSubmitExam }: { examId: string ,onSubmitExam:()=>void}) {
     const [examName, setExamName] = useState("Loading...");
     const [mcqs, setMcqs] = useState<Mcq[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -137,6 +137,7 @@ export default function MainExamPanel({ examId }: { examId: string }) {
                 { withCredentials: true }
             );
             if (response.status === 201) {
+                onSubmitExam();
                 console.log("Exam submitted successfully");
             }
         } catch (error) {
