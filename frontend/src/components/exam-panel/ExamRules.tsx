@@ -3,15 +3,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useRouter } from "next/navigation";
 
-export default function ExamRules({onStartExam}:{onStartExam:()=>void}) {
+export default function ExamRules({ onStartExam }: { onStartExam: () => void }) {
   const [agreed, setAgreed] = useState(false);
-  const router = useRouter();
 
   const handleStartExam = () => {
     if (agreed) {
-       onStartExam();
+      onStartExam();
     } else {
       alert("Please agree to the instructions before proceeding.");
     }

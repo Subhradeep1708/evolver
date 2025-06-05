@@ -1,4 +1,3 @@
-import MainExamPanel from "../_components/MainExamPanel";
 import MultiPageExam from "../_components/MultiPageExam";
 
 export default async function ExamPanelPage({

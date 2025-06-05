@@ -1,13 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-import apiRoutes from "@/lib/routes";
-import { useAppStore } from "@/store";
 
 const TeacherDashboardPage = () => {
-    const user=useAppStore((state)=>state.user)
-    const [data, setData] = useState();
+    // const user=useAppStore((state)=>state.user)
+    // const [data, setData] = useState();
 
     // useEffect(() => {
     //     const fetchData = async () => {
