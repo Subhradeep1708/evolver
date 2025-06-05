@@ -1,4 +1,4 @@
-export const origin = process.env.ORIGIN;
+export const origin = process.env.NEXT_PUBLIC_ORIGIN;
 // console.log("API Origin:", origin);
 
 const auth_routes = "api/auth";
