@@ -1,78 +1,36 @@
-# Goals
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-[ ] Upgrade react+vite
-[ ]
+## Getting Started
 
-# Project Structure
+First, run the development server:
 
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
-frontend/
-├── public/
-│   ├── favicon.ico
-│   └── images/
-│       ├── logo.png
-│       ├── banner.png
-│       └── ...
-├── src/
-│   ├── components/
-│   │   ├── ui/                      # Reusable shadcn UI components (like Button, Input)
-│   │   ├── forms/                   # Form-specific components (ExamForm, SubjectForm)
-│   │   ├── layout/                  # Layout wrappers (MainLayout, AuthLayout)
-│   │   └── shared/                  # Common components (Navbar, Sidebar, Footer)
-│   │
-│   ├── features/                    # Domain-specific logic
-│   │   ├── auth/                    # Auth-related pages, hooks, logic
-│   │   │   ├── LoginPage.jsx
-│   │   │   ├── auth.api.js
-│   │   │   └── useAuth.js
-│   │   ├── exams/                   # Exam-related logic and views
-│   │   │   ├── CreateExam.jsx
-│   │   │   ├── ExamCard.jsx
-│   │   │   └── exams.api.js
-│   │   ├── students/                # Student dashboard, results, profile
-│   │   ├── teachers/                # Teacher dashboard, actions
-│   │   └── dashboard/               # Shared dashboard layout/views
-│
-│   ├── pages/                       # Route-level pages (optional if using features/)
-│   │   ├── Landing.jsx
-│   │   ├── About.jsx
-│   │   └── Contact.jsx
-│
-│   ├── routes/                      # Centralized route configuration
-│   │   └── AppRoutes.jsx
-│
-│   ├── lib/                         # API utilities, axios configs
-│   │   ├── axios.js
-│   │   └── helpers.js
-│
-│   ├── store/                       # Global state (Redux/Zustand slices)
-│   │   ├── authSlice.js
-│   │   └── index.js
-│
-│   ├── hooks/                       # Custom reusable hooks
-│   │   ├── useFetch.js
-│   │   └── useDebounce.js
-│
-│   ├── constants/                   # Static values like role enums, config values
-│   │   ├── roles.js
-│   │   └── appConfig.js
-│
-│   ├── contexts/                    # React Context APIs
-│   │   └── UserContext.jsx
-│
-│   ├── styles/                      # Global styles
-│   │   ├── globals.css
-│   │   └── theme.js                 # Optional: shadcn/chakra theme
-│
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-│
-├── .env                             # Environment variables
-├── .gitignore
-├── index.html
-├── package.json
-├── README.md
-├── vite.config.js
-└── eslint.config.js
-```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
