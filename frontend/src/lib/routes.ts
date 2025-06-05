@@ -1,4 +1,6 @@
-export const origin = process.env.ORIGIN || "http://localhost:5000";
+export const origin = process.env.ORIGIN;
+// console.log("API Origin:", origin);
+
 const auth_routes = "api/auth";
 const user_routes = "api/user";
 const subject_routes = "api/subject";
