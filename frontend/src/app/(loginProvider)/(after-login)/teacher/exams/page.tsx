@@ -21,7 +21,7 @@ type Exam = {
   updatedAt: string;
 };
 
-const page = () => {
+const Page = () => {
     const user = useAppStore((state) => state.user);
     const [exams, setExams] = useState<Exam[]>([]);
     const getExamByTeacherId = async () => {
@@ -78,4 +78,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

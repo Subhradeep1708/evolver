@@ -39,18 +39,18 @@ type Result = {
     percentageMarks: number;
     submittedAt: string;
 };
-const page = () => {
+const Page = () => {
     const [exams, setExams] = useState<Exam[]>([]);
     const [examId, setExamId] = useState<string | null>(null);
     const [result, setResult] = useState<Result[] | null>(null);
 
-    const user=useAppStore((state)=>state.user)
+    const user = useAppStore((state) => state.user)
 
     useEffect(() => {
         const fetchExamData = async () => {
             try {
                 const res = await axios.get(
-                   `${apiRoutes.getExamByTeacher}/${user?.userId}`,
+                    `${apiRoutes.getExamByTeacher}/${user?.userId}`,
                     {
                         withCredentials: true,
                     }
@@ -126,9 +126,9 @@ const page = () => {
                                                 Results for this exam
                                             </DialogDescription>
                                         </DialogHeader>
-                                       <div >
-                                         <Leaderboard result={result} />
-                                       </div>
+                                        <div >
+                                            <Leaderboard result={result} />
+                                        </div>
                                     </DialogContent>
                                 </Dialog>
                             </TableCell>
@@ -145,35 +145,35 @@ type LeaderboardProps = {
 const Leaderboard: React.FC<LeaderboardProps> = ({ result }) => {
     const formatDate = (date: string) => new Date(date).toLocaleString();
     return (
-      
-            <Table className="w-full p-2">
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Rank</TableHead>
-                        <TableHead>Student Name</TableHead>
-                        <TableHead>Roll Number</TableHead>
-                        <TableHead>Marks</TableHead>
-                        <TableHead>Percentage</TableHead>
-                        <TableHead>Submitted At</TableHead>
+
+        <Table className="w-full p-2">
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Rank</TableHead>
+                    <TableHead>Student Name</TableHead>
+                    <TableHead>Roll Number</TableHead>
+                    <TableHead>Marks</TableHead>
+                    <TableHead>Percentage</TableHead>
+                    <TableHead>Submitted At</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {result?.map((item, index) => (
+                    <TableRow key={index}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>{item.studentName}</TableCell>
+                        <TableCell>{item.studentRollNumber}</TableCell>
+                        <TableCell>{item.marksObtained}</TableCell>
+                        <TableCell>{item.percentageMarks} %</TableCell>
+                        <TableCell>
+                            {formatDate(item.submittedAt)}
+                        </TableCell>
                     </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {result?.map((item, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{index + 1}</TableCell>
-                            <TableCell>{item.studentName}</TableCell>
-                            <TableCell>{item.studentRollNumber}</TableCell>
-                            <TableCell>{item.marksObtained}</TableCell>
-                            <TableCell>{item.percentageMarks} %</TableCell>
-                            <TableCell>
-                                {formatDate(item.submittedAt)}
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-       
+                ))}
+            </TableBody>
+        </Table>
+
     );
 };
 
-export default page;
+export default Page;
